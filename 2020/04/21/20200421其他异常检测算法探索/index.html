@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.mainecoon.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="异常检测算法探寻3-sigma拿最新3个datapoint的平均值和整个序列比较，看是否偏离总体平均水平太多。怎样算“太多”呢，因为standard deviation表示集合中元素到mean的平均偏移距离，因此最简单就是和它进行比较。在normal distribution（正态分布）中，99.73%的数据都在偏离mean 3个σ (standard deviation 标准差) 的范围内。如果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="其他异常检测算法探索">
+<meta property="og:url" content="https://www.mainecoon.top/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/index.html">
+<meta property="og:site_name" content="MaineCoon">
+<meta property="og:description" content="异常检测算法探寻3-sigma拿最新3个datapoint的平均值和整个序列比较，看是否偏离总体平均水平太多。怎样算“太多”呢，因为standard deviation表示集合中元素到mean的平均偏移距离，因此最简单就是和它进行比较。在normal distribution（正态分布）中，99.73%的数据都在偏离mean 3个σ (standard deviation 标准差) 的范围内。如果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.mainecoon.top/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/20190313111100150_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/image-20200419231303134.png">
+<meta property="article:published_time" content="2020-04-21T06:20:02.000Z">
+<meta property="article:modified_time" content="2020-10-01T06:24:55.136Z">
+<meta property="article:author" content="Chronos">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="智能运维">
+<meta property="article:tag" content="Metis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mainecoon.top/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/20190313111100150_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png">
+
+<link rel="canonical" href="https://www.mainecoon.top/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>其他异常检测算法探索 | MaineCoon</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <a href="https://github.com/msq0313" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">MaineCoon</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record of technical learning experience</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.mainecoon.top/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Chronos">
+      <meta itemprop="description" content="Constantly approaching the truth">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MaineCoon">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          其他异常检测算法探索
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-21 14:20:02" itemprop="dateCreated datePublished" datetime="2020-04-21T14:20:02+08:00">2020-04-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%99%BA%E8%83%BD%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">智能运维</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="异常检测算法探寻"><a href="#异常检测算法探寻" class="headerlink" title="异常检测算法探寻"></a>异常检测算法探寻</h3><h4 id="3-sigma"><a href="#3-sigma" class="headerlink" title="3-sigma"></a>3-sigma</h4><p>拿最新3个datapoint的平均值和整个序列比较，看是否偏离总体平均水平太多。怎样算“太多”呢，因为standard deviation表示集合中元素到mean的平均偏移距离，因此最简单就是和它进行比较。在normal distribution（正态分布）中，99.73%的数据都在偏离mean 3个σ (standard deviation 标准差) 的范围内。如果某些datapoint到mean的距离超过这个范围，则认为是异常的。</p>
+<a id="more"></a>
+
+<h4 id="z-score"><a href="#z-score" class="headerlink" title="z score"></a>z score</h4><p>标准分，一个个体到集合mean的偏离，以标准差为单位，表达个体距mean相对“平均偏离水平”的偏离程度，常用来比对来自不同集合的数据。在模型中，z_score用来衡量窗口数据中，中间值的偏离程度。</p>
+<p>算法流程：</p>
+<ol>
+<li>排除最后一个值</li>
+<li>求剩余序列的平均值</li>
+<li>全序列减去上面这个平均值</li>
+<li>求剩余序列的标准差</li>
+<li>（ 中间三个数的平均值-全序列均值）/ 全序列标准差</li>
+</ol>
+<h4 id="Grubbs格拉斯测试"><a href="#Grubbs格拉斯测试" class="headerlink" title="Grubbs格拉斯测试"></a>Grubbs格拉斯测试</h4><p>Grubbs测试是一种从样本中找出outlier的方法，所谓outlier，是指样本中偏离平均值过远的数据，他们有可能是极端情况下的正常数据，也有可能是测量过程中的错误数据。使用Grubbs测试需要总体是正态分布的。</p>
+<p>算法流程：</p>
+<ol>
+<li>样本从小到大排序</li>
+<li>求样本的mean和std.dev</li>
+<li>计算min/max与mean的差距，更大的那个为可疑值</li>
+<li>求可疑值的z-score (standard score)，如果大于Grubbs临界值，那么就是outlier</li>
+</ol>
+<p>Grubbs临界值可以查表得到，它由两个值决定：检出水平α（越严格越小），样本数量n。排除outlier，对剩余序列循环做 1-4 步骤。由于这里需要的是异常判定，只需要判断tail_avg是否outlier即可。</p>
+<h4 id="exponential-weighted-moving-average（指数加权移动平均）"><a href="#exponential-weighted-moving-average（指数加权移动平均）" class="headerlink" title="exponential weighted moving average（指数加权移动平均）"></a>exponential weighted moving average（指数加权移动平均）</h4><p><img src="/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/20190313111100150_%E7%9C%8B%E5%9B%BE%E7%8E%8B.png" alt="20190313111100150_看图王"></p>
+<h4 id="stddev-from-moving-average（移动平均-标准差）"><a href="#stddev-from-moving-average（移动平均-标准差）" class="headerlink" title="stddev from moving average（移动平均-标准差）"></a>stddev from moving average（移动平均-标准差）</h4><p>先求出最后一个点处的指数加权移动平均值，然后再用最新的点和三倍方差方法求异常。</p>
+<h4 id="median-absolute-deviation（中位数绝对偏差）"><a href="#median-absolute-deviation（中位数绝对偏差）" class="headerlink" title="median absolute deviation（中位数绝对偏差）"></a>median absolute deviation（中位数绝对偏差）</h4><p>median：大部分情况下我们用mean来表达一个集合的平均水平（average），但是在某些情况下存在少数极大或极小的outlier，拉高或拉低了（skew）整体的mean，造成估计的不准确。此时可以用median（中位数）代替mean描述平均水平。Median的求法很简单，集合排序中间位置即是，如果集合总数为偶数，则取中间二者的平均值。</p>
+<p>median of deviation（MAD）：</p>
+<p>同mean一样，对于median我们也需要类似standard deviation这样的指标来表达数据的紧凑/分散程度，即偏离average的平均距离，这就是MAD。MAD顾名思义，是deviation的median，而此时的deviation = abs( 个体 – median )，避免了少量outlier对结果的影响，更robust。</p>
+<p>绝对中位差实际求法是用原数据减去中位数后得到的新数据的绝对值的中位数。</p>
+<p>原数据-中位值=新数据<br>新数据的绝对值的中位数作为特征</p>
+<h4 id="mean-subtraction-cumulation（平均值减法累积）"><a href="#mean-subtraction-cumulation（平均值减法累积）" class="headerlink" title="mean subtraction cumulation（平均值减法累积）"></a>mean subtraction cumulation（平均值减法累积）</h4><p>该特征类似于3-sigma准则。</p>
+<p>算法流程</p>
+<ol>
+<li>排除全序列（暂称为all）最后一个值（last datapoint），求剩余序列（暂称为rest，0..length-2）的mean；</li>
+<li>rest序列中每个元素减去rest的mean，再求标准差；</li>
+<li>求窗口数据中间点到rest mean的距离，即 abs(last datapoint – rest mean)；</li>
+</ol>
+<hr>
+<h3 id="http接口尝试"><a href="#http接口尝试" class="headerlink" title="http接口尝试"></a>http接口尝试</h3><p>查看源码后，确认两种异常检测接口的请求路径，并进行接口测试</p>
+<p>量值检测：API： POST /{ip}:{port}/PredictValue</p>
+<p>率值检测：API： POST /{ip}:{port}/PredictRate</p>
+<p>功能均为根据参考数据检测最近一个数据点是否异常</p>
+<p>按照数据格式，构成请求数据后，利用postman工具进行测试，仍返回405 Not Allowed</p>
+<p>可能原因是，nginx服务器禁止post请求访问静态资源</p>
+<p>对docker了解较少，不知道如何修改nginx配置，或者有没有其他方法可以正常进行接口测试</p>
+<p>下一步可能会尝试手动部署后调用python接口</p>
+<p><img src="/2020/04/21/20200421%E5%85%B6%E4%BB%96%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%E6%8E%A2%E7%B4%A2/image-20200419231303134.png" alt="image-20200419231303134"></p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>通过之前对Metis算法，及其调用程序的代码的分析，想探索一些其他算法，为之后可能进行的算法扩展做一些准备，</p>
+<p>上周进一步了解异常检测算法的实现原理，对比Metis中算法的运用进行资料搜集，在搜集过程中找到了一些对Metis中现有算法的描述，另外，也搜集了一些有关时间序列异常检测的其他算法，对它们进行了学习与总结。</p>
+<p>测试接口仍然不能成功进行，之后考虑在虚拟机中进行手动部署，调用python接口，方便后续代码修改，调试</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>希望这些内容对你有帮助，感谢打赏！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Chronos 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Chronos 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E6%99%BA%E8%83%BD%E8%BF%90%E7%BB%B4/" rel="tag"># 智能运维</a>
+              <a href="/tags/Metis/" rel="tag"># Metis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/14/20200414Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" rel="prev" title="Metis异常检测源码分析">
+      <i class="fa fa-chevron-left"></i> Metis异常检测源码分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/28/20200428XGBoost%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/" rel="next" title="XGBoost时间序列异常检测分析">
+      XGBoost时间序列异常检测分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#异常检测算法探寻"><span class="nav-number">1.</span> <span class="nav-text">异常检测算法探寻</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-sigma"><span class="nav-number">1.1.</span> <span class="nav-text">3-sigma</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#z-score"><span class="nav-number">1.2.</span> <span class="nav-text">z score</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grubbs格拉斯测试"><span class="nav-number">1.3.</span> <span class="nav-text">Grubbs格拉斯测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exponential-weighted-moving-average（指数加权移动平均）"><span class="nav-number">1.4.</span> <span class="nav-text">exponential weighted moving average（指数加权移动平均）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stddev-from-moving-average（移动平均-标准差）"><span class="nav-number">1.5.</span> <span class="nav-text">stddev from moving average（移动平均-标准差）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#median-absolute-deviation（中位数绝对偏差）"><span class="nav-number">1.6.</span> <span class="nav-text">median absolute deviation（中位数绝对偏差）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mean-subtraction-cumulation（平均值减法累积）"><span class="nav-number">1.7.</span> <span class="nav-text">mean subtraction cumulation（平均值减法累积）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http接口尝试"><span class="nav-number">2.</span> <span class="nav-text">http接口尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结："><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chronos"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Chronos</p>
+  <div class="site-description" itemprop="description">Constantly approaching the truth</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/msq0313" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;msq0313" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:miaosuqi@pku.edu.cn" title="E-Mail → mailto:miaosuqi@pku.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chronos</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
