@@ -106,6 +106,30 @@
       </tags>
   </entry>
   <entry>
+    <title>Metis的优势</title>
+    <url>/2020/03/16/20200316Metis%E7%9A%84%E4%BC%98%E5%8A%BF/</url>
+    <content><![CDATA[<p>相对于skywalking对系统的监控功能，Metis更加注重智能化运维。它基于腾讯已有的运维数据，将机器学习领域的分类、聚类、回归、降维等算法和运维场景相结合，旨在通过一系列基于机器学习的算法，对运维数据进行分析、决策，从而实现自动化运维的更高阶段。</p>
+<h3 id="时间序列异常检测"><a href="#时间序列异常检测" class="headerlink" title="时间序列异常检测"></a>时间序列异常检测</h3><a id="more"></a>
+<p>时间序列异常检测是 Metis 组成部分之一，承载了海量业务的监控告警功能。其优越性体现在三点：</p>
+<h4 id="1、无阈值智能判决"><a href="#1、无阈值智能判决" class="headerlink" title="1、无阈值智能判决"></a>1、无阈值智能判决</h4><p>运维人员无需设置告警阈值，检测模型可对数据异常智能判决，直观告诉大家检测结果是正常还是异常；</p>
+<h4 id="2、通用检测模型"><a href="#2、通用检测模型" class="headerlink" title="2、通用检测模型"></a>2、通用检测模型</h4><p>智能检测的模型由海量的业务样本数据训练而成，适合复用在时间序列类数据的检测中；</p>
+<h4 id="3、可成长业务反馈"><a href="#3、可成长业务反馈" class="headerlink" title="3、可成长业务反馈"></a>3、可成长业务反馈</h4><p>实践过程中也会遇到较个性的业务场景，这里支持用户标注反馈检测结果，异常检测系统可以自动化地根据用户反馈信息进行进阶学习、优化模型，加强对业务的理解。</p>
+<h2 id="Docker部署Metis"><a href="#Docker部署Metis" class="headerlink" title="Docker部署Metis"></a>Docker部署Metis</h2><p>按照 GitHub 项目上的 install.md 文档，</p>
+<p><a href="https://github.com/Tencent/Metis/blob/master/docs/install.md#chapter-2" target="_blank" rel="noopener">https://github.com/Tencent/Metis/blob/master/docs/install.md#chapter-2</a></p>
+<p>尝试在阿里云服务器使用docker部署metis，没成功，在寻找解决办法。系统版本：CentOS 7.4</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">[root@iz2ze4puu4dbxzsmzr7htkz data]<span class="comment"># Metis/docker/start.sh 123.56.125.236</span></span><br><span class="line">sed: can't read init.sh: No such file or directory</span><br><span class="line">unable to <span class="keyword">prepare</span> <span class="keyword">context</span>: unable <span class="keyword">to</span> <span class="keyword">evaluate</span> symlinks <span class="keyword">in</span> Dockerfile <span class="keyword">path</span>: lstat /root/<span class="keyword">data</span>/Dockerfile: <span class="keyword">no</span> such <span class="keyword">file</span> <span class="keyword">or</span> <span class="keyword">directory</span></span><br><span class="line">Unable <span class="keyword">to</span> find image <span class="string">'local/metis-demo:1.0'</span> locally</span><br><span class="line">Trying <span class="keyword">to</span> pull repository docker.io/<span class="keyword">local</span>/metis-demo ... </span><br><span class="line">/usr/<span class="keyword">bin</span>/docker-<span class="keyword">current</span>: <span class="keyword">Get</span> https://registry<span class="number">-1.</span>docker.io/v2/: net/<span class="keyword">http</span>: request canceled (Client.Timeout exceeded <span class="keyword">while</span> awaiting headers).</span><br><span class="line">See <span class="string">'/usr/bin/docker-current run --help'</span>.</span><br><span class="line">[root@iz2ze4puu4dbxzsmzr7htkz <span class="keyword">data</span>]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/16/20200316Metis%E7%9A%84%E4%BC%98%E5%8A%BF/image-20200316223811571.png" alt="image-20200316223811571"></p>
+]]></content>
+      <categories>
+        <category>智能运维</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>智能运维</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Metis的异常检测流程</title>
     <url>/2020/03/23/20200323Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="一、尝试部署metis"><a href="#一、尝试部署metis" class="headerlink" title="一、尝试部署metis"></a>一、尝试部署metis</h2><p><img src="/2020/03/23/20200323Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%B5%81%E7%A8%8B/image-20200618220131123.png" alt="image-20200618220131123"></p>
@@ -123,30 +147,6 @@
 <li>样本管理：提供样本管理功能，检索、图示、编辑、删除，导入等功能</li>
 <li>模型管理：提供模型管理功能，支持自定义模型训练</li>
 </ul>
-]]></content>
-      <categories>
-        <category>智能运维</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>智能运维</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Metis的优势</title>
-    <url>/2020/03/16/20200316Metis%E7%9A%84%E4%BC%98%E5%8A%BF/</url>
-    <content><![CDATA[<p>相对于skywalking对系统的监控功能，Metis更加注重智能化运维。它基于腾讯已有的运维数据，将机器学习领域的分类、聚类、回归、降维等算法和运维场景相结合，旨在通过一系列基于机器学习的算法，对运维数据进行分析、决策，从而实现自动化运维的更高阶段。</p>
-<h3 id="时间序列异常检测"><a href="#时间序列异常检测" class="headerlink" title="时间序列异常检测"></a>时间序列异常检测</h3><a id="more"></a>
-<p>时间序列异常检测是 Metis 组成部分之一，承载了海量业务的监控告警功能。其优越性体现在三点：</p>
-<h4 id="1、无阈值智能判决"><a href="#1、无阈值智能判决" class="headerlink" title="1、无阈值智能判决"></a>1、无阈值智能判决</h4><p>运维人员无需设置告警阈值，检测模型可对数据异常智能判决，直观告诉大家检测结果是正常还是异常；</p>
-<h4 id="2、通用检测模型"><a href="#2、通用检测模型" class="headerlink" title="2、通用检测模型"></a>2、通用检测模型</h4><p>智能检测的模型由海量的业务样本数据训练而成，适合复用在时间序列类数据的检测中；</p>
-<h4 id="3、可成长业务反馈"><a href="#3、可成长业务反馈" class="headerlink" title="3、可成长业务反馈"></a>3、可成长业务反馈</h4><p>实践过程中也会遇到较个性的业务场景，这里支持用户标注反馈检测结果，异常检测系统可以自动化地根据用户反馈信息进行进阶学习、优化模型，加强对业务的理解。</p>
-<h2 id="Docker部署Metis"><a href="#Docker部署Metis" class="headerlink" title="Docker部署Metis"></a>Docker部署Metis</h2><p>按照 GitHub 项目上的 install.md 文档，</p>
-<p><a href="https://github.com/Tencent/Metis/blob/master/docs/install.md#chapter-2" target="_blank" rel="noopener">https://github.com/Tencent/Metis/blob/master/docs/install.md#chapter-2</a></p>
-<p>尝试在阿里云服务器使用docker部署metis，没成功，在寻找解决办法。系统版本：CentOS 7.4</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">[root@iz2ze4puu4dbxzsmzr7htkz data]<span class="comment"># Metis/docker/start.sh 123.56.125.236</span></span><br><span class="line">sed: can't read init.sh: No such file or directory</span><br><span class="line">unable to <span class="keyword">prepare</span> <span class="keyword">context</span>: unable <span class="keyword">to</span> <span class="keyword">evaluate</span> symlinks <span class="keyword">in</span> Dockerfile <span class="keyword">path</span>: lstat /root/<span class="keyword">data</span>/Dockerfile: <span class="keyword">no</span> such <span class="keyword">file</span> <span class="keyword">or</span> <span class="keyword">directory</span></span><br><span class="line">Unable <span class="keyword">to</span> find image <span class="string">'local/metis-demo:1.0'</span> locally</span><br><span class="line">Trying <span class="keyword">to</span> pull repository docker.io/<span class="keyword">local</span>/metis-demo ... </span><br><span class="line">/usr/<span class="keyword">bin</span>/docker-<span class="keyword">current</span>: <span class="keyword">Get</span> https://registry<span class="number">-1.</span>docker.io/v2/: net/<span class="keyword">http</span>: request canceled (Client.Timeout exceeded <span class="keyword">while</span> awaiting headers).</span><br><span class="line">See <span class="string">'/usr/bin/docker-current run --help'</span>.</span><br><span class="line">[root@iz2ze4puu4dbxzsmzr7htkz <span class="keyword">data</span>]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/03/16/20200316Metis%E7%9A%84%E4%BC%98%E5%8A%BF/image-20200316223811571.png" alt="image-20200316223811571"></p>
 ]]></content>
       <categories>
         <category>智能运维</category>
@@ -521,40 +521,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Metis中xgboosting的运用</title>
-    <url>/2020/05/12/20200512Metis%E4%B8%ADxgboosting%E7%9A%84%E8%BF%90%E7%94%A8/</url>
-    <content><![CDATA[<p>这周工作主要是在之前源码阅读的基础上，继续了解metis中xgboosting的运用，主要是algorithm包下xgboosting.py的代码。</p>
-<p>它的过程是先判断时间序列格式是否正确、特征值提取、xgb矩阵赋值、创建xgb实例，设置cpu线程数，调用异常检测方法，到之后与阈值进行比对判断是否异常</p>
-<h3 id="xgboosting-py"><a href="#xgboosting-py" class="headerlink" title="xgboosting.py"></a>xgboosting.py</h3><a id="more"></a>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X, window=DEFAULT_WINDOW, model_name=DEFAULT_MODEL)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :param X: the time series to detect of</span></span><br><span class="line"><span class="string">    :type X: pandas.Series</span></span><br><span class="line"><span class="string">    :param window: the length of window</span></span><br><span class="line"><span class="string">    :param model_name: Use a xgboost model to predict a particular sample is an outlier or not.</span></span><br><span class="line"><span class="string">    :return 1 denotes normal, 0 denotes abnormal.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 判断时间序列格式是否正确</span></span><br><span class="line">    <span class="keyword">if</span> is_standard_time_series(X, window):</span><br><span class="line">        ts_features = []</span><br><span class="line">        features = [<span class="number">10</span>]</span><br><span class="line">        <span class="comment"># 特征值提取</span></span><br><span class="line">        features.extend(feature_service.extract_features(X, window))</span><br><span class="line">        <span class="comment"># 统计特征、拟合特征、分类特征</span></span><br><span class="line">        ts_features.append(features)</span><br><span class="line">        <span class="comment"># xgb矩阵赋值</span></span><br><span class="line">        res_pred = xgb.DMatrix(np.array(ts_features))</span><br><span class="line">        <span class="comment"># 创建xgb实例，设置cpu线程数</span></span><br><span class="line">        bst = xgb.Booster(&#123;<span class="string">'nthread'</span>: <span class="number">4</span>&#125;)</span><br><span class="line">        <span class="comment"># 加载训练集名称</span></span><br><span class="line">        bst.load_model(model_name)</span><br><span class="line">        <span class="comment"># 异常检测</span></span><br><span class="line">        xgb_ret = bst.predict(res_pred)</span><br><span class="line">        <span class="comment"># 阈值默认为0.15，小于此值时判断为异常</span></span><br><span class="line">        <span class="keyword">if</span> xgb_ret[<span class="number">0</span>] &lt; self.threshold:</span><br><span class="line">            value = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            value = <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> [value, xgb_ret[<span class="number">0</span>]]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="number">0</span>, <span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-
-<p>提取特征值的过程中调用了feature_service.py 提取这些特征值主要通过导入tsfresh包以及tsd_common实现</p>
-<h3 id="feature-service-py"><a href="#feature-service-py" class="headerlink" title="feature_service.py"></a>feature_service.py</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_features</span><span class="params">(time_series, window)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Extracts three types of features from the time series.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param time_series: the time series to extract the feature of</span></span><br><span class="line"><span class="string">    :type time_series: pandas.Series</span></span><br><span class="line"><span class="string">    :param window: the length of window</span></span><br><span class="line"><span class="string">    :type window: int</span></span><br><span class="line"><span class="string">    :return: the value of features</span></span><br><span class="line"><span class="string">    :return type: list with float</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> tsd_common.is_standard_time_series(time_series, window):</span><br><span class="line">        <span class="comment"># add your report of this error here...</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># spilt time_series 切分时间序列</span></span><br><span class="line">    split_time_series = tsd_common.split_time_series(time_series, window)</span><br><span class="line">    <span class="comment"># nomalize time_series 标准化时间序列</span></span><br><span class="line">    normalized_split_time_series = tsd_common.normalize_time_series(split_time_series)</span><br><span class="line">    max_min_normalized_time_series = tsd_common.normalize_time_series_by_max_min(split_time_series)</span><br><span class="line">    <span class="comment"># 统计学特征，包括最大值，最小值，平均数，方差，标准差，峰值，偏态，中位数等各种数据</span></span><br><span class="line">    s_features = statistical_features.get_statistical_features(normalized_split_time_series[<span class="number">4</span>])</span><br><span class="line">    <span class="comment"># 拟合特征，包括移动平均数，加权移动平均数，指数加权移动平均数，双指数加权移动平均数，通过这些计算出的周期特征</span></span><br><span class="line">    f_features = fitting_features.get_fitting_features(normalized_split_time_series)</span><br><span class="line">    <span class="comment"># 分类特征</span></span><br><span class="line">    c_features = classification_features.get_classification_features(max_min_normalized_time_series)</span><br><span class="line">    <span class="comment"># combine features with types 拼接各组特征</span></span><br><span class="line">    features = s_features + f_features + c_features</span><br><span class="line">    <span class="keyword">return</span> features</span><br></pre></td></tr></table></figure>
-
-<p>也观察到了拼接各组特征的过程，只在xgb中进行了使用，而没有用在其他位置</p>
-<p>另外我尝试写了一些代码，通过设置时间序列数据，来检测目前metis采用的算法，实际上是对metis算法调用的一个简化，方便之后如进行了算法更改，也可以进行一个检测，目前统计算法3-sigma、指数加权移动算法可以正常调用，多项式回归和xgb算法的测试还需要花些时间来研究</p>
-<p>之后考虑在现有算法之上与之前所调研的其他算法进行结合，如z score，Grubbs格拉斯测试等方法</p>
-<p>多指标算法</p>
-<p>用于多元时间序列的 Python 模块 —— Seglearn</p>
-<p>Github 项目推荐 | 用于多元时间序列的 Python 模块 —— Seglearn</p>
-<ul>
-<li>Seglearn 是一个通过滑动窗口分割的机器学习多元时间序列的 Python 模块。它为特征提取、特征处理和最终估计提供一个集成的 Pipeline。</li>
-<li>Seglearn 为分类、回归和预测问题提供了多元时间序列和上下文数据的灵活方法，并且它与 scikit-learn 兼容。</li>
-<li><a href="https://cloud.tencent.com/developer/article/1166797" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1166797</a></li>
-</ul>
-<p>序列和时间序列的机器学习算法通常从固定长度的片段中学习，该程序包支持滑动窗口分段或填充和截断方法，以将顺序数据集处理为固定长度的分段。</p>
-]]></content>
-      <categories>
-        <category>智能运维</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>智能运维</tag>
-        <tag>Metis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>XGBoost时间序列异常检测分析</title>
     <url>/2020/04/28/20200428XGBoost%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h3 id="率值检测调用XGBoost"><a href="#率值检测调用XGBoost" class="headerlink" title="率值检测调用XGBoost"></a>率值检测调用XGBoost</h3><p>率值检测方法经过3-sigma算法，指数加权移动算法，多项式回归算法检测后，如果有异常，继续调用XGBoost算法，传入参数为时间序列及窗口大小</p>
@@ -594,6 +560,70 @@
 </ul>
 </li>
 </ul>
+]]></content>
+      <categories>
+        <category>智能运维</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>智能运维</tag>
+        <tag>Metis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Metis中xgboosting的运用</title>
+    <url>/2020/05/12/20200512Metis%E4%B8%ADxgboosting%E7%9A%84%E8%BF%90%E7%94%A8/</url>
+    <content><![CDATA[<p>这周工作主要是在之前源码阅读的基础上，继续了解metis中xgboosting的运用，主要是algorithm包下xgboosting.py的代码。</p>
+<p>它的过程是先判断时间序列格式是否正确、特征值提取、xgb矩阵赋值、创建xgb实例，设置cpu线程数，调用异常检测方法，到之后与阈值进行比对判断是否异常</p>
+<h3 id="xgboosting-py"><a href="#xgboosting-py" class="headerlink" title="xgboosting.py"></a>xgboosting.py</h3><a id="more"></a>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X, window=DEFAULT_WINDOW, model_name=DEFAULT_MODEL)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :param X: the time series to detect of</span></span><br><span class="line"><span class="string">    :type X: pandas.Series</span></span><br><span class="line"><span class="string">    :param window: the length of window</span></span><br><span class="line"><span class="string">    :param model_name: Use a xgboost model to predict a particular sample is an outlier or not.</span></span><br><span class="line"><span class="string">    :return 1 denotes normal, 0 denotes abnormal.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 判断时间序列格式是否正确</span></span><br><span class="line">    <span class="keyword">if</span> is_standard_time_series(X, window):</span><br><span class="line">        ts_features = []</span><br><span class="line">        features = [<span class="number">10</span>]</span><br><span class="line">        <span class="comment"># 特征值提取</span></span><br><span class="line">        features.extend(feature_service.extract_features(X, window))</span><br><span class="line">        <span class="comment"># 统计特征、拟合特征、分类特征</span></span><br><span class="line">        ts_features.append(features)</span><br><span class="line">        <span class="comment"># xgb矩阵赋值</span></span><br><span class="line">        res_pred = xgb.DMatrix(np.array(ts_features))</span><br><span class="line">        <span class="comment"># 创建xgb实例，设置cpu线程数</span></span><br><span class="line">        bst = xgb.Booster(&#123;<span class="string">'nthread'</span>: <span class="number">4</span>&#125;)</span><br><span class="line">        <span class="comment"># 加载训练集名称</span></span><br><span class="line">        bst.load_model(model_name)</span><br><span class="line">        <span class="comment"># 异常检测</span></span><br><span class="line">        xgb_ret = bst.predict(res_pred)</span><br><span class="line">        <span class="comment"># 阈值默认为0.15，小于此值时判断为异常</span></span><br><span class="line">        <span class="keyword">if</span> xgb_ret[<span class="number">0</span>] &lt; self.threshold:</span><br><span class="line">            value = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            value = <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> [value, xgb_ret[<span class="number">0</span>]]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="number">0</span>, <span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>提取特征值的过程中调用了feature_service.py 提取这些特征值主要通过导入tsfresh包以及tsd_common实现</p>
+<h3 id="feature-service-py"><a href="#feature-service-py" class="headerlink" title="feature_service.py"></a>feature_service.py</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_features</span><span class="params">(time_series, window)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Extracts three types of features from the time series.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param time_series: the time series to extract the feature of</span></span><br><span class="line"><span class="string">    :type time_series: pandas.Series</span></span><br><span class="line"><span class="string">    :param window: the length of window</span></span><br><span class="line"><span class="string">    :type window: int</span></span><br><span class="line"><span class="string">    :return: the value of features</span></span><br><span class="line"><span class="string">    :return type: list with float</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> tsd_common.is_standard_time_series(time_series, window):</span><br><span class="line">        <span class="comment"># add your report of this error here...</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># spilt time_series 切分时间序列</span></span><br><span class="line">    split_time_series = tsd_common.split_time_series(time_series, window)</span><br><span class="line">    <span class="comment"># nomalize time_series 标准化时间序列</span></span><br><span class="line">    normalized_split_time_series = tsd_common.normalize_time_series(split_time_series)</span><br><span class="line">    max_min_normalized_time_series = tsd_common.normalize_time_series_by_max_min(split_time_series)</span><br><span class="line">    <span class="comment"># 统计学特征，包括最大值，最小值，平均数，方差，标准差，峰值，偏态，中位数等各种数据</span></span><br><span class="line">    s_features = statistical_features.get_statistical_features(normalized_split_time_series[<span class="number">4</span>])</span><br><span class="line">    <span class="comment"># 拟合特征，包括移动平均数，加权移动平均数，指数加权移动平均数，双指数加权移动平均数，通过这些计算出的周期特征</span></span><br><span class="line">    f_features = fitting_features.get_fitting_features(normalized_split_time_series)</span><br><span class="line">    <span class="comment"># 分类特征</span></span><br><span class="line">    c_features = classification_features.get_classification_features(max_min_normalized_time_series)</span><br><span class="line">    <span class="comment"># combine features with types 拼接各组特征</span></span><br><span class="line">    features = s_features + f_features + c_features</span><br><span class="line">    <span class="keyword">return</span> features</span><br></pre></td></tr></table></figure>
+
+<p>也观察到了拼接各组特征的过程，只在xgb中进行了使用，而没有用在其他位置</p>
+<p>另外我尝试写了一些代码，通过设置时间序列数据，来检测目前metis采用的算法，实际上是对metis算法调用的一个简化，方便之后如进行了算法更改，也可以进行一个检测，目前统计算法3-sigma、指数加权移动算法可以正常调用，多项式回归和xgb算法的测试还需要花些时间来研究</p>
+<p>之后考虑在现有算法之上与之前所调研的其他算法进行结合，如z score，Grubbs格拉斯测试等方法</p>
+<p>多指标算法</p>
+<p>用于多元时间序列的 Python 模块 —— Seglearn</p>
+<p>Github 项目推荐 | 用于多元时间序列的 Python 模块 —— Seglearn</p>
+<ul>
+<li>Seglearn 是一个通过滑动窗口分割的机器学习多元时间序列的 Python 模块。它为特征提取、特征处理和最终估计提供一个集成的 Pipeline。</li>
+<li>Seglearn 为分类、回归和预测问题提供了多元时间序列和上下文数据的灵活方法，并且它与 scikit-learn 兼容。</li>
+<li><a href="https://cloud.tencent.com/developer/article/1166797" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1166797</a></li>
+</ul>
+<p>序列和时间序列的机器学习算法通常从固定长度的片段中学习，该程序包支持滑动窗口分段或填充和截断方法，以将顺序数据集处理为固定长度的分段。</p>
+]]></content>
+      <categories>
+        <category>智能运维</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>智能运维</tag>
+        <tag>Metis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>时间序列预测算法Prophet</title>
+    <url>/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Facebook 所提供的 prophet 算法不仅可以处理时间序列存在一些异常值的情况，也可以处理部分缺失值的情形，还能够几乎全自动地预测时间序列未来的走势。</p>
+<p><img src="/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/prophetexample1.png" alt="prophetexample1"></p>
+<a id="more"></a>
+
+<p>这是一个一个常见的时间序列场景，黑色表示原始的时间序列离散点，深蓝色的线表示使用时间序列来拟合所得到的取值，而浅蓝色的线表示时间序列的一个置信区间，也就是所谓的合理的上界和下界。prophet 所做的事情就是：</p>
+<ol>
+<li>输入已知的时间序列的时间戳和相应的值；</li>
+<li>输入需要预测的时间序列的长度；</li>
+<li>输出未来的时间序列走势。</li>
+<li>输出结果可以提供必要的统计指标，包括拟合曲线，上界和下界等。</li>
+</ol>
+<h3 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h3><p>而 fbprophet 所需要的时间序列是这种格式的，只要用 csv 文件存储两列即可，第一列的名字是 ‘ds’, 第二列的名称是 ‘y’。第一列表示时间序列的时间戳，第二列表示时间序列的取值。通过 prophet 的计算，可以计算出 yhat，yhat_lower，yhat_upper，分别表示时间序列的预测值，预测值的下界，预测值的上界。两份表格如下面的两幅图表示。</p>
+<p><img src="/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/prophetexample3.png" alt="prophetexample3"></p>
+<p><img src="/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/prophetexample4-1589536420625.png" alt="prophetexample4"></p>
+<h3 id="Prophet-的实际使用"><a href="#Prophet-的实际使用" class="headerlink" title="Prophet 的实际使用"></a>Prophet 的实际使用</h3><p>在jupyter中运行</p>
+<p>![FireShot Capture 009 - ProphetTest - Jupyter Notebook - localhost](20200519时间序列预测算法Prophet/FireShot Capture 009 - ProphetTest - Jupyter Notebook - localhost.png)</p>
+<p>可考虑用这个工具代替Metis现有算法进行时间序列异常检测</p>
 ]]></content>
       <categories>
         <category>智能运维</category>
@@ -691,52 +721,6 @@
       </tags>
   </entry>
   <entry>
-    <title>时间序列预测算法Prophet</title>
-    <url>/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/</url>
-    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Facebook 所提供的 prophet 算法不仅可以处理时间序列存在一些异常值的情况，也可以处理部分缺失值的情形，还能够几乎全自动地预测时间序列未来的走势。</p>
-<p><img src="/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/prophetexample1.png" alt="prophetexample1"></p>
-<a id="more"></a>
-
-<p>这是一个一个常见的时间序列场景，黑色表示原始的时间序列离散点，深蓝色的线表示使用时间序列来拟合所得到的取值，而浅蓝色的线表示时间序列的一个置信区间，也就是所谓的合理的上界和下界。prophet 所做的事情就是：</p>
-<ol>
-<li>输入已知的时间序列的时间戳和相应的值；</li>
-<li>输入需要预测的时间序列的长度；</li>
-<li>输出未来的时间序列走势。</li>
-<li>输出结果可以提供必要的统计指标，包括拟合曲线，上界和下界等。</li>
-</ol>
-<h3 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h3><p>而 fbprophet 所需要的时间序列是这种格式的，只要用 csv 文件存储两列即可，第一列的名字是 ‘ds’, 第二列的名称是 ‘y’。第一列表示时间序列的时间戳，第二列表示时间序列的取值。通过 prophet 的计算，可以计算出 yhat，yhat_lower，yhat_upper，分别表示时间序列的预测值，预测值的下界，预测值的上界。两份表格如下面的两幅图表示。</p>
-<p><img src="/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/prophetexample3.png" alt="prophetexample3"></p>
-<p><img src="/2020/05/19/20200519%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%AE%97%E6%B3%95Prophet/prophetexample4-1589536420625.png" alt="prophetexample4"></p>
-<h3 id="Prophet-的实际使用"><a href="#Prophet-的实际使用" class="headerlink" title="Prophet 的实际使用"></a>Prophet 的实际使用</h3><p>在jupyter中运行</p>
-<p>![FireShot Capture 009 - ProphetTest - Jupyter Notebook - localhost](20200519时间序列预测算法Prophet/FireShot Capture 009 - ProphetTest - Jupyter Notebook - localhost.png)</p>
-<p>可考虑用这个工具代替Metis现有算法进行时间序列异常检测</p>
-]]></content>
-      <categories>
-        <category>智能运维</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>智能运维</tag>
-        <tag>Metis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>prophet模块代码提交</title>
-    <url>/2020/06/18/20200618prophet%E6%A8%A1%E5%9D%97%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4/</url>
-    <content><![CDATA[<p>prophet模块代码已提交至GitHub：<a href="https://github.com/msq0313/Metis" target="_blank" rel="noopener">https://github.com/msq0313/Metis</a></p>
-<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta"># 利用prophet预测时间序列，已封装为函数</span></span><br><span class="line"><span class="meta"># 传入参数：l，类型为list，为时间序列的值</span></span><br><span class="line"><span class="meta"># 返回参数：res，类型为float，默认保留3位小数，为第一个预测值</span></span><br><span class="line"><span class="meta"># 预测窗口长度默认为传入l长度的十分之一</span></span><br><span class="line"><span class="meta"># 预测图片保存在 time_series_detector/output 目录下</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>智能运维</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>智能运维</tag>
-        <tag>Metis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Metis虚拟机调试环境搭建</title>
     <url>/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<p>之前的工作中，使用prophet进行数据预测基本写完了，但是没有和Metis结合，这周尝试搭建Metis调试环境，方便之后进行修改调试。</p>
@@ -794,6 +778,22 @@
 <p>![批注 2020-06-09 035101](20200609Metis虚拟机调试环境搭建/批注 2020-06-09 035101.png)</p>
 <p>执行 docker-compose up -d 开启本地测试环境</p>
 <p><img src="/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20200609041034104.png" alt="image-20200609041034104"></p>
+]]></content>
+      <categories>
+        <category>智能运维</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>智能运维</tag>
+        <tag>Metis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>prophet模块代码提交</title>
+    <url>/2020/06/18/20200618prophet%E6%A8%A1%E5%9D%97%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4/</url>
+    <content><![CDATA[<p>prophet模块代码已提交至GitHub：<a href="https://github.com/msq0313/Metis" target="_blank" rel="noopener">https://github.com/msq0313/Metis</a></p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta"># 利用prophet预测时间序列，已封装为函数</span></span><br><span class="line"><span class="meta"># 传入参数：l，类型为list，为时间序列的值</span></span><br><span class="line"><span class="meta"># 返回参数：res，类型为float，默认保留3位小数，为第一个预测值</span></span><br><span class="line"><span class="meta"># 预测窗口长度默认为传入l长度的十分之一</span></span><br><span class="line"><span class="meta"># 预测图片保存在 time_series_detector/output 目录下</span></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>智能运维</category>
