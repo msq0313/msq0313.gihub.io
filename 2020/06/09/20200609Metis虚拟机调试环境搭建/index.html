@@ -17,17 +17,17 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.mainecoon.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.chrblog.icu","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="之前的工作中，使用prophet进行数据预测基本写完了，但是没有和Metis结合，这周尝试搭建Metis调试环境，方便之后进行修改调试。 由于在改造后仍希望可使用docker进行部署，涉及到一些docker以及docker-compose的知识，所以这周也对涉及到的docker相关内容进行学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Metis虚拟机调试环境搭建">
-<meta property="og:url" content="https://www.mainecoon.top/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
-<meta property="og:site_name" content="MaineCoon">
+<meta property="og:url" content="https://www.chrblog.icu/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Chronos&#39; blog">
 <meta property="og:description" content="之前的工作中，使用prophet进行数据预测基本写完了，但是没有和Metis结合，这周尝试搭建Metis调试环境，方便之后进行修改调试。 由于在改造后仍希望可使用docker进行部署，涉及到一些docker以及docker-compose的知识，所以这周也对涉及到的docker相关内容进行学习">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.mainecoon.top/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20200609041034104.png">
+<meta property="og:image" content="https://www.chrblog.icu/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20200609041034104.png">
 <meta property="article:published_time" content="2020-06-09T06:35:06.000Z">
 <meta property="article:modified_time" content="2020-10-01T06:36:28.994Z">
 <meta property="article:author" content="Chronos">
@@ -35,9 +35,9 @@
 <meta property="article:tag" content="智能运维">
 <meta property="article:tag" content="Metis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.mainecoon.top/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20200609041034104.png">
+<meta name="twitter:image" content="https://www.chrblog.icu/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20200609041034104.png">
 
-<link rel="canonical" href="https://www.mainecoon.top/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+<link rel="canonical" href="https://www.chrblog.icu/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
 
 <script id="page-configurations">
@@ -50,7 +50,7 @@
   };
 </script>
 
-  <title>Metis虚拟机调试环境搭建 | MaineCoon</title>
+  <title>Metis虚拟机调试环境搭建 | Chronos' blog</title>
   
 
 
@@ -103,7 +103,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">MaineCoon</h1>
+      <h1 class="site-title">Chronos' blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">Record of technical learning experience</p>
@@ -196,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.mainecoon.top/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+    <link itemprop="mainEntityOfPage" href="https://www.chrblog.icu/2020/06/09/20200609Metis%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -205,7 +205,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MaineCoon">
+      <meta itemprop="name" content="Chronos' blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">

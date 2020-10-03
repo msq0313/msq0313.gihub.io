@@ -17,14 +17,14 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.mainecoon.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.chrblog.icu","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Facebook Libra 的 LibraBFT 共识协议Libra 采用基于 HotStuff 的 LibraBFT 共识。 HotStuff 是一个三阶段的 BFT 算法。它将视图切换流程和正常流程进行合并，不再有单独视图切换流程，降低了视图切换的复杂度。 在 HotStuff 中切换视图时，系统中的某个节点无需确认「足够多的节点希望进行视图切换」这一消息再通知新的主节点，而是可以直接切换到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LibraBFT共识机制">
-<meta property="og:url" content="https://www.mainecoon.top/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/index.html">
-<meta property="og:site_name" content="MaineCoon">
+<meta property="og:url" content="https://www.chrblog.icu/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Chronos&#39; blog">
 <meta property="og:description" content="Facebook Libra 的 LibraBFT 共识协议Libra 采用基于 HotStuff 的 LibraBFT 共识。 HotStuff 是一个三阶段的 BFT 算法。它将视图切换流程和正常流程进行合并，不再有单独视图切换流程，降低了视图切换的复杂度。 在 HotStuff 中切换视图时，系统中的某个节点无需确认「足够多的节点希望进行视图切换」这一消息再通知新的主节点，而是可以直接切换到">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic3.zhimg.com/80/v2-b174bfcc0980ee03a7db4f4f647235e8_720w.jpg">
@@ -42,7 +42,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-b174bfcc0980ee03a7db4f4f647235e8_720w.jpg">
 
-<link rel="canonical" href="https://www.mainecoon.top/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+<link rel="canonical" href="https://www.chrblog.icu/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
 
 
 <script id="page-configurations">
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>LibraBFT共识机制 | MaineCoon</title>
+  <title>LibraBFT共识机制 | Chronos' blog</title>
   
 
 
@@ -108,7 +108,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">MaineCoon</h1>
+      <h1 class="site-title">Chronos' blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">Record of technical learning experience</p>
@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.mainecoon.top/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+    <link itemprop="mainEntityOfPage" href="https://www.chrblog.icu/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -210,7 +210,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MaineCoon">
+      <meta itemprop="name" content="Chronos' blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
