@@ -804,4 +804,526 @@
         <tag>Metis</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux指令</title>
+    <url>/2020/08/15/20200815Linux%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<p><img src="/2020/08/15/20200815Linux%E6%8C%87%E4%BB%A4/wps1.jpg" alt="img"></p>
+<p>root管理员的home目录root</p>
+<p>其他用户的home目录home目录中</p>
+<a id="more"></a>
+
+<h3 id="查看内存占用"><a href="#查看内存占用" class="headerlink" title="查看内存占用"></a>查看内存占用</h3><p>管道 | 左侧输出为右侧参数</p>
+<p>ps aux | head -1; ps aux | sort -4knr | head -10</p>
+<h3 id="切换目录命令cd："><a href="#切换目录命令cd：" class="headerlink" title="切换目录命令cd："></a>切换目录命令cd：</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd app		切换到app目录</span><br><span class="line">cd ..		切换到上一层目录</span><br><span class="line">cd /		切换到系统根目录</span><br><span class="line">cd ~		切换到用户主目录</span><br><span class="line">cd -		切换到上一个所在目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="列出文件列表：ls-ll-dir"><a href="#列出文件列表：ls-ll-dir" class="headerlink" title="列出文件列表：ls ll dir(*****)"></a>列出文件列表：ls ll dir(*****)</h3><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span>(<span class="keyword">list</span>)是一个非常有用的命令，用来显示当前目录下的内容。配合参数的使用，能以不同的方式显示目录内容。</span><br><span class="line">    格式：<span class="keyword">ls</span>[参数] [路径或文件名]</span><br><span class="line"></span><br><span class="line">常用：</span><br><span class="line">在linux中以 . 开头的文件都是隐藏的文件</span><br><span class="line"></span><br><span class="line">* <span class="keyword">ls</span></span><br><span class="line">* <span class="keyword">ls</span> -<span class="keyword">a</span>  显示所有文件或目录（包含隐藏的文件）</span><br><span class="line">* <span class="keyword">ls</span> -<span class="keyword">l</span>  缩写成<span class="keyword">ll</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建目录和移除目录：mkdir-rmdir"><a href="#创建目录和移除目录：mkdir-rmdir" class="headerlink" title="创建目录和移除目录：mkdir rmdir"></a>创建目录和移除目录：mkdir rmdir</h3><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mkdir</span>(make directory)命令可用来创建子目录。</span><br><span class="line"><span class="keyword">mkdir</span> <span class="keyword">app</span>    在当前目录下创建<span class="keyword">app</span>目录</span><br><span class="line"><span class="keyword">mkdir</span> –p app2/<span class="keyword">test</span>   级联创建aap2以及<span class="keyword">test</span>目</span><br><span class="line"></span><br><span class="line"><span class="keyword">rmdir</span>(remove directory)命令可用来删除“空”的子目录：</span><br><span class="line"><span class="keyword">rmdir</span> <span class="keyword">app</span>    删除<span class="keyword">app</span>目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="浏览文件"><a href="#浏览文件" class="headerlink" title="浏览文件"></a>浏览文件</h3><h4 id="cat、more、less"><a href="#cat、more、less" class="headerlink" title="cat、more、less"></a>cat、more、less</h4><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span></span><br><span class="line">用于显示文件的内容。</span><br><span class="line">格式：<span class="keyword">cat</span>[参数]&lt;文件名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">    * cat yum.conf</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">more</span></span><br><span class="line">一般用于要显示的内容会超过一个画面长度的情况。按空格键显示下一个画面。</span><br><span class="line">回车显示下一行内容。</span><br><span class="line">按 q 键退出查看。</span><br><span class="line"><span class="comment">* more yum.conf</span></span><br><span class="line"><span class="comment">   * 空格显示下一页数据  回车显示下一行的数据</span></span><br><span class="line"></span><br><span class="line">less</span><br><span class="line">用法和<span class="keyword">more</span>类似，不同的是less可以通过PgUp、PgDn键来控制。</span><br><span class="line"><span class="comment">    * less yum.conf</span></span><br><span class="line"><span class="comment">        * PgUp 和 PgDn 进行上下翻页.</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">tail命令是在实际使用过程中使用非常多的一个命令，它的功能是：用于显示文件后几行的内容。</span><br><span class="line">用法:</span><br><span class="line">tail -<span class="number">10</span> /etc/passwd    查看后<span class="number">10</span>行数据</span><br><span class="line">tail -f catalina.log    动态查看日志<span class="comment">(*****)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ctrl+c 结束查看</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">rm</span>  删除文件</span><br><span class="line">用法：<span class="keyword">rm</span> [选项]... 文件...</span><br><span class="line"><span class="keyword">rm</span> a.txt    删除a.txt文件</span><br><span class="line">删除需要用户确认，y/<span class="keyword">n</span></span><br><span class="line"><span class="keyword">rm</span> 删除不询问</span><br><span class="line"><span class="keyword">rm</span> -f a.txt    不询问，直接删除</span><br><span class="line"><span class="keyword">rm</span> 删除目录</span><br><span class="line"><span class="keyword">rm</span> -r a    递归删除</span><br><span class="line">不询问递归删除（慎用）</span><br><span class="line"><span class="keyword">rm</span> -rf  a    不询问递归删除</span><br><span class="line"><span class="keyword">rm</span> -rf *      删除所有文件</span><br><span class="line"><span class="keyword">rm</span> -rf <span class="comment">/*      自杀</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="cp、mv"><a href="#cp、mv" class="headerlink" title="cp、mv"></a>cp、mv</h4><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">cp</span><span class="params">(copy)</span></span>命令可以将文件从一处复制到另一处。一般在使用cp命令时将一个文件复制成另一个文件或复制到某目录时，需要指定源文件名与目标文件名或目录。</span><br><span class="line">cp <span class="selector-tag">a</span><span class="selector-class">.txt</span> <span class="selector-tag">b</span><span class="selector-class">.txt</span>    将<span class="selector-tag">a</span>.txt复制为<span class="selector-tag">b</span>.txt文件</span><br><span class="line">cp <span class="selector-tag">a</span><span class="selector-class">.txt</span> ../    将<span class="selector-tag">a</span>.txt文件复制到上一层目录中</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mv 移动或者重命名</span><br><span class="line">mv <span class="selector-tag">a</span><span class="selector-class">.txt</span> ../    将<span class="selector-tag">a</span>.txt文件移动到上一层目录中</span><br><span class="line">mv <span class="selector-tag">a</span><span class="selector-class">.txt</span> <span class="selector-tag">b</span><span class="selector-class">.txt</span>    将<span class="selector-tag">a</span>.txt文件重命名为<span class="selector-tag">b</span>.txt</span><br></pre></td></tr></table></figure>
+
+<h4 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h4><figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">tar命令位于/bin目录下，它能够将用户所指定的文件或目录打包成一个文件，但不做压缩。一般Linux上常用的压缩方式是选用tar将许多文件打包成一个文件，再以gzip压缩命令压缩成xxx.tar.gz(或称为xxx.tgz)的文件。</span><br><span class="line"></span><br><span class="line">常用参数：</span><br><span class="line"><span class="deletion">-c：创建一个新tar文件</span></span><br><span class="line"><span class="deletion">-v：显示运行过程的信息</span></span><br><span class="line"><span class="deletion">-f：指定文件名</span></span><br><span class="line"><span class="deletion">-z：调用gzip压缩命令进行压缩</span></span><br><span class="line"><span class="deletion">-t：查看压缩文件的内容</span></span><br><span class="line"><span class="deletion">-x：解开tar文件</span></span><br><span class="line"></span><br><span class="line">打包：</span><br><span class="line">tar –cvf xxx.tar ./*</span><br><span class="line">打包并且压缩：</span><br><span class="line">tar –zcvf xxx.tar.gz ./* </span><br><span class="line"></span><br><span class="line">解压 </span><br><span class="line">     tar –xvf xxx.tar</span><br><span class="line">tar -xvf xxx.tar.gz -C /usr/aaa</span><br></pre></td></tr></table></figure>
+
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">查找符合条件的字符串。</span><br><span class="line">用法: <span class="selector-tag">grep</span> <span class="selector-attr">[选项]</span>... <span class="selector-tag">PATTERN</span> <span class="selector-attr">[FILE]</span>...</span><br><span class="line">示例：</span><br><span class="line"><span class="selector-tag">grep</span> <span class="selector-tag">lang</span> <span class="selector-tag">anaconda-ks</span><span class="selector-class">.cfg</span>  在文件中查找<span class="selector-tag">lang</span></span><br><span class="line"><span class="selector-tag">grep</span> <span class="selector-tag">lang</span> <span class="selector-tag">anaconda-ks</span><span class="selector-class">.cfg</span> –<span class="selector-tag">color</span> 高亮显示</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h3><h4 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">显示当前所在目录</span><br></pre></td></tr></table></figure>
+
+<h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">创建一个空文件</span><br><span class="line"><span class="comment">* touch a.txt</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="ll-h"><a href="#ll-h" class="headerlink" title="ll -h"></a>ll -h</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">友好显示文件大小</span><br></pre></td></tr></table></figure>
+
+<h4 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h4><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">下载资料</span><br><span class="line">* wget http:<span class="regexp">//</span>nginx.org<span class="regexp">/download/</span>nginx-<span class="number">1.9</span>.<span class="number">12</span>.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="重定向输出-gt-和-gt-gt"><a href="#重定向输出-gt-和-gt-gt" class="headerlink" title="重定向输出&gt;和&gt;&gt;"></a>重定向输出&gt;和&gt;&gt;</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&gt; 重定向输出，覆盖原有内容；</span><br><span class="line">&gt;&gt; 重定向输出，又追加功能；</span><br><span class="line">示例：</span><br><span class="line">cat /etc/passwd &gt; <span class="selector-tag">a</span><span class="selector-class">.txt</span>  将输出定向到<span class="selector-tag">a</span>.txt中</span><br><span class="line">cat /etc/passwd &gt;&gt; <span class="selector-tag">a</span><span class="selector-class">.txt</span>  输出并且追加</span><br><span class="line"></span><br><span class="line">ifconfig &gt; ifconfig.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道 |"></a>管道 |</h3><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">管道是Linux命令中重要的一个概念，其作用是将一个命令的输出用作另一个命令的输入。</span><br><span class="line">示例</span><br><span class="line"><span class="keyword">ls</span> --<span class="keyword">help</span> | more  分页查询帮助信息</span><br><span class="line"><span class="keyword">ps</span> –ef | <span class="keyword">grep</span> java  查询名称中包含java的进程</span><br><span class="line"></span><br><span class="line">ifconfig | more</span><br><span class="line"><span class="keyword">cat</span> <span class="built_in">index</span>.html | more</span><br><span class="line"><span class="keyword">ps</span> –ef | <span class="keyword">grep</span> aio</span><br></pre></td></tr></table></figure>
+
+<h3 id="amp-amp-命令执行控制"><a href="#amp-amp-命令执行控制" class="headerlink" title="&amp;&amp;命令执行控制"></a>&amp;&amp;命令执行控制</h3><figure class="highlight sas"><table><tr><td class="code"><pre><span class="line">命令之间使用 <span class="variable">&amp;&amp;</span> 连接，实现逻辑与的功能。 </span><br><span class="line"></span><br><span class="line">只有在 <span class="variable">&amp;&amp;</span> 左边的命令返回真（命令返回值 $? == 0），<span class="variable">&amp;&amp;</span> 右边的命令才会被执行。 </span><br><span class="line"></span><br><span class="line">只要有一个命令返回假（命令返回值 $? == 1），后面的命令就不会被执行。</span><br><span class="line"></span><br><span class="line">mkdir test <span class="variable">&amp;&amp;</span> cd test</span><br></pre></td></tr></table></figure>
+
+<h3 id="网络通讯命令"><a href="#网络通讯命令" class="headerlink" title="网络通讯命令"></a>网络通讯命令</h3><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">ifconfig  显示或设置网络设备。</span><br><span class="line">ifconfig  显示网络设备</span><br><span class="line">ifconfig eth0 up 启用eth0网卡</span><br><span class="line">ifconfig eth0 down  停用eth0网卡</span><br><span class="line">ping   探测网络是否通畅。</span><br><span class="line">ping 192.168.0.1</span><br><span class="line">netstat 查看网络端口。</span><br><span class="line">netstat -an | grep 3306 查询3306端口占用情况</span><br></pre></td></tr></table></figure>
+
+<h3 id="系统管理命令"><a href="#系统管理命令" class="headerlink" title="系统管理命令"></a>系统管理命令</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">date</span> <span class="string">显示或设置系统时间</span></span><br><span class="line"><span class="attr">date</span>  <span class="string">显示当前系统时间</span></span><br><span class="line"><span class="attr">date</span> <span class="string">-s “2014-01-01 10:10:10“  设置系统时间</span></span><br><span class="line"><span class="attr">df</span> <span class="string">显示磁盘信息</span></span><br><span class="line"><span class="attr">df</span> <span class="string">–h  友好显示大小</span></span><br><span class="line"><span class="attr">free</span> <span class="string">显示内存状态</span></span><br><span class="line"><span class="attr">free</span> <span class="string">–m 以mb单位显示内存组昂头</span></span><br><span class="line"><span class="attr">top</span> <span class="string">显示，管理执行中的程序</span></span><br><span class="line"></span><br><span class="line"><span class="attr">clear</span> <span class="string">清屏幕</span></span><br><span class="line"></span><br><span class="line"><span class="attr">ps</span> <span class="string">正在运行的某个进程的状态</span></span><br><span class="line"><span class="attr">ps</span> <span class="string">–ef  查看所有进程</span></span><br><span class="line"><span class="attr">ps</span> <span class="string">–ef | grep ssh 查找某一进程</span></span><br><span class="line"><span class="attr">kill</span> <span class="string">杀掉某一进程</span></span><br><span class="line"><span class="attr">kill</span> <span class="string">2868  杀掉2868编号的进程</span></span><br><span class="line"><span class="attr">kill</span> <span class="string">-9 2868  强制杀死进程</span></span><br><span class="line"></span><br><span class="line"><span class="attr">du</span> <span class="string">显示目录或文件的大小。</span></span><br><span class="line"><span class="attr">du</span> <span class="string">–h 显示当前目录的大小</span></span><br><span class="line"></span><br><span class="line"><span class="attr">who</span> <span class="string">显示目前登入系统的用户信息。</span></span><br><span class="line"></span><br><span class="line"><span class="attr">hostname</span> <span class="string">查看当前主机名</span></span><br><span class="line"><span class="meta">修改：vi</span> <span class="string">/etc/sysconfig/network</span></span><br><span class="line"></span><br><span class="line"><span class="attr">uname</span> <span class="string">显示系统信息。</span></span><br><span class="line"><span class="attr">uname</span> <span class="string">-a 显示本机详细信息。</span></span><br><span class="line"><span class="attr">依次为：内核名称(类别)，主机名，内核版本号，内核版本，内核编译日期，硬件名，处理器类型，硬件平台类型，操作系统名称</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="用户的管理"><a href="#用户的管理" class="headerlink" title="用户的管理"></a>用户的管理</h3><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">useradd</span> <span class="string">添加一个用户</span></span><br><span class="line"><span class="attr">useradd</span> <span class="string">test 添加test用户</span></span><br><span class="line"><span class="attr">useradd</span> <span class="string">test -d /home/t1  指定用户home目录</span></span><br><span class="line"></span><br><span class="line"><span class="attr">passwd</span>  <span class="string">设置、修改密码</span></span><br><span class="line"><span class="attr">passwd</span> <span class="string">test  为test用户设置密码</span></span><br><span class="line"></span><br><span class="line"><span class="attr">切换登录：</span></span><br><span class="line"><span class="attr">ssh</span> <span class="string">-l test -p 22 192.168.19.128</span></span><br><span class="line"></span><br><span class="line"><span class="attr">su</span> <span class="string">– 用户名</span></span><br><span class="line"></span><br><span class="line"><span class="attr">userdel</span> <span class="string">删除一个用户</span></span><br><span class="line"><span class="attr">userdel</span> <span class="string">test 删除test用户(不会删除home目录)</span></span><br><span class="line"><span class="attr">userdel</span> <span class="string">–r test  删除用户以及home目录</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="组管理"><a href="#组管理" class="headerlink" title="组管理"></a>组管理</h3><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">当在创建一个新用户<span class="keyword">user</span>时，若没有指定他所属于的组，就建立一个和该用户同名的私有组</span><br><span class="line"></span><br><span class="line">创建用户时也可以指定所在组</span><br><span class="line"></span><br><span class="line">groupadd  创建组</span><br><span class="line">groupadd <span class="built_in">public</span>  创建一个名为<span class="built_in">public</span>的组</span><br><span class="line">useradd u1 –g <span class="built_in">public</span>  创建用户指定组</span><br><span class="line">groupdel 删除组，如果该组有用户成员，必须先删除用户才能删除组。</span><br><span class="line">groupdel <span class="built_in">public</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="id，su"><a href="#id，su" class="headerlink" title="id，su"></a>id，su</h3><h4 id="id命令"><a href="#id命令" class="headerlink" title="id命令"></a>id命令</h4><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">功能：查看一个用户的<span class="built_in">UID</span>和GID</span><br><span class="line">用法：<span class="keyword">id</span> [选项]... [用户名]</span><br><span class="line">直接使用<span class="keyword">id</span></span><br><span class="line">直接使用<span class="keyword">id</span> 用户名</span><br></pre></td></tr></table></figure>
+
+<h4 id="su命令"><a href="#su命令" class="headerlink" title="su命令"></a>su命令</h4><figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">功能：切换用户。</span><br><span class="line">用法：su <span class="comment">[选项]</span>... <span class="comment">[-]</span> <span class="comment">[用户 <span class="comment">[参数]</span>... ]</span></span><br><span class="line">示例：</span><br><span class="line">su u1  切换到u1用户</span><br><span class="line">su - u1 切换到u1用户，并且将环境也切换到u1用户的环境（推荐使用）</span><br></pre></td></tr></table></figure>
+
+<h4 id="账户文件"><a href="#账户文件" class="headerlink" title="账户文件"></a>账户文件</h4><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">/etc/passwd  用户文件</span><br><span class="line">/etc/shadow  密码文件</span><br><span class="line">/etc<span class="built_in">/group </span> 组信息文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="用户文件"><a href="#用户文件" class="headerlink" title="用户文件"></a>用户文件</h4><figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="symbol">root:</span><span class="symbol">x:</span>0<span class="symbol">:</span>0<span class="symbol">:root</span><span class="symbol">:/root</span><span class="symbol">:/bin/bash</span></span><br><span class="line">账号名称：		在系统中是唯一的</span><br><span class="line">用户密码：		此字段存放加密口令</span><br><span class="line">用户标识码(User ID)：  系统内部用它来标示用户</span><br><span class="line">组标识码(Group ID)：   系统内部用它来标识用户属性</span><br><span class="line">用户相关信息：		例如用户全名等</span><br><span class="line">用户目录：		用户登录系统后所进入的目录</span><br><span class="line">用户环境:		用户工作的环境</span><br></pre></td></tr></table></figure>
+
+<h4 id="密码文件"><a href="#密码文件" class="headerlink" title="密码文件"></a>密码文件</h4><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">shadow文件中每条记录用冒号间隔的<span class="number">9</span>个字段组成.</span><br><span class="line">用户名：用户登录到系统时使用的名字，而且是惟一的</span><br><span class="line">口令：  存放加密的口令</span><br><span class="line">最后一次修改时间:  标识从某一时刻起到用户最后一次修改时间</span><br><span class="line">最大时间间隔:  口令保持有效的最大天数，即多少天后必须修改口令</span><br><span class="line">最小时间间隔：	再次修改口令之间的最小天数</span><br><span class="line">警告时间：从系统开始警告到口令正式失效的天数</span><br><span class="line">不活动时间：	口令过期少天后，该账号被禁用</span><br><span class="line">失效时间：指示口令失效的绝对天数(从<span class="number">1970</span>年<span class="number">1</span>月<span class="number">1</span>日开始计算)</span><br><span class="line">标志：未使用</span><br></pre></td></tr></table></figure>
+
+<h4 id="组文件"><a href="#组文件" class="headerlink" title="组文件"></a>组文件</h4><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">root</span><span class="selector-pseudo">:x</span><span class="selector-pseudo">:0</span>:</span><br><span class="line">组名：用户所属组</span><br><span class="line">组口令：一般不用</span><br><span class="line"><span class="selector-tag">GID</span>：组<span class="selector-tag">ID</span></span><br><span class="line">用户列表：属于该组的所有用户</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h4><p><img src="/2020/08/15/20200815Linux%E6%8C%87%E4%BB%A4/wps2.jpg" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th>属主（user）</th>
+<th></th>
+<th></th>
+<th>属组（group）</th>
+<th></th>
+<th></th>
+<th></th>
+<th>其他用户</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>w</td>
+<td>x</td>
+<td>r</td>
+<td>w</td>
+<td>x</td>
+<td>r</td>
+<td>w</td>
+<td>x</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h4 id="Linux三种文件类型"><a href="#Linux三种文件类型" class="headerlink" title="Linux三种文件类型"></a>Linux三种文件类型</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">普通文件： 包括文本文件、数据文件、可执行的二进制程序文件等。 </span><br><span class="line"></span><br><span class="line">目录文件： Linux系统把目录看成是一种特殊的文件，利用它构成文件系统的树型结构。  </span><br><span class="line"></span><br><span class="line">设备文件： Linux系统把每一个设备都看成是一个文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件类型标识"><a href="#文件类型标识" class="headerlink" title="文件类型标识"></a>文件类型标识</h4><figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">普通文件（-）</span><br><span class="line">目录（d）</span><br><span class="line">符号链接（l）</span><br><span class="line"><span class="bullet">* </span>进入etc可以查看，相当于快捷方式</span><br><span class="line">字符设备文件（c）</span><br><span class="line">块设备文件（s）</span><br><span class="line">套接字（s）</span><br><span class="line">命名管道（p</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件权限管理"><a href="#文件权限管理" class="headerlink" title="文件权限管理"></a>文件权限管理</h4><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">chmod 变更文件或目录的权限。</span><br><span class="line">chmod <span class="number">755</span> <span class="selector-tag">a</span><span class="selector-class">.txt</span> </span><br><span class="line">chmod u=rwx,g=rx,o=rx <span class="selector-tag">a</span>.txt</span><br><span class="line">chmod <span class="number">000</span> <span class="selector-tag">a</span><span class="selector-class">.txt</span>  / chmod <span class="number">777</span> <span class="selector-tag">a</span>.txt</span><br><span class="line">chown 变更文件或目录改文件所属用户和组</span><br><span class="line">chown u1:public <span class="selector-tag">a</span><span class="selector-class">.txt</span>	：变更当前的目录或文件的所属用户和组</span><br><span class="line">chown -R u1:public dir	：变更目录中的所有的子目录及文件的所属用户和组</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>查阅参考</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区块链征信基本概念整理</title>
+    <url>/2020/08/24/20200824%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BE%81%E4%BF%A1%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/</url>
+    <content><![CDATA[<h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p>区块链（Blockchain）是一种由多方共同维护，使用密码学保证传输和访问安全，能够实现数据一致存储、难以篡改、防止抵赖的记账技术，也称为分布式账本技术（Distributed Ledger Technology）。典型的区块链以块-链结构存储数据。功能架构划分为基础设施、基础组件、账本、共识、智能合约、接口、应用、操作运维和系统管理等模块。</p>
+<p>——中国信通院《区块链白皮书》</p>
+<a id="more"></a>
+
+<h5 id="区块链技术具有重塑中心化金融基础设施的潜力"><a href="#区块链技术具有重塑中心化金融基础设施的潜力" class="headerlink" title="区块链技术具有重塑中心化金融基础设施的潜力"></a>区块链技术具有重塑中心化金融基础设施的潜力</h5><p>区块链带来的不仅是技术方面的改良，更进一步引入了新的金融模式和组织形式。如 Facebook 发起的 Libra 项目，其目标是构建一个全球化、分布式可编程的通用底层金融基础设施，这可能对当前金融体系具有颠覆性<br>意义。原因其一，区块链分布式特征使不同金融市场出现“去中介化”趋势，不再依托于集中化的银行管理，这将可能改变现有金融体系中的支付、交易、清结算流程，降低金融机构之间的摩擦成本，提升执行效率；其二，区块链作为金融科技之一，改变传统金融市场格局，通过高透明、可穿透的数字化资产管理，形成信任的链式传递，加速数字资产的高效在线转移；其三，“智能合约”的发展将使货币可编程，支付能够在特定条件下执行，比如中央银行可以发行特定用途的数字货币，精确地实施其产业政策，使这些货币只有在进入特定行业时才能被支付。</p>
+<p>——中国信通院《区块链白皮书》</p>
+<p>区块链控制数据，使数据不能篡改，维持数据保持一致性。</p>
+<h4 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a><strong>智能合约</strong></h4><p>智能合约是一类计算机协议，它通过自动地执行合约所规定的的条款来实施一个合约。相比传统合约，它可以降低交易的成本，同时提供安全保障。通过智能合约建立起的权利和义务由系统强制执行。从本质上，它是定义好的一段程序代码，当条件满足时，系统会自动触发合约的执行。</p>
+<p>智能合约概念由Szabo在1995年提出，是一种用算法和程序来编制合同条款且可按照规则自动执行的数字化协议。</p>
+<p>智能合约控制应用流程，智能合约控制的应用流程是一个标准化的应用，是微服务化的应用，标准化、微服务化的智能合约是一种监管形的智能合约。这样，数据控制在区块链上，流程控制在智能合约上，数据来自区块链而又回到区块链。</p>
+<p>区块链是一个封闭的环境，链上是无法主动获取链外真实世界的数据。主要是因为区块链无法主动发起Network call（网络调用）而链上智能合约是被动接收数据的。其次，智能合约其实并不“智能”，它只是在满足相应条件下，才达到触发状态的程序。同时，智能合约最终的执行需要合约参与方的私钥签署，智能合约本身没有办法自动执行。</p>
+<h4 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h4><p>预言机，是区块链与外界沟通的渠道，即<strong>链下数据上链的机制</strong>。由于智能合约及区块链“一经部署，难以更改”的特性，智能合约的调用条件在部署时配置，而后续触发智能合约执行则需要其他的条件，如果智能合约的触发条件来自于外部世界，如某地的气温、商品货物的流转情况等等，则一定会涉及到外部信息上链。</p>
+<p>预言机是与外界接触专门搜集资料，控制外面的接口。上面英国央行用智能合约与外面的智能合约对接，有的是用智能合约直接跟外面对接，有的是用预言机直接跟外面对接。预言机本身可以使用区块链，也可以使用智能合约，也可以使用人工智能，也可以使用物联网，还有其他技术。</p>
+<p><strong>预言机的运行原理</strong>：当区块链上的某个智能合约有数据交互需求时，预言机在接收到需求后，帮助智能合约在链外收集外界数据，验证后再将获取的数据反馈回链上的智能合约。</p>
+<h4 id="DID"><a href="#DID" class="headerlink" title="DID"></a>DID</h4><p>去中心化身份（Decentralized ID, DID)</p>
+<p>去中心化身份标识(Decentralized Identifier，DID)是一种新类型的标识符，具有全局唯一性、高可用性可解析性和加密可验证性。DIDs通常与加密材料(如公钥)和服务端点相关联，以建立安全的通信信道。DIDs对于任何受益于自管理、加密可验证的标识符(如个人标识符、组织标识符和物联网场景标识符)的应用程序都很有用。例如，当前W3C可验证凭据的商业部署大量使用DIDs来标识人员、组织和事物，并实现许多安全和隐私保护保证。</p>
+<p><strong>中心化身份系统</strong>的本质就是，中央集权化的权威机构掌握着身份数据，因为围绕数据进行的认证、授权等也都由中心化的机构来决定。身份不是由用户自己控制的。</p>
+<p>在联盟身份提出后，身份系统就开始走向<strong>去中心化</strong>了。期间也有很多去中心化的标准、方案出现，比如OpenID。</p>
+<h4 id="互链网"><a href="#互链网" class="headerlink" title="互链网"></a>互链网</h4><p>区块链+智能合约+预言机</p>
+<h4 id="GDPR"><a href="#GDPR" class="headerlink" title="GDPR"></a><strong>GDPR</strong></h4><p>《通用数据保护条例》（General Data Protection Regulation，简称GDPR）为欧洲联盟的条例，前身是欧盟在1995年制定的《计算机数据保护法》。</p>
+<p>2018年5月25日，欧洲联盟出台《通用数据保护条例》。</p>
+<p>译文链接：<a href="https://baike.baidu.com/item/通用数据保护条例/22616576?fromtitle=GDPR&fromid=22616587&fr=aladdin" target="_blank" rel="noopener">https://baike.baidu.com/item/%E9%80%9A%E7%94%A8%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4%E6%9D%A1%E4%BE%8B/22616576?fromtitle=GDPR&amp;fromid=22616587&amp;fr=aladdin</a></p>
+<h2 id="区块链解决的问题"><a href="#区块链解决的问题" class="headerlink" title="区块链解决的问题"></a>区块链解决的问题</h2><h4 id="信息不对称理论"><a href="#信息不对称理论" class="headerlink" title="信息不对称理论"></a>信息不对称理论</h4><p>信息不对称是指在交易过程中，交易双方无法完全获取对方的真实情况，或者由于获取完全信息的成本太高，导致了交易双方在市场活动中拥有的信息数量和种类上的不对等。掌握更多信息的一方处于优势地位，容易比另一方获取更多的利益。在交易之前，由于贷款人（或信用提供方）对借款人（或信用需求方）的信息了解不完全，因此在提供资金融通时会谨慎考虑，在信息普遍不完全的情况下，所有的借款人对于贷款人来说都处于同样的信息不透明状态，那些愿意承担高利息的人往往能够获得资金，而他们化同样是信用较差的人，贷款人的风险被放大，称为＂逆向选择＂；交易后，借款人可能违背契约精神，不按照合同规定的方式和用途使用资金或执行条款，从而使得贷款人的利益遭到损害，称为＂道德风险＂。</p>
+]]></content>
+      <categories>
+        <category>区块链征信</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>可信交易</tag>
+        <tag>智能合约</tag>
+        <tag>DID分布式身份</tag>
+        <tag>预言机</tag>
+        <tag>互链网</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区块及链（非联盟链）的组成</title>
+    <url>/2020/06/24/20200624%E5%8C%BA%E5%9D%97%E5%8F%8A%E9%93%BE%EF%BC%88%E9%9D%9E%E8%81%94%E7%9B%9F%E9%93%BE%EF%BC%89%E7%9A%84%E7%BB%84%E6%88%90/</url>
+    <content><![CDATA[<p><strong>1.</strong> <strong>区块</strong></p>
+<p>区块作为区块链的基本结构单元，由包含了三组元数据的<strong>区块头</strong>和包含交易数据<strong>区块主体（也叫区块体）</strong>两部分组成（由于不同区块链系统采用的数据结构会有不同，所以下面以比特币为例）。</p>
+<p><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1051633130,89326217&fm=173&app=25&f=JPEG?w=640&h=477&s=9EAA7A23408EC5494CBCF0C20100E0E0" alt="img"></p>
+<a id="more"></a>
+
+<p><strong>1.1.</strong> <strong>区块头</strong></p>
+<p>区块头主要包含的三组元数据分别是：(1)用于连接前面的区块、索引自父区块<strong>哈希值的数据</strong>；(2)<strong>挖矿难度</strong>、<strong>时间戳</strong>、Nonce(<strong>随机数</strong>，用于工作量证明算法的计数器，也可理解为记录解密该区块相关数学题的答案的值)；(3)能够<strong>总结</strong>并快速<strong>归纳</strong>校验区块中所有交易数据的<strong>Merkle</strong>树根数据。(4)版本号、难度值等。</p>
+<p>从这个结构来看，<strong>区块链的大部分功能都由区块头实现。</strong></p>
+<p><strong>1.2</strong> <strong>区块主体</strong></p>
+<p>区块主体所记录的<strong>交易信息</strong>是区块所承载的任务数据，具体包括交易的数量、电子货币的数字签名等。</p>
+<p><strong>2.</strong> <strong>链</strong></p>
+<p>比特币系统大约每10分钟会创建一个区块，这个区块包含了这段时间里全网范围内发生的所有交易。每一个区块都保存了上一个区块的哈希值，使得每个区块都能找到其前一个区块，这样就将这些区块连接起来，形成了一个链式的结构。</p>
+<p><img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3716836122,2701384528&fm=173&app=25&f=JPEG?w=640&h=332&s=BE8A70230378558A0B54B5CB0100C0B1" alt="img"></p>
+<p><strong>3.</strong> <strong>区块的形成过程</strong></p>
+<p>在当前区块加入区块链后，所有矿工就立即开始下一个区块的生成工作：（1）把在本地内存中的交易信息记录到区块主体中；（2）在区块主体中生成此区块中所有交易信息的Merkle树，把Merkle树根的值保存在区块头中；（3）把上一个刚刚生成的区块的区块头的数据通过SHA256算法生成一个哈希值填入到当前区块的父哈希值中；（4）把当前时间保存在时间戳字段中；（5）难度值字段会根据之前一段时间区块的平均生成时间进行调整，以应对整个网络不断变化的整体计算总量，如果计算总量增长了，则系统会调高数学题的难度值，使得预期完成下一个区块的时间依然在一定时间内。</p>
+]]></content>
+      <categories>
+        <category>区块链征信</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>可信交易</tag>
+        <tag>智能合约</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>异步拜占庭将军问题分析</title>
+    <url>/2020/06/30/20200630%E5%BC%82%E6%AD%A5%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>资料来源：知乎</p>
+<h4 id="异步拜占庭将军问题，在四个将军的情况下是有解的"><a href="#异步拜占庭将军问题，在四个将军的情况下是有解的" class="headerlink" title="异步拜占庭将军问题，在四个将军的情况下是有解的"></a>异步拜占庭将军问题，在四个将军的情况下是有解的</h4><p>假设我是诚实将军A，我收到了命令“进攻”，因为外面最多有一个恶意节点，所以，我至少还会再收到一位将军发来的消息。</p>
+<a id="more"></a>
+
+<p>1，这个时候，我收到了将军B的消息，他说他收到的是“撤退”，并且提供了指挥官的签名。这个时候，我知道指挥官是恶意的，因为他发了两条不一样的消息。于是，我知道我们三个将军都是诚实的，那么我们一定会把自己收到的东西发出来。所以，我知道我一定会等到将军C的消息，然后，如果他说他收到的是“进攻”，我就进攻，如果他说撤退，我们就撤退。</p>
+<p>这里，最重要的一点是——我也很清楚地知道，因为B和C也是诚实的，所以他们也会采用同样的算法，所以，我们最终会达成共识。</p>
+<p>2，如果我收到将军B的消息，他说他收到的是“进攻”，这个时候事情就有点麻烦了——因为我这个时候还不知道谁是叛徒。</p>
+<p>首先，假设将军B诚实，那么首先他不会撤退，因为他首先收到了“进攻”，然后，因为我发的是“进攻”，那么他最多只能收到一个撤退。接着要么将军C是叛徒，要么指挥官是叛徒。如果是前者，那么共识达成，因为指挥官和我以及将军B达成了共识，如果是后者，那么C有可能收到指挥官发的“撤退”，但他仍旧会和我们达成共识，因为我和B都发了“进攻”他最多只收到一个”撤退“。</p>
+<p>然后我们考虑将军B是叛徒，那么他只能选择不发给C消息（他没法伪造因为他不知道将军签名），但是这不重要，考虑到我和指挥官都是诚实的，C一定能收到两条“进攻”。</p>
+<p>所以，我能够确定无论在什么情况下大家都能达成共识，也就代表这个算法成立。而这其中最重要的部分是——当我做出决定的时候，我能肯定别人一定不会做出相悖的决定。</p>
+<p>这个算法推而广之到n个将军的话，一般解法是这样的：</p>
+<p>假设有n个将军，f个将军是恶意的。</p>
+<p>那么对于任何一个将军而言，为了保证活性，他最多只能等n-f条消息（包括指挥官）就必须做出判断，否则的话就有算法就可能不会结束。</p>
+<p>接着就是我之前加粗的那一段了——当收到多少条”进攻“的时候我才能确定别人和我的判断一致，即，他们收到的”进攻“数量无论如何都会多于”撤退“呢？假设我开始接收消息，然后接收到的一致的消息的数量开始缓慢增加，1,2,3……，直到k条。这里面有诚实节点发的，也有恶意节点发的，那么，这个k是多少的时候，我可以自信地拍胸脯打包票：</p>
+<p>“稳了！不可能有任何一个人能收到超过k条和我不一致的消息了。”</p>
+<p>为了求k的值，我们考虑下这种情况：假设将军B收到了k条和我不一致的消息。</p>
+<p>如果除了指挥官之外其他人都是诚实的，那么k应该是n/2+1，因为那样就代表至少有一个节点既发了消息给我又发了消息给B，也就是说他发了两条不一致的消息，这和他诚实矛盾。</p>
+<p><img src="/2020/06/30/20200630%E5%BC%82%E6%AD%A5%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/wps1.jpg" alt="img"> </p>
+<p>但是现在网络里除了指挥官之外，还有f-1个恶意节点，他们如果和指挥官合谋的话，n/2+1条消息就不够了，因为其中可能有f条消息是恶意节点发的。这个时候，我们需要的消息数量是(n+f+1)/2。只有这样，我才能确定其他人能够和我做出一样的判断。</p>
+<p><img src="/2020/06/30/20200630%E5%BC%82%E6%AD%A5%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/wps2.jpg" alt="img"> </p>
+<p>结合这两个条件，我们知道想要这个问题有解，我们需要同时满足这两个条件，即当收到最多n-f条消息的时候，我们已经可以做出一致性的判断了，也即：(n+f+1)/2&lt;=n-f，也就是n&gt;=3f+1的条件下，弱中止条件下的拜占庭容错有解。</p>
+]]></content>
+      <categories>
+        <category>区块链征信</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>智能合约</tag>
+        <tag>共识机制</tag>
+        <tag>拜占庭将军问题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LibraBFT共识机制</title>
+    <url>/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h2 id="Facebook-Libra-的-LibraBFT-共识协议"><a href="#Facebook-Libra-的-LibraBFT-共识协议" class="headerlink" title="Facebook Libra 的 LibraBFT 共识协议"></a><strong>Facebook Libra 的 LibraBFT 共识协议</strong></h2><p>Libra 采用基于 HotStuff 的 LibraBFT 共识。</p>
+<p>HotStuff 是一个三阶段的 BFT 算法。它将视图切换流程和正常流程进行合并，不再有单独视图切换流程，降低了视图切换的复杂度。</p>
+<p>在 HotStuff 中切换视图时，系统中的某个节点无需确认「足够多的节点希望进行视图切换」这一消息再通知新的主节点，而是可以直接切换到新视图并通知新主节点。HotStuff 把确认「足够多的节点希望进行视图切换」这一消息的行为放进了正常流程中。由此把 PBFT 的两阶段确认扩展成了三阶段确认。</p>
+<a id="more"></a>
+
+<p>HotStuff 的另一个重要改变，是将 PBFT 的网状通信网络拓扑变成了星形通信网络拓扑。HotStuff 中，每次通信都依靠主节点。节点不再通过 p2p 网络将消息广播给其它节点，而是将消息发送给主节点，由主节点处理后发送给其它节点。得益于星型通信网络拓扑，系统的通信复杂度大大降低。和 PBFT 类似，主节点会提议进行状态迁移，其它节点收到该状态迁移要求后，会检查其合法性。</p>
+<p>LibraBFT 在 3f+1 个验证节点之间收集投票，这些验证者可能是诚实的节点也可能是拜占庭节点。在网络中存在 2f+1 个诚实节点的前提下，Libra能够抵御 f 个验证节点的双花攻击和分叉攻击。</p>
+<p>LibraBFT在一个有全局统一时间（GST），并且网络最大延时（ΔT）可控的部分同步网络中是有效的。并且，LibraBFT在所有验证节点重启的情况下，也能够保证网络一致性。</p>
+<h1 id="LibraBFT共识机制"><a href="#LibraBFT共识机制" class="headerlink" title="LibraBFT共识机制"></a>LibraBFT共识机制</h1><p><strong>Libra白皮书中关于共识机制的描述</strong></p>
+<p>Libra 区块链采用了基于 LibraBFT 共识协议的 BFT 机制来实现所有验证者节点就将要执行的交易及其执行顺序达成一致。这种方法可以在网络中建立信任，因为即使某些验证者节点(最多三分之一的网络)被破坏或发生故障，BFT共识协议的设计也能够确保网络正常运行。与其他一些区块链中使用的“工作量证明”机制相比，这类共识协议还可实现高交易处理量、低延迟和更高能效的共识方法。</p>
+<p><strong>1. libra共识简介</strong></p>
+<p>Libra的共识采用的是LibraBFT共识，是一个为Libra设计的鲁棒的高效的状态复制系统。它基于一种新型的BFT共识算法，HotStuff(BFT Consensus in Lens of Blockchain)，在扩展性和一致性上达到了较高的水平。LibraBFT 在HotStuff的基础上引入显示的活跃机制并提供了具体的延时分析。LibraBFT在3f+1个验证节点之间收集投票，这些验证者可能是诚实的节点也可能是拜占庭节点。在网络中有2f+1个诚实节点的前提下，Libra能够抵御f个验证节点的双花攻击和分叉攻击。LibraBFT在一个有全局统一时间（GST），并且网络最大延时（ΔT）可控的 Partial Synchrony的网络中是有效的。并且，LibraBFT在所有验证节点都重启的情况下，也能够保证网络的一致性。</p>
+<p>Libra白皮书指出，其将以许可型区块链的方式起步。未来为了确保Libra的真正开放，始终以符合用户最佳利益的方式运作，Facebook的最终目标是让Libra网络成为”非许可型网络”，但是其目前的挑战在于，他们目前还没有成熟的解决方案可以通过非许可型网络，提供支持全球数十亿人和交易所需的规模、稳定性和安全性。从“许可型”网络过渡到“非许可型”网络，共识层面还需要做非常大的改进。</p>
+<h2 id="2-HotStuff算法"><a href="#2-HotStuff算法" class="headerlink" title="2. HotStuff算法"></a><strong>2. HotStuff算法</strong></h2><p>2.1 HotStuff算法特点</p>
+<p>HotStuff 是一个三阶段的BFT算法，允许一个新的leader简单地选择一个最新的的QC(Quorum certification)。它引入了一个第二阶段，允许副本在投票后在不需要请求leader请求的基础上改变他的决策。这一改进大大降低了复杂度，同时也降低了leader替换的复杂度。最后，由于长期委任所有的状态，这样HotStuff非常容易通过事件机制的方式实现，适合leader经常切换的场景。HotStuff主要有以下几个特性：</p>
+<p>• 线性的视图切换：在GST后，对于一个诚实的leader，一旦被指定，会发给n个验证者来收集签名，以推动共识的决定；</p>
+<p>• 乐观的响应：在GST后，对于一个诚实的leader，一旦被指定，只需要等最早的 n-f 个验证者返回消息就可以发起有效的提案，包括leader替换；</p>
+<p>• 支持频繁切主：HotStuff还有一个特点是新leader的推动协议达成共识的成本不高于当前领导者的成本，所以其适用于leader切换的协议；</p>
+<p>• 决策简单：HotStuff中副本只有两种消息类型和一个简单的规则来决定是否要接受一个提案，其通过投票和提交规则来达成一致性，通过Pacemaker来保证可用性，并且各阶段的算法复杂度低；</p>
+<p>• 阈值签名：HotStuff使用阈值签名的方式来收集签名，使得签名的验证会更为简单；</p>
+<p>2.2 HotStuff算法流程</p>
+<h2 id="2-2-1-Basic-HotStuff"><a href="#2-2-1-Basic-HotStuff" class="headerlink" title="2.2.1 Basic HotStuff"></a>2.2.1 Basic HotStuff</h2><p>Basic HotStuff 协议是HotStuff的基本过程，他在一系列的视图中切换，视图以单调递增编号方式切换。在每个视图内，有一个唯一的达成共识的leader。每个副本在起本地数据结构中会记录所有请求的tree，tree的每个叶子节点是一个已经提出的提案。一个给定节点的分支是该节点到达树根的所有路径。按照HotStuff协议，随着视图的增长，分支会被提交。Leader需要像(n-f)个验证者采用阈值签名的方式收集签名，收集签名的过程主要包括3个阶段，PREPARE、PRE-COMMIT和COMMIT阶段，整个算法包括5个阶段，PREPARE、PRE-COMMIT、COMMIT、DECIDE和FINALLY阶段，如下图所示：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-b174bfcc0980ee03a7db4f4f647235e8_720w.jpg" alt="img"></p>
+<p>\1. PREPARE阶段：该阶段，leader发起一个high的提案（highQC），组成消息，消息内容 m = MSG(PREPARE, curProposal,highQC)，并广播给所有的验证节点；验证节点在收到时上述提案消息后会进行投票，如果m的node超过本地已经判决过的node是则会投票，并返回消息给leader，m’ = voteMSG(PREPARE，n.node，⊥)。</p>
+<p>\2. PRE-COMMIT阶段：该阶段，当Leader收到（n-f）个验证节点的PREPARE阶段的投票信息后，会发起一个 PREPARE的提案（prepareQC），组成消息，消息内容为 m = MSG(COMMIT, ⊥，prepareQC），并广播给所有的验证节点；验证节点在收到上述提案消息后会进行投票，并返回消息给leader，m’ = voteMSG(PRE-COMMIT，m.justify.node，⊥)。</p>
+<p>\3. COMMIT阶段：该阶段，当Leader收到（n-f）个验证节点的PRE-COMMIT阶段的投票信息后，会发起一个 PRE-COMMIT的提案（precommitQC），组成消息，消息内容为 m = MSG(COMMIT, ⊥，precommitQC），并广播给所有的验证节点；验证节点在收到上述提案消息后会进行投票，并返回消息给leader，m’ = voteMSG(COMMIT，m.justify.node，⊥)。</p>
+<p>\4. DECIDE阶段：该阶段，当Leader收到（n-f）个验证节点 COMMIT 的投票后，会生成一个COMMIT的提案（commitQC），组成消息，消息内容为 m = MSG(DECIDE，⊥，commitQC)，并广播给所有的验证者；验证者在收到该消息后，会执行命令，并返回给客户端。</p>
+<p>\5. FINALLY阶段：如果系统进入下一个View，各个副本会发送一个消息给下一个View的leader，消息内容为 m = MSG(NEW-VIEW，⊥，prepareQC)。</p>
+<h2 id="2-2-2-Chained-HotStuff"><a href="#2-2-2-Chained-HotStuff" class="headerlink" title="2.2.2 Chained HotStuff"></a>2.2.2 Chained HotStuff</h2><p>上图中可以看出来Basic HotStuff的各个phase中的流程都非常相似，作者又提出了一种Chained HotStuff来优化和简化Basic HotStuff。改进的点主要是改变每个PREPARE节点的View。这将大大降低通信消息的数量，并且可以对决策进行管道处理。Chained HotStuff的流程如下所示：</p>
+<p><img src="https://picb.zhimg.com/80/v2-546a48d8f561a5682b11456833f73379_720w.jpg" alt="img"></p>
+<p>上述Figure1可以看出一个节点可以同时处于不同的View，通过链式的结构，一个提案在经过3个块后能够达成共识。其内部有一个状态转换器，通过genericQC实现提案的自动切换。其主要算法流程如下所示：</p>
+<p><img src="https://picb.zhimg.com/80/v2-037b85da524742d6949e457dde3ae9a6_720w.jpg" alt="img"></p>
+<p><strong>3. LibraBft改进</strong></p>
+<p>Libra 为了更好地适应其生态，对HotStuff进行了相应的优化，主要有5点：</p>
+<p>1.首要的是Libra定义了安全的条件，提供了安全性、活性和乐观响应的扩展证明；</p>
+<p>2.第二点：Libra 通过让验证器集体对区块的状态而不是事务的顺序进行签名，使得协议会更加鲁棒。同时还允许客户端使用QC验证从数据库里读出的数据。</p>
+<p>3.第三点：Libra 设计了一个Pacemaker 来发出显示的超时信号，验证者通过他发出的提案自动进入下一个视图，而不需要一个同步的时钟；</p>
+<p>4.第四点：Libra 希望让矿工变得不可预测，它最新提交的区块信息为种子生成一个可验证的随机数VRF，成为下一个矿工；</p>
+<p>5.第五点：Libra 使用聚合签名的方式保留QC中验证者的身份，以提高验签效率，同时为这些验证者提供奖励。</p>
+]]></content>
+      <categories>
+        <category>区块链征信</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>智能合约</tag>
+        <tag>共识机制</tag>
+        <tag>拜占庭将军问题</tag>
+        <tag>BFT拜占庭容错</tag>
+        <tag>Libra</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DID分布式身份</title>
+    <url>/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/</url>
+    <content><![CDATA[<h1 id="去中心化身份（Decentralized-ID-DID）"><a href="#去中心化身份（Decentralized-ID-DID）" class="headerlink" title="去中心化身份（Decentralized ID, DID）"></a>去中心化身份（Decentralized ID, DID）</h1><h2 id="1-背景与现状"><a href="#1-背景与现状" class="headerlink" title="1 背景与现状"></a>1 背景与现状</h2><h3 id="1-1-数字身份认证背景"><a href="#1-1-数字身份认证背景" class="headerlink" title="1.1 数字身份认证背景"></a>1.1 数字身份认证背景</h3><blockquote>
+<p>中心化身份 =&gt; 联盟身份 =&gt; 中心化身份（DID）</p>
+</blockquote>
+<p>一开始的数字认证始是中心化的，比如ICANN管理的域名与IP地址分配，以及PKI（Public Key Infrastructure）系统中的CA（Certificate Authority）证书机构管理的数字证书。</p>
+<p><strong>中心化身份系统</strong>的本质就是，中央集权化的权威机构掌握着身份数据，因为围绕数据进行的认证、授权等也都由中心化的机构来决定。身份不是由用户自己控制的。</p>
+<p>而且不同的中心化网站（比如淘宝、知乎、豆瓣等等）上有一套自己的身份系统，所以都需要你重新注册一个账户。而不同网站自己用的身份系统（及账户对应的数据）之间是<strong>不互通的</strong>。</p>
+<a id="more"></a>
+
+<p>为了解决这个问题，不同的网站自己联合起来推出了<strong>联盟身份</strong>（这个概念是首先由微软在1999年提出的）。在联盟身份体系下，用户的在线身份有了一定的可移植性。如今的不少网站注册都可以支持<strong>第三方登录</strong>，比如微信、QQ、新浪微博等。</p>
+<p>在联盟身份提出后，身份系统就开始走向<strong>去中心化</strong>了。期间也有很多去中心化的标准、方案出现，比如<a href="https://baike.baidu.com/item/OpenID/2267230?fr=aladdin" target="_blank" rel="noopener">OpenID</a>。其实就算是一些网站支持的微信、QQ第三方登录，其用户体验也不是很好，而且往往还是需要你用手机号 + 验证码进行注册的。</p>
+<p>综上所述，中心化身份主要的问题就是两个，一是个人并不是真正意义上拥有自己的身份，二是身份无法互通。</p>
+<h3 id="1-2-Decentralized-IDentity（DID）现状"><a href="#1-2-Decentralized-IDentity（DID）现状" class="headerlink" title="1.2 Decentralized IDentity（DID）现状"></a>1.2 Decentralized IDentity（DID）现状</h3><blockquote>
+<p>发展前景、已经提出的标准、已经出现的项目</p>
+</blockquote>
+<p>DID可以说是区块链领域一个偏冷门的方向。目前只有很少的团队在研究DID，开发的项目也不多，屈指可数，而关于DID行业的研究报告也几乎没有（只找到一份）。DID的热度和扩容、跨链、DeFi这些热门概念是无法相比的。但是其实它看上去有不小的价值的，微软布局DID或许就是从侧面说明了这点。</p>
+<p>基于区块链或者说是分布式账本（DLT）技术的DID有望解决前面提到的问题（但是也会引进新的问题，新的问题会在<strong>3 uPort项目</strong>部分提到）。</p>
+<h4 id="（1）标准"><a href="#（1）标准" class="headerlink" title="（1）标准"></a>（1）标准</h4><p>目前（2019年）已经提出的标准主要有：</p>
+<ul>
+<li>W3C的DID标准：<a href="https://w3c-ccg.github.io/did-primer/" target="_blank" rel="noopener">A Primer for Decentralized Identifiers</a></li>
+<li>DIF（Decentralized Identity Foundation）的DID Auth：<a href="https://identity.foundation/#about" target="_blank" rel="noopener">DIF官网</a></li>
+</ul>
+<p>接下去以W3C的DID标准以及以太坊ETH上的实际项目uPort进行简要分析。</p>
+<h4 id="（2）项目"><a href="#（2）项目" class="headerlink" title="（2）项目"></a>（2）项目</h4><p>目前已经有的比较知名的DID项目有：MicrosoftDID、Sovrin、uPort、Evernym、Civic、ShoCard。</p>
+<table>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>大致内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MicrosoftDID</td>
+<td><a href="https://www.microsoft.com/zh-cn/security/technology/own-your-identity" target="_blank" rel="noopener">微软的DID</a></td>
+</tr>
+<tr>
+<td>Sovrin</td>
+<td>位于HyperLedger</td>
+</tr>
+<tr>
+<td>uPort</td>
+<td><a href="https://www.uport.me/" target="_blank" rel="noopener">位于ETH</a></td>
+</tr>
+<tr>
+<td>Evernym</td>
+<td>用于交易</td>
+</tr>
+<tr>
+<td>Civic</td>
+<td>使生物识别的多因素身份认证、移动身份平台</td>
+</tr>
+<tr>
+<td>ShoCard</td>
+<td>移动身份平台、保护隐私</td>
+</tr>
+</tbody></table>
+<h2 id="2-W3C-DID-标准"><a href="#2-W3C-DID-标准" class="headerlink" title="2 W3C DID 标准"></a>2 W3C DID 标准</h2><blockquote>
+<p>去中心化身份标识(Decentralized Identifier，DID)是一种新类型的标识符，具有全局唯一性、高可用性可解析性和加密可验证性。DIDs通常与加密材料(如公钥)和服务端点相关联，以建立安全的通信信道。DIDs对于任何受益于自管理、加密可验证的标识符(如个人标识符、组织标识符和物联网场景标识符)的应用程序都很有用。例如，当前W3C可验证凭据的商业部署大量使用DIDs来标识人员、组织和事物，并实现许多安全和隐私保护保证。<br>——W3C 文档</p>
+</blockquote>
+<p>W3C的DID标准下的DID系统主要包括以下层次要素：</p>
+<ol>
+<li>基础层：DID规范<ul>
+<li><strong>DID标识符</strong>（Identifier）</li>
+<li><strong>DID文档</strong>（Document）</li>
+</ul>
+</li>
+<li>应用层：可验证声明<ul>
+<li><strong>可验证声明</strong>（Verifiable Claims 或 Verifiable Credentials，本文接下去都简称<strong>VC</strong>）</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-1-DID-规范"><a href="#2-1-DID-规范" class="headerlink" title="2.1 DID 规范"></a>2.1 DID 规范</h3><p><strong>DID标识符</strong>，是一个全局唯一的表示你身份的东西，就像你的身份证号码一样。其形式大致如下：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93M2MtY2NnLmdpdGh1Yi5pby9kaWQtcHJpbWVyL2RpZC1wcmltZXItZGlhZ3JhbXMvZGlkLWZvcm1hdC5wbmc" alt="DID格式"></p>
+<p>DID示例：<code>did:eth:123456789abcdefg</code></p>
+<p>DID标识符不容易记忆。根据Zooko三角形理论，没有任何标识符能够同时实现易记忆、安全、去中心化。在这里，W3C的DID取了后两者。</p>
+<p><strong>DID Infrastructure</strong>是一个全局键值对数据库，这个数据库要么是某个DID兼容的区块链，要么是某个DID兼容的分布式账本，或者是某个DID兼容的去中心化网络（其实这个数据库的位置就是DID标识符中的<em>example</em>字段，目前已经有非常多的<a href="https://w3c-ccg.github.io/did-method-registry/" target="_blank" rel="noopener">合法地址</a>）。在这个数据库中，<strong>DID标识符</strong>是键，而<strong>DID文档</strong>是值。</p>
+<p><strong>DID文档</strong>是一个JSON-LD Object，包括6个部分（都是optional的）：</p>
+<ol>
+<li>DID标识符。</li>
+<li>一个加密材料的集合。比如公钥。</li>
+<li>一个加密协议的集合。</li>
+<li>一个服务端点的集合。</li>
+<li>时间戳。</li>
+<li>一个可选的JSON-LD签名。用来证明这个DID文档是合法的。</li>
+</ol>
+<p>文档内容示例：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"@context"</span>: <span class="string">"https://w3id.org/did/v1"</span>,</span><br><span class="line">  <span class="attr">"id"</span>: <span class="string">"did:example:123456789abcdefghi"</span>,</span><br><span class="line">  <span class="attr">"authentication"</span>: [&#123;</span><br><span class="line">    <span class="comment">// used to authenticate as did:...fghi</span></span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"did:example:123456789abcdefghi#keys-1"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"RsaVerificationKey2018"</span>,</span><br><span class="line">    <span class="attr">"controller"</span>: <span class="string">"did:example:123456789abcdefghi"</span>,</span><br><span class="line">    <span class="attr">"publicKeyPem"</span>: <span class="string">"-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"</span></span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"service"</span>: [&#123;</span><br><span class="line">    <span class="comment">// used to retrieve Verifiable Credentials associated with the DID</span></span><br><span class="line">    <span class="attr">"id"</span>:<span class="string">"did:example:123456789abcdefghi#vcs"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"VerifiableCredentialService"</span>,</span><br><span class="line">    <span class="attr">"serviceEndpoint"</span>: <span class="string">"https://example.com/vc/"</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">1234567891011121314151617</span></span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是，<strong>DID文档中没有任何和你个人真实信息相关的内容，比如你的真实姓名、地址、手机号等</strong>。因此光靠DID规范是无法验证一个人的身份的，必须要靠DID应用层中的<strong>VC</strong>。</p>
+<h3 id="2-2-可验证声明"><a href="#2-2-可验证声明" class="headerlink" title="2.2 可验证声明"></a>2.2 可验证声明</h3><p>W3C认为前面的DID规范是基础，而把<strong>可验证声明</strong>视作是next higher layer，<strong>并认为这一层才是建立DID整个体系的价值所在</strong>。因为在这个应用层中，DID既可以用来标识个体的身份、也可以用来标识组织的身份，甚至标识物品的身份（言外之意是不仅可以改变当前的互联网，还可以改变物联网？）。</p>
+<p>接下去我将可验证声明简称之<strong>VC</strong>。VC有点类似于数字签名，要是实现数字签名，需要有PKI体系。这里要实现VC也是一样，需要用一套系统来支持它。在VC的这套系统中，有以下几种参与者（列出了其功能）：</p>
+<ul>
+<li>发行者（Issuer）：拥有用户数据并能开具VC的实体，如政府、银行、大学等机构和组织。</li>
+<li>验证者（Inspector-Verifier，<strong>IV</strong>）：接受VC并进行验证，由此可以提供给出示VC者某种类型的服务。</li>
+<li>持有者（Holder）：向Issuer请求、收到、持有VC的实体。向IV出示VC。开具的VC可以放在VC钱包里，方便以后再次使用。</li>
+<li>标识符注册机构（Identifier Registry）：维护DIDs的数据库，如某条区块链、分布式账本（差不多就是前面提到的DID里的<em>example字段</em>）。</li>
+</ul>
+<p>之所以需有Identifier Registry，是因为IV要验证VC，也要验证用户。验证VC用VC和发VC的Issuer，验证用户用DID和存DID的数据库。</p>
+<p>因为DID对应的DID文档里没有用户的真实信息，所以当用户进行某个操作时，网站需要用户出示证明。比如，要求你证明“我XXX年龄已经大于18周岁”。这个时候你就需要Issuer帮你发出（并签名）这样一个VC给网站，网站做作为Inspector就可以进行验证。验证之后你可以进行操作了。</p>
+<p>这里有一点要注意，那就是Issuer只需要给出你是超过18岁的VC，而不需要给出你的生日是多少的的VC，前者泄露你更少的信息。最理想的VC应该是一个回答是否的回复，而不是回答多少和什么的回复。这样能泄露最少的信息给IV。</p>
+<p>VC的格式也是JSON的。示例如下：</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// set the context, which establishes the special terms we will be using</span></span><br><span class="line">  <span class="comment">// such as 'issuer' and 'alumniOf'.</span></span><br><span class="line">  <span class="string">"@context"</span>: [</span><br><span class="line">    <span class="string">"https://www.w3.org/2018/credentials/v1"</span>,</span><br><span class="line">    <span class="string">"https://www.w3.org/2018/credentials/examples/v1"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// specify the identifier for the credential</span></span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"http://example.edu/credentials/1872"</span>,</span><br><span class="line">  <span class="comment">// the credential types, which declare what data to expect in the credential</span></span><br><span class="line">  <span class="string">"type"</span>: [<span class="string">"VerifiableCredential"</span>, <span class="string">"AlumniCredential"</span>],</span><br><span class="line">  <span class="comment">// the entity that issued the credential</span></span><br><span class="line">  <span class="string">"issuer"</span>: <span class="string">"https://example.edu/issuers/565049"</span>,</span><br><span class="line">  <span class="comment">// when the credential was issued</span></span><br><span class="line">  <span class="string">"issuanceDate"</span>: <span class="string">"2010-01-01T19:73:24Z"</span>,</span><br><span class="line">  <span class="comment">// claims about the subjects of the credential</span></span><br><span class="line">  <span class="string">"credentialSubject"</span>: &#123;</span><br><span class="line">    <span class="comment">// identifier for the only subject of the credential</span></span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,</span><br><span class="line">    <span class="comment">// assertion about the only subject of the credential</span></span><br><span class="line">    <span class="string">"alumniOf"</span>: &#123;</span><br><span class="line">      <span class="string">"id"</span>: <span class="string">"did:example:c276e12ec21ebfeb1f712ebc6f1"</span>,</span><br><span class="line">      <span class="string">"name"</span>: [&#123;</span><br><span class="line">        <span class="string">"value"</span>: <span class="string">"Example University"</span>,</span><br><span class="line">        <span class="string">"lang"</span>: <span class="string">"en"</span></span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        <span class="string">"value"</span>: <span class="string">"Exemple d'Université"</span>,</span><br><span class="line">        <span class="string">"lang"</span>: <span class="string">"fr"</span></span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// digital proof that makes the credential tamper-evident</span></span><br><span class="line">  <span class="comment">// see the NOTE at end of this section for more detail</span></span><br><span class="line">  <span class="string">"proof"</span>: &#123;</span><br><span class="line">    <span class="comment">// the cryptographic signature suite that was used to generate the signature</span></span><br><span class="line">    <span class="string">"type"</span>: <span class="string">"RsaSignature2018"</span>,</span><br><span class="line">    <span class="comment">// the date the signature was created</span></span><br><span class="line">    <span class="string">"created"</span>: <span class="string">"2017-06-18T21:19:10Z"</span>,</span><br><span class="line">    <span class="comment">// purpose of this proof</span></span><br><span class="line">    <span class="string">"proofPurpose"</span>: <span class="string">"assertionMethod"</span>,</span><br><span class="line">    <span class="comment">// the identifier of the public key that can verify the signature</span></span><br><span class="line">    <span class="string">"verificationMethod"</span>: <span class="string">"https://example.edu/issuers/keys/1"</span>,</span><br><span class="line">    <span class="comment">// the digital signature value</span></span><br><span class="line">    <span class="string">"jws"</span>: <span class="string">"eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X</span></span><br><span class="line">      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc</span><br><span class="line">      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj</span><br><span class="line">      PAYuNzVBAh4vGHSrQyHUdBBPM<span class="string">"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>IV该如何来验证VC：</strong>因为VC中是没有Issuer的公钥的（也不应该有，因为就算有了，IV还是得亲自验证公钥是否是真的）。这里VC的id是一个URI，而VC中的Issuer字段也是一个URI。而Issuer也可能是使用DID来作为其身份的。因此通过VC中的Issuer字段——URI地址得到其DID，然后从DID对应的DID文档里就可以得到其公钥了。用公钥验证对VC的签名就能验证VC是否Issuer发的。</p>
+<p>当然IV验证用户的方法也是如此：用Holder（即用户）的DID对应的DID文档里的公钥来验证其数字签名的合法性。</p>
+<p>资料参考：<a href="https://zhuanlan.zhihu.com/p/77290826" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/77290826</a></p>
+]]></content>
+      <categories>
+        <category>区块链征信</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>DID分布式身份</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>互链网——重新定义区块链</title>
+    <url>/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/</url>
+    <content><![CDATA[<h1 id="互链网——重新定义区块链"><a href="#互链网——重新定义区块链" class="headerlink" title="互链网——重新定义区块链"></a>互链网——重新定义区块链</h1><p>主讲老师：北京航空航天大学 蔡维德 教授</p>
+<p>从区块链的架构历史方向来看，蔡维德老师过去多次预测未来的区块链会有巨大的变化，如果大家有兴趣可以看一下在2018年1月在北京演讲的视频。他为什么这样预测？这有下面观点出发：</p>
+<a id="more"></a>
+
+<ul>
+<li><p>从应用出发，区块链的应用会决定区块链的设计方向。比特币、以太坊都是逃避监管的数字代币，到2014年12月英国央行研究区块链技术后发现区块链技术是可以支持数字法币的，但是现在的区块链系统并不支持监管，因为这些链数据结构还有一些问题。不支持监管的区块链系统设很难用来支持数字法币。所以预测以后支持监管的区块链架构会和逃避监管的区块链链架构会大不相同。</p>
+</li>
+<li><p>从系统设计原则出发：区块链系统设计原则现在越来越清楚，不同应用场景可开发出不同区块链设计。</p>
+</li>
+<li><p>从历史重大事件出发：过去10个月（2019年6月开始）发生几次历史大事，改变了区块链的历史。具体的改变是从设计逃避监管的区块链到拥抱和支持监管的区块链。</p>
+</li>
+<li><p>区块链成为基础设施：在过去，多认为区块链不会改变现在系统架构因为大多把区块链当作应用。但是现在越来越多人认为区块链不只是应用，而且是基础设施。2020年区块链也列在中国新基建的计划中，代表区块链是未来中国的基础设施。我们如果把区块链当做是一个基础设施，区块链就会影响到操作系统、数控、网络、存储。</p>
+</li>
+</ul>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094125413.png" alt="image-20200725094125413"></p>
+<p>蔡维德老师在2018年就写过区块链中国梦，第一个梦就提到互链网（区块链互联网），由于系统结构改变，可以带动中国科技发展。在2019年10月24号，区块链也被认定是中国科技的重要突破口，带领中国科技发展，区块链的使命大不相同。</p>
+<h2 id="1-区块链架构历史"><a href="#1-区块链架构历史" class="headerlink" title="1. 区块链架构历史"></a><strong>1. 区块链架构历史</strong></h2><p>现在看区块链结构历史，区块链在2008年（经过比特币）出现，当时比特币使用UTXO账本模型，全网记账，但是使用P2P网络协议来逃避监管。</p>
+<p>后来以太坊出现，改用余额账本，加了智能合约机制，前面这两项都是重大突破。但是以太坊还是使用P2P网络协议仍然在逃避监管。</p>
+<p>在2016年蔡维德老师提出放弃P2P网络协议，并且提出熊猫模型，就是在区块链系统将数据与软件分开，这样系统就可以有扩展性，也可以保护隐私，在架构上解决区块链难扩展难保护隐私的问题，这样的链也不逃避监管。</p>
+<p>2017年加拿大央行做了世界第一个数字法币的大型实验，发现区块链系统还有包括一些特别为银行设计的区块链系统大有问题。所以加拿大央行认为现在的区块链监管，不可靠，不安全，而且难监管。这对区块链界一个大警钟，因为一般人认为区块链是安全可靠的。</p>
+<p>2017年5月蔡维德老师在贵阳数博会就提出互链网会重构互联网，从底层到应用系统架构都会改变。</p>
+<p>2018年美国期货商品交易所委员会CFTC，提出智能合约两大应用是（合规）金融交易与监管。传统区块链应用（例如比特币和以太币）都是逃避监管，现在美国监管单位反而认为这是监管利器，也是合规金融交易工具，这真是180度的思想改变。</p>
+<p>2018年12月蔡维德老师在北京会议上提出区块链应该设计成“可监管的区块链”。这个可监管的区块链设计，跟逃避监管的架构会有不同的架构。</p>
+<p>2019年出现了Libra稳定币白皮书，还有英国的Fnality稳定币白皮书，Fnality是做批发数字法币，当时就有美元、欧元、英镑、加拿大币、日元5个法币加入。这两个项目都使用数据与软件分离的系统架构，也是原来和2016年提出的项目模型架构一致。所以，2019年区块链架构出现了一个重要分水岭。</p>
+<p>在2020年3月英国央行出报告，提出三个智能合约架构，并提到这些智能合约由央行开发、央行运行、央行监管，这与2013年以太坊提出的智能合约运行和监管方式完全相反。其意思就是是智能合约不可以随便开发，不可以随便运行，也不可以逃离监管。而且英国央行提出智能合约框架也跟以太坊架构不同。</p>
+<p>2020年3月中国互链网白皮书提出整个计算机系统架构会改变。</p>
+<p>2020年4月Libra 2.0白皮书出现，正式提出放弃公链路线，走向完全合规化路线。这又是一个重大分水岭，无论是稳定币或者是数字法币，都开始走合规化的道路。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094222371.png" alt="image-20200725094222371"></p>
+<p>下面是区块链架构历史图。我们可以看到2008年到2013年最重要的突破是余额记账；2016年区块链数据与算法分开；2017年最重要的贡献提出互链网新型网络架构；2018年是可监管的链概念出现；2019年证实在区块链系统内数据与算法应该分离，互链网网络协议也出现了；2020年新型的智能合约平台出现，可监管的区块链系统架构也出现了。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094338930.png" alt="image-20200725094338930"></p>
+<p>现在，无论是网络，操作系统，存储，应用，智能合约它的架构都会因为区块链的出现跟以前不一样。</p>
+<p>比如，下面是国外公司Contract Vault提出的一个智能合约系统，<strong>上面合约上不但是有参与者、银行金融机构、还有监管单位</strong>。这样一来，这些单位都可以在同时间看到同样的信息（数据）。在这新架构上，还包含智能合约组的概念。</p>
+<p><strong>一个重要概念：智能合约标准化</strong></p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094449433.png" alt="image-20200725094449433"></p>
+<h2 id="2-区块链两大应用"><a href="#2-区块链两大应用" class="headerlink" title="2. 区块链两大应用"></a><strong>2. 区块链两大应用</strong></h2><p>根据美国商品期货交易委员会CFTC的说法，两大应用是金融交易和监管：</p>
+<p><strong>金融交易</strong>：在金融交易上，可以使用在衍生品交易、贸易清算、供应链、贸易融资、保险、数据保留、远期合同。事实上，CFTC就是美国监管单位负责监管衍生品（期货）交易。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094720263.png" alt="image-20200725094720263"></p>
+<p>其次，CFTC还提出了智能合约组的概念，<strong>每个智能合约都只做简单的工作</strong>，就是完成部分交易的功能，而不是完成整个交易。大部分的智能合约都从事标准化的功能，部分而且短暂的交易作业。这些都是软件工程技术，而且会对金融系统架构和监管产生巨大影响。由于智能合约标准化，在金融交易和监管上都可以全面标准化，大大减少不同系统会有不同合规或是安全属性。而又因为这些智能合约只是完成部分功能，每个金融系统还可以有个性化的定制，不同金融系统可以开发出来，而又有相同的合规性。这也是皋陶模型采用的路线。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094746150.png" alt="image-20200725094746150"></p>
+<p><strong>监管</strong>：CFTC提出第二个最有用的应用是监管，就是验证客户来保障交易正常执行以及确保账本记录的准确性，完成实施监管报告。当然，这些监管机制也是标准化的作业。</p>
+<p>17个月后，2020年3月英国央行也提出类似概念，就是使用智能合约来做<strong>交易和监管</strong>。同时，英国央行提出了三个智能合模型。</p>
+<p>第一个模型是传统的模型，智能合约在链上，但并不符合现代的金融系统，现代系统（也是经历多年得来的功课）就是账本系统和交易分开。比特币和以太坊难扩展就是因为违反这个原则。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094840150.png" alt="image-20200725094840150"></p>
+<p>第二个模型，类似于中国的熊猫模型，将智能合约和核心账本分开，两个并行来做。事实上，2019年Libra也在做相同的事情，将数据和软件分开。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094903531.png" alt="image-20200725094903531"></p>
+<p>第三个模型是智能合约直接与客户交互，同时直接做监管。<strong>根据这三个模型，我们提出了三驾马车模型</strong>，将这3个模型都融合在一起，一些智能合约在账本里面只负责管理和维护账本系统，一些智能合约是并行的做负责交易作业，在外面还有一套智能合约和客户交互和监管客户。所以是三套智能合约一起合作，各做各的功能，这样可以达到监管性和扩展性。在这三驾马车模型，账本系统、交易系统、客户交互系统都可以独立扩展而不被其他系统影响到。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095014654.png" alt="image-20200725095014654"></p>
+<p>由上面可以看出，现在的智能合约架构已经和传统的以太坊智能合约结构大不相同了。原来的区块链和智能合约架构，被哈佛大学认为是地下经济活动的媒介和工具，到今天区块链使用在合法合规金融市场交易和监管上，从逃避监管到使用区块链来监管。而这写概念由美国和英国监管单位提出来的。在这转变流程，区块链的系统结构也被改变了，甚至区块链基本定义也改变了。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095037982.png" alt="image-20200725095037982"></p>
+<h2 id="3-区块链新定义"><a href="#3-区块链新定义" class="headerlink" title="3. 区块链新定义"></a><strong>3. 区块链新定义</strong></h2><p>传统区块链系统就是块子链、多节点、拜占庭将军协议、智能合约。还有一些人会把P2P网络协议放在区块链定义中，这是不对的，如果将P2P协议放进区块链定义中，所有区块链都是逃避监管的。下面我们看一下新的区块链定义。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095217630.png" alt="image-20200725095217630"></p>
+<h3 id="3-1-新组成系统"><a href="#3-1-新组成系统" class="headerlink" title="3.1 新组成系统"></a><strong>3.1 新组成系统</strong></h3><p>新的区块链定义是<strong>区块链+智能合约+预言机</strong>。</p>
+<ul>
+<li>区块链控制数据，使数据不能篡改，维持数据保持一致性。</li>
+<li>智能合约控制应用流程，智能合约控制的应用流程是一个标准化的应用，是微服务化的应用，标准化、微服务化的智能合约是一种监管形的智能合约。这样，数据控制在区块链上，流程控制在智能合约上，数据来自区块链而又回到区块链。</li>
+<li>预言机是与外界接触专门搜集资料，控制外面的接口。上面英国央行用智能合约与外面的智能合约对接，有的是用智能合约直接跟外面对接，有的是用预言机直接跟外面对接。预言机本身可以使用区块链，也可以使用智能合约，也可以使用人工智能，也可以使用物联网，还有其他技术。</li>
+</ul>
+<p>这样的系统才是完整的系统，能够实现金融交易和监管。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095403313.png" alt="image-20200725095403313"></p>
+<p>新型的系统可以参考美国的雅阁项目(Accord Project)，该系统是<strong>有法律效力的智能合约系统</strong>，还包括<strong>预言机</strong>在内。在《智能合约：重构社会契约》可以查阅更详细的信息。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095421781.png" alt="image-20200725095421781"></p>
+<h3 id="3-2-特性不同"><a href="#3-2-特性不同" class="headerlink" title="3.2 特性不同"></a><strong>3.2 特性不同</strong></h3><p>传统区块链特性是数据不能篡改，可以检验说谎（拜占庭将军协议），分布式架构。主要问题是高性能、扩展性。新区块链属性类似，但不一样。新区块链系统，仍然保持传统数据不能篡改性，可以检验说谎，和分布式架构。但是因为新型区块链应用不同，其他特性不一样。</p>
+<p>CTFC认为区块链最大的功能是支持交易，所以区块链第一件特性就是能够做交易，就是<strong>交易性</strong>。</p>
+<p>第2个重要特性再来就是<strong>监管性</strong>，在合规市场，区块链系统必须可以被监管，这包括交交易前监管，交易中也监管，交易后再监管，全程都被监管。</p>
+<p>再来是<strong>可靠性</strong>，<strong>安全性</strong>，<strong>高性能</strong>，和<strong>扩展性</strong>，这些是跟传统一样。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095538383.png" alt="image-20200725095538383"></p>
+<p>什么是交易性？区块链里面有共识，共识就是有一致性，但是一致性并不代表可交易性。传统数据库是中心化的系统，但是有多并行的进程，多个“读”跟“写”操作同时间进行，但是事务处理会使这样并行的“读”（例如读账本数据）和“写”（例如改账本数据）等于一个串行交易序列，而且结果一致。这是说可以有一个串行交易序列，跟这些并行的读和写流程得到同样的结果，这样的交易就是完备的，不会出现因为多进程使系统执行得到不同交易结果（例如得到不同的余额）。这是金融交易系统需要的。</p>
+<p>但是到了分布式数据库的时候，分布式一致性协议并不维持这交易特性，只是维持数据一致性。<strong>例如两轮协议（2 phase）投票机制，投票的目的只担保数据一致性，并不担保交易可以等于一个串行交易序列</strong>。传统分布式一致性协议是在参与节点互相信任的环境下进行。</p>
+<p>后来有拜占庭将军协议，三轮投票，也是数据一致性协议，可是参与方不需要互相信任。拜占庭将军协议比传统数据库一致性协议复杂的多，因为要查验可能说谎的节点。这代表一个新方向，以前系统只是防护外面来的攻击，拜占庭将军协议却是防护内部人员作弊。因此使用拜占庭将军协议加上加密技术，就可以防止说谎节点瘫痪整个系统。</p>
+<p>但是不论是传统分布式数据库一致性协议，或是拜占庭将军协议，他们都只是维持数据一致性。这些协议都没有找出可以对应的串行交易序列。这表示这些协议只是维持数据一致（在互信的环境下，或是没有互信的环境下），而没有维持金融交易完备性。</p>
+<p>区块链系统要从事交易，需要交易性，而又需要拜占庭将军协议。这两个都得存在，才能做交易。区块链新定义第一要素—交易性，就是在互不信任环境下，系统能够完成传统金融交易，就是可以有对应的串行的交易序列。只有在这情形下，金融交易才能完备。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095611780.png" alt="image-20200725095611780"></p>
+<p>事实上，区块链中做交易的时候，每一区块中所有的交易都是一起被验证，一起被通过的。这和传统数据库交易方式不同，传统是一次交易流程一笔交易，区块链是一次交易流程多笔交易。这是新型的交易方式，这个跟传统数据库读和写是不一样的。</p>
+<p>一些类似的区块链出现的问题就是节点有不同的信息。节点如果有不同的信息，一个监管单位要查验？或者说如何检验这个交易能不能通过。监管单位就会发现节点没有相关数据，如果在一个节点没有信息，如何来检验？可能有人说，这可以在所有节点上查询。问题是这样做，共识会慢下来。这些类似链设计概念就是不要所有节点有同样信息来进行高速共识，但是如果需要在共识时候在不同节点搜寻数据，这样会大大降低共识速度，因此交易会降低。</p>
+<p>这些链就会面临2个选择：仍然维持高速共识（和交易）但是有可能这些交易不完备（就是可能会得到不正确的交易结果，这在合规市场是不能被接受的），或是系统慢下来来维持交易完备性。这样“交易性”和“监管性”就出现问题。</p>
+<p>这两个是重要的概念，因为其他属性都必须在保证这两个属性都存在下完成。例如扩展性，我们不能有扩展性，但是扩展后交易不完备，或是扩展后，交易难监管。没有这两项属性，区块链只能慢速进行，而且交易有不完备的风险。只有在这两特性都维持下，才能谈其他功能和属性例如清结算、扩展性、保护隐私。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095642282.png" alt="image-20200725095642282"></p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095653531.png" alt="image-20200725095653531"></p>
+<h3 id="3-3-架构不同、工程不同"><a href="#3-3-架构不同、工程不同" class="headerlink" title="3.3 架构不同、工程不同"></a><strong>3.3 架构不同、工程不同</strong></h3><p>新型区块链会有不同的架构，开发的工程技术也不同，Libra就是一个例子。Libra系统就把软件资源和数据分开，而英国央行提出的核心账本和智能合约分开也与Libra异曲同工之妙。这样将软件和数据分开的软件设计原则是软件工程之父David Parnas在1972年（48年前）提出的概念。原则简单，但是今天的一些链的设计还是违背这原则，包括比特币（2008年）、以太坊（2013年）等系统。当账本系统和交易系统放在同一系统的时候，系统就会出现许多问题。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234714351.png" alt="image-20200731234714351"></p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234733196.png" alt="image-20200731234733196"></p>
+<p>在《智能合约：重构社会契约》书里，提到一个重要项目，就是ISDA (International Swap and Derivatives Association国际交换交易商协会) 的智能合约标准化的工作。ISDA提出金融衍生品的交易用智能合约完成（这观点和美国CFTC一致），并且开始制定智能合约标准。从2017-2020年一直在研究开发，在今年已经出了多个白皮书，开始建立一套新型的智能合约体系。</p>
+<p>在ISDA的白皮书中提出了一个重要的概念，那就是智能合约系统首先需要预言机，而且预言系统可以复杂。ISDA花了大部分时间来制定在金融交易上可能会遇到事件和问题，而不是在写智能合约代码。因为在智能合约环境下，以前人工处理的问题，现在需要自动处理，而以前这些复杂的流程是业务人员可以经过谈话、交通、和系统一起来处理，谈话单位可能包括上市公司、交易所、证券商、托管中心、银行、律师、公证处和法院，现在大部分这些工作会是（智能合约）自动处理，而这些单位都可以是智能合约参与单位或是预言界出发点。 例如一家上市公司有一天有金融危机，没有交付欠款，这可能会引起大量相关市场交易，或是法律事件。在银行的预言机可能会先启动，通知相关单位这公司没有按期付款，违约的事件会自动启动，这违约事件可能会启动早已部署的智能合约在市场自动执行交易，还要启动其他事件。ISDA大量分析这些场景，而且一个重要设计理念就是事件处理(event processing)，下图是金融交易可能遇到的一些事件。这样的事件处理系统在传统区块链、智能合约、或是预言机都没有出现过，这是一个新机制。</p>
+<p>ISDA的工作带来重要信息，区块链和智能合约系统和当初以太坊的智能合约设计差距非常远，在架构和内容上都不同。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234908920.png" alt="image-20200731234908920"></p>
+<h3 id="3-4-基础设施不同"><a href="#3-4-基础设施不同" class="headerlink" title="3.4 基础设施不同"></a><strong>3.4 基础设施不同</strong></h3><p>我们已经看到新型区块链在架构不同，在工程不同，另外基础设施也会不同，而基础设施包括网络、数据库和存储。</p>
+<p>下面这张图，左边是传统的互联网，上面安全，下面不安全，是一个开放性的架构。右边是一个新的架构，这是互链网架构。下面加一个共识层，上面加一个核心的区块链，还有应用层。我们可以看到，如果我们根据ISDA的做法，还会有智能合约和预言机出现，包括标准式的预言机和合约。这个跟我们现在知道的互联网和金融架构不同。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234952699.png" alt="image-20200731234952699"></p>
+<p><strong>区块链系统</strong>：在新书里面会提出了多个新型区块链模型包括。</p>
+<ul>
+<li>皋陶模型：顶层智能合约设计的模型；</li>
+<li>比特犬模型：领域工程和模型来创造智能合约；</li>
+<li>烽火台模型：预言机内事件处理模型，一件事情发生后，这信息就像烽火在烽火台一样快速的传递，到达在正确的智能合约执行平台；</li>
+<li>大雁模型：这是新型传递的模型，信息可以有组织性往上报，而且上面的信息的可以有组织性的往下走；</li>
+<li>熊猫模型：基本思想就是在区块链系统，数据与软件分开处理；</li>
+<li>独角兽模型：一个可以被机器处理的智能合约语言，也是法言法语；</li>
+<li>石榴模型：一个事件处理器的模型；</li>
+<li>三架马车模型：智能合约混合模型；</li>
+<li>金丝猴模型：一种交易的跨链模型。</li>
+</ul>
+<p><strong>网络系统</strong>：互联网虽然速度快，但是<strong>不安全，而且时常有欺诈行为</strong>。新网络思想追求速度，但是更加重要的是追求安全和隐私。<strong>保护隐私和监管是互链网的首要目的</strong>。这是我们在2019年提出新网络协议MEF，而且又兼容现在的协议，这就有可能打开一个新网络结构。朱波博士也提出Jazz（爵士音乐）模型。在互链网上面，每个团队或者每个组织都可以在上面做开发和经商。不像在现在互联网上，只有大公司有能力开发系统做电商。在互链网上，世界更加扁平化，好像Jazz音乐一样，没有交响乐团也可以有发展空间。这些都是新思想。</p>
+<p><strong>操作系统</strong>：再来就是传统操作系统，传统操作系统多年没改变，架构也没有变。但是今天因为要监管数字金融交易，操作系统需要改变。我们提出操作数据库系统ODBS（Operating DataBase Systems）这概念。当我们有这种ODBS的时候，就可以监管所有的交易，业可以使用硬件来处理交易。在这新型操作系统，结构、进程、存储、和安全机制都和跟传统的操作系统不一样。</p>
+<p><strong>数据库</strong>：数据库在过去有非常大的发展，例如大数据平台出现，但是当区块链来的时候，我预测会有还会有新型的数据库结构出现。在2019年微软和德国出了一个BlockchainDB，我们也提出了BQL(Blockchain Query Language)和BDL(Blockchain Data Lake)。BQL使区块链查询更方便，而BDL是为监管区块链数据的平台，以后区块链交易都可以放在数据湖内查询和大数据分析。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h2><p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731235230100.png" alt="image-20200731235230100"></p>
+<p>另外，虽然这些都是改革，但又兼容现有的系统，例如MEF协议可以和现在TCP或是BBR协议一同使用，新型操作系统兼容现在运行的应用，新型数据库结构也兼容现在的数据库和其应用。区块链确实改变，不仅是应用的改变，系统设计也改变，而且是结构上的改变，基础设施的改变。这样的改变才有可能在理论上占有前沿的地位，拥有国际话语权，制定国际标准，这是1024的精神。只是跟随国外的技中国发展，不可能在理论上有最前沿的地位，也不会在国际上有话语权。国外单位例如ISDA已经大量制定金融交易的标准，已经走在中国前面了。</p>
+<p>以后怎么发展，以后那个会留下来，现在还未可知，但是一个很清晰的图已经出现。老师预测：现在的以太坊，比特币，超级账本不会是将来。将来的区块链有非常大的改变，有可能是这些链的改进版，也可能是全新的项目像Libra一样。举个例子，十年以后或是二十年以后，可能现在所有的区块链机制都可能全翻新，有可能现在部分思想会留下来，但是不改变是没有办法的。</p>
+<h2 id="Q-amp-A："><a href="#Q-amp-A：" class="headerlink" title="Q&amp;A："></a>Q&amp;A：</h2><ul>
+<li><p>区块链在金融领域的应用会重构监管政策吗？可能会，传统监管方式不能一直持续下去</p>
+</li>
+<li><p>对虚拟货币市场怎么看？2020年开始区块链技术全面走向正规化。</p>
+</li>
+<li><p>会取代纸币吗？纸币不会完全被取代</p>
+</li>
+<li><p>监管会有什么变化？由于交易迅速，数字监管会更加严格，类比汽车与飞机</p>
+</li>
+<li><p>其他行业应用？电力行业</p>
+</li>
+</ul>
+<p>最后：英国首席科学家称之为“革命”，如果真的实现，将是对社会各方面巨大的改变</p>
+]]></content>
+      <categories>
+        <category>区块链征信</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>智能合约</tag>
+        <tag>共识机制</tag>
+        <tag>BFT拜占庭容错</tag>
+      </tags>
+  </entry>
 </search>

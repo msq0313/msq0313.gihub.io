@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.mainecoon.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="互链网——重新定义区块链主讲老师：北京航空航天大学 蔡维德 教授 从区块链的架构历史方向来看，蔡维德老师过去多次预测未来的区块链会有巨大的变化，如果大家有兴趣可以看一下在2018年1月在北京演讲的视频。他为什么这样预测？这有下面观点出发：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="互链网——重新定义区块链">
+<meta property="og:url" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/index.html">
+<meta property="og:site_name" content="MaineCoon">
+<meta property="og:description" content="互链网——重新定义区块链主讲老师：北京航空航天大学 蔡维德 教授 从区块链的架构历史方向来看，蔡维德老师过去多次预测未来的区块链会有巨大的变化，如果大家有兴趣可以看一下在2018年1月在北京演讲的视频。他为什么这样预测？这有下面观点出发：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094125413.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094222371.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094338930.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094449433.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094720263.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094746150.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094840150.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094903531.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095014654.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095037982.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095217630.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095403313.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095421781.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095538383.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095611780.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095642282.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095653531.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234714351.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234733196.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234908920.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234952699.png">
+<meta property="og:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731235230100.png">
+<meta property="article:published_time" content="2020-07-13T10:04:29.000Z">
+<meta property="article:modified_time" content="2020-10-02T10:06:07.859Z">
+<meta property="article:author" content="Chronos">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="智能合约">
+<meta property="article:tag" content="共识机制">
+<meta property="article:tag" content="BFT拜占庭容错">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094125413.png">
+
+<link rel="canonical" href="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>互链网——重新定义区块链 | MaineCoon</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <a href="https://github.com/msq0313" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">MaineCoon</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record of technical learning experience</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.mainecoon.top/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Chronos">
+      <meta itemprop="description" content="Constantly approaching the truth">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MaineCoon">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          互链网——重新定义区块链
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-13 18:04:29" itemprop="dateCreated datePublished" datetime="2020-07-13T18:04:29+08:00">2020-07-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BE%81%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">区块链征信</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="互链网——重新定义区块链"><a href="#互链网——重新定义区块链" class="headerlink" title="互链网——重新定义区块链"></a>互链网——重新定义区块链</h1><p>主讲老师：北京航空航天大学 蔡维德 教授</p>
+<p>从区块链的架构历史方向来看，蔡维德老师过去多次预测未来的区块链会有巨大的变化，如果大家有兴趣可以看一下在2018年1月在北京演讲的视频。他为什么这样预测？这有下面观点出发：</p>
+<a id="more"></a>
+
+<ul>
+<li><p>从应用出发，区块链的应用会决定区块链的设计方向。比特币、以太坊都是逃避监管的数字代币，到2014年12月英国央行研究区块链技术后发现区块链技术是可以支持数字法币的，但是现在的区块链系统并不支持监管，因为这些链数据结构还有一些问题。不支持监管的区块链系统设很难用来支持数字法币。所以预测以后支持监管的区块链架构会和逃避监管的区块链链架构会大不相同。</p>
+</li>
+<li><p>从系统设计原则出发：区块链系统设计原则现在越来越清楚，不同应用场景可开发出不同区块链设计。</p>
+</li>
+<li><p>从历史重大事件出发：过去10个月（2019年6月开始）发生几次历史大事，改变了区块链的历史。具体的改变是从设计逃避监管的区块链到拥抱和支持监管的区块链。</p>
+</li>
+<li><p>区块链成为基础设施：在过去，多认为区块链不会改变现在系统架构因为大多把区块链当作应用。但是现在越来越多人认为区块链不只是应用，而且是基础设施。2020年区块链也列在中国新基建的计划中，代表区块链是未来中国的基础设施。我们如果把区块链当做是一个基础设施，区块链就会影响到操作系统、数控、网络、存储。</p>
+</li>
+</ul>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094125413.png" alt="image-20200725094125413"></p>
+<p>蔡维德老师在2018年就写过区块链中国梦，第一个梦就提到互链网（区块链互联网），由于系统结构改变，可以带动中国科技发展。在2019年10月24号，区块链也被认定是中国科技的重要突破口，带领中国科技发展，区块链的使命大不相同。</p>
+<h2 id="1-区块链架构历史"><a href="#1-区块链架构历史" class="headerlink" title="1. 区块链架构历史"></a><strong>1. 区块链架构历史</strong></h2><p>现在看区块链结构历史，区块链在2008年（经过比特币）出现，当时比特币使用UTXO账本模型，全网记账，但是使用P2P网络协议来逃避监管。</p>
+<p>后来以太坊出现，改用余额账本，加了智能合约机制，前面这两项都是重大突破。但是以太坊还是使用P2P网络协议仍然在逃避监管。</p>
+<p>在2016年蔡维德老师提出放弃P2P网络协议，并且提出熊猫模型，就是在区块链系统将数据与软件分开，这样系统就可以有扩展性，也可以保护隐私，在架构上解决区块链难扩展难保护隐私的问题，这样的链也不逃避监管。</p>
+<p>2017年加拿大央行做了世界第一个数字法币的大型实验，发现区块链系统还有包括一些特别为银行设计的区块链系统大有问题。所以加拿大央行认为现在的区块链监管，不可靠，不安全，而且难监管。这对区块链界一个大警钟，因为一般人认为区块链是安全可靠的。</p>
+<p>2017年5月蔡维德老师在贵阳数博会就提出互链网会重构互联网，从底层到应用系统架构都会改变。</p>
+<p>2018年美国期货商品交易所委员会CFTC，提出智能合约两大应用是（合规）金融交易与监管。传统区块链应用（例如比特币和以太币）都是逃避监管，现在美国监管单位反而认为这是监管利器，也是合规金融交易工具，这真是180度的思想改变。</p>
+<p>2018年12月蔡维德老师在北京会议上提出区块链应该设计成“可监管的区块链”。这个可监管的区块链设计，跟逃避监管的架构会有不同的架构。</p>
+<p>2019年出现了Libra稳定币白皮书，还有英国的Fnality稳定币白皮书，Fnality是做批发数字法币，当时就有美元、欧元、英镑、加拿大币、日元5个法币加入。这两个项目都使用数据与软件分离的系统架构，也是原来和2016年提出的项目模型架构一致。所以，2019年区块链架构出现了一个重要分水岭。</p>
+<p>在2020年3月英国央行出报告，提出三个智能合约架构，并提到这些智能合约由央行开发、央行运行、央行监管，这与2013年以太坊提出的智能合约运行和监管方式完全相反。其意思就是是智能合约不可以随便开发，不可以随便运行，也不可以逃离监管。而且英国央行提出智能合约框架也跟以太坊架构不同。</p>
+<p>2020年3月中国互链网白皮书提出整个计算机系统架构会改变。</p>
+<p>2020年4月Libra 2.0白皮书出现，正式提出放弃公链路线，走向完全合规化路线。这又是一个重大分水岭，无论是稳定币或者是数字法币，都开始走合规化的道路。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094222371.png" alt="image-20200725094222371"></p>
+<p>下面是区块链架构历史图。我们可以看到2008年到2013年最重要的突破是余额记账；2016年区块链数据与算法分开；2017年最重要的贡献提出互链网新型网络架构；2018年是可监管的链概念出现；2019年证实在区块链系统内数据与算法应该分离，互链网网络协议也出现了；2020年新型的智能合约平台出现，可监管的区块链系统架构也出现了。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094338930.png" alt="image-20200725094338930"></p>
+<p>现在，无论是网络，操作系统，存储，应用，智能合约它的架构都会因为区块链的出现跟以前不一样。</p>
+<p>比如，下面是国外公司Contract Vault提出的一个智能合约系统，<strong>上面合约上不但是有参与者、银行金融机构、还有监管单位</strong>。这样一来，这些单位都可以在同时间看到同样的信息（数据）。在这新架构上，还包含智能合约组的概念。</p>
+<p><strong>一个重要概念：智能合约标准化</strong></p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094449433.png" alt="image-20200725094449433"></p>
+<h2 id="2-区块链两大应用"><a href="#2-区块链两大应用" class="headerlink" title="2. 区块链两大应用"></a><strong>2. 区块链两大应用</strong></h2><p>根据美国商品期货交易委员会CFTC的说法，两大应用是金融交易和监管：</p>
+<p><strong>金融交易</strong>：在金融交易上，可以使用在衍生品交易、贸易清算、供应链、贸易融资、保险、数据保留、远期合同。事实上，CFTC就是美国监管单位负责监管衍生品（期货）交易。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094720263.png" alt="image-20200725094720263"></p>
+<p>其次，CFTC还提出了智能合约组的概念，<strong>每个智能合约都只做简单的工作</strong>，就是完成部分交易的功能，而不是完成整个交易。大部分的智能合约都从事标准化的功能，部分而且短暂的交易作业。这些都是软件工程技术，而且会对金融系统架构和监管产生巨大影响。由于智能合约标准化，在金融交易和监管上都可以全面标准化，大大减少不同系统会有不同合规或是安全属性。而又因为这些智能合约只是完成部分功能，每个金融系统还可以有个性化的定制，不同金融系统可以开发出来，而又有相同的合规性。这也是皋陶模型采用的路线。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094746150.png" alt="image-20200725094746150"></p>
+<p><strong>监管</strong>：CFTC提出第二个最有用的应用是监管，就是验证客户来保障交易正常执行以及确保账本记录的准确性，完成实施监管报告。当然，这些监管机制也是标准化的作业。</p>
+<p>17个月后，2020年3月英国央行也提出类似概念，就是使用智能合约来做<strong>交易和监管</strong>。同时，英国央行提出了三个智能合模型。</p>
+<p>第一个模型是传统的模型，智能合约在链上，但并不符合现代的金融系统，现代系统（也是经历多年得来的功课）就是账本系统和交易分开。比特币和以太坊难扩展就是因为违反这个原则。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094840150.png" alt="image-20200725094840150"></p>
+<p>第二个模型，类似于中国的熊猫模型，将智能合约和核心账本分开，两个并行来做。事实上，2019年Libra也在做相同的事情，将数据和软件分开。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725094903531.png" alt="image-20200725094903531"></p>
+<p>第三个模型是智能合约直接与客户交互，同时直接做监管。<strong>根据这三个模型，我们提出了三驾马车模型</strong>，将这3个模型都融合在一起，一些智能合约在账本里面只负责管理和维护账本系统，一些智能合约是并行的做负责交易作业，在外面还有一套智能合约和客户交互和监管客户。所以是三套智能合约一起合作，各做各的功能，这样可以达到监管性和扩展性。在这三驾马车模型，账本系统、交易系统、客户交互系统都可以独立扩展而不被其他系统影响到。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095014654.png" alt="image-20200725095014654"></p>
+<p>由上面可以看出，现在的智能合约架构已经和传统的以太坊智能合约结构大不相同了。原来的区块链和智能合约架构，被哈佛大学认为是地下经济活动的媒介和工具，到今天区块链使用在合法合规金融市场交易和监管上，从逃避监管到使用区块链来监管。而这写概念由美国和英国监管单位提出来的。在这转变流程，区块链的系统结构也被改变了，甚至区块链基本定义也改变了。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095037982.png" alt="image-20200725095037982"></p>
+<h2 id="3-区块链新定义"><a href="#3-区块链新定义" class="headerlink" title="3. 区块链新定义"></a><strong>3. 区块链新定义</strong></h2><p>传统区块链系统就是块子链、多节点、拜占庭将军协议、智能合约。还有一些人会把P2P网络协议放在区块链定义中，这是不对的，如果将P2P协议放进区块链定义中，所有区块链都是逃避监管的。下面我们看一下新的区块链定义。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095217630.png" alt="image-20200725095217630"></p>
+<h3 id="3-1-新组成系统"><a href="#3-1-新组成系统" class="headerlink" title="3.1 新组成系统"></a><strong>3.1 新组成系统</strong></h3><p>新的区块链定义是<strong>区块链+智能合约+预言机</strong>。</p>
+<ul>
+<li>区块链控制数据，使数据不能篡改，维持数据保持一致性。</li>
+<li>智能合约控制应用流程，智能合约控制的应用流程是一个标准化的应用，是微服务化的应用，标准化、微服务化的智能合约是一种监管形的智能合约。这样，数据控制在区块链上，流程控制在智能合约上，数据来自区块链而又回到区块链。</li>
+<li>预言机是与外界接触专门搜集资料，控制外面的接口。上面英国央行用智能合约与外面的智能合约对接，有的是用智能合约直接跟外面对接，有的是用预言机直接跟外面对接。预言机本身可以使用区块链，也可以使用智能合约，也可以使用人工智能，也可以使用物联网，还有其他技术。</li>
+</ul>
+<p>这样的系统才是完整的系统，能够实现金融交易和监管。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095403313.png" alt="image-20200725095403313"></p>
+<p>新型的系统可以参考美国的雅阁项目(Accord Project)，该系统是<strong>有法律效力的智能合约系统</strong>，还包括<strong>预言机</strong>在内。在《智能合约：重构社会契约》可以查阅更详细的信息。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095421781.png" alt="image-20200725095421781"></p>
+<h3 id="3-2-特性不同"><a href="#3-2-特性不同" class="headerlink" title="3.2 特性不同"></a><strong>3.2 特性不同</strong></h3><p>传统区块链特性是数据不能篡改，可以检验说谎（拜占庭将军协议），分布式架构。主要问题是高性能、扩展性。新区块链属性类似，但不一样。新区块链系统，仍然保持传统数据不能篡改性，可以检验说谎，和分布式架构。但是因为新型区块链应用不同，其他特性不一样。</p>
+<p>CTFC认为区块链最大的功能是支持交易，所以区块链第一件特性就是能够做交易，就是<strong>交易性</strong>。</p>
+<p>第2个重要特性再来就是<strong>监管性</strong>，在合规市场，区块链系统必须可以被监管，这包括交交易前监管，交易中也监管，交易后再监管，全程都被监管。</p>
+<p>再来是<strong>可靠性</strong>，<strong>安全性</strong>，<strong>高性能</strong>，和<strong>扩展性</strong>，这些是跟传统一样。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095538383.png" alt="image-20200725095538383"></p>
+<p>什么是交易性？区块链里面有共识，共识就是有一致性，但是一致性并不代表可交易性。传统数据库是中心化的系统，但是有多并行的进程，多个“读”跟“写”操作同时间进行，但是事务处理会使这样并行的“读”（例如读账本数据）和“写”（例如改账本数据）等于一个串行交易序列，而且结果一致。这是说可以有一个串行交易序列，跟这些并行的读和写流程得到同样的结果，这样的交易就是完备的，不会出现因为多进程使系统执行得到不同交易结果（例如得到不同的余额）。这是金融交易系统需要的。</p>
+<p>但是到了分布式数据库的时候，分布式一致性协议并不维持这交易特性，只是维持数据一致性。<strong>例如两轮协议（2 phase）投票机制，投票的目的只担保数据一致性，并不担保交易可以等于一个串行交易序列</strong>。传统分布式一致性协议是在参与节点互相信任的环境下进行。</p>
+<p>后来有拜占庭将军协议，三轮投票，也是数据一致性协议，可是参与方不需要互相信任。拜占庭将军协议比传统数据库一致性协议复杂的多，因为要查验可能说谎的节点。这代表一个新方向，以前系统只是防护外面来的攻击，拜占庭将军协议却是防护内部人员作弊。因此使用拜占庭将军协议加上加密技术，就可以防止说谎节点瘫痪整个系统。</p>
+<p>但是不论是传统分布式数据库一致性协议，或是拜占庭将军协议，他们都只是维持数据一致性。这些协议都没有找出可以对应的串行交易序列。这表示这些协议只是维持数据一致（在互信的环境下，或是没有互信的环境下），而没有维持金融交易完备性。</p>
+<p>区块链系统要从事交易，需要交易性，而又需要拜占庭将军协议。这两个都得存在，才能做交易。区块链新定义第一要素—交易性，就是在互不信任环境下，系统能够完成传统金融交易，就是可以有对应的串行的交易序列。只有在这情形下，金融交易才能完备。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095611780.png" alt="image-20200725095611780"></p>
+<p>事实上，区块链中做交易的时候，每一区块中所有的交易都是一起被验证，一起被通过的。这和传统数据库交易方式不同，传统是一次交易流程一笔交易，区块链是一次交易流程多笔交易。这是新型的交易方式，这个跟传统数据库读和写是不一样的。</p>
+<p>一些类似的区块链出现的问题就是节点有不同的信息。节点如果有不同的信息，一个监管单位要查验？或者说如何检验这个交易能不能通过。监管单位就会发现节点没有相关数据，如果在一个节点没有信息，如何来检验？可能有人说，这可以在所有节点上查询。问题是这样做，共识会慢下来。这些类似链设计概念就是不要所有节点有同样信息来进行高速共识，但是如果需要在共识时候在不同节点搜寻数据，这样会大大降低共识速度，因此交易会降低。</p>
+<p>这些链就会面临2个选择：仍然维持高速共识（和交易）但是有可能这些交易不完备（就是可能会得到不正确的交易结果，这在合规市场是不能被接受的），或是系统慢下来来维持交易完备性。这样“交易性”和“监管性”就出现问题。</p>
+<p>这两个是重要的概念，因为其他属性都必须在保证这两个属性都存在下完成。例如扩展性，我们不能有扩展性，但是扩展后交易不完备，或是扩展后，交易难监管。没有这两项属性，区块链只能慢速进行，而且交易有不完备的风险。只有在这两特性都维持下，才能谈其他功能和属性例如清结算、扩展性、保护隐私。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095642282.png" alt="image-20200725095642282"></p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200725095653531.png" alt="image-20200725095653531"></p>
+<h3 id="3-3-架构不同、工程不同"><a href="#3-3-架构不同、工程不同" class="headerlink" title="3.3 架构不同、工程不同"></a><strong>3.3 架构不同、工程不同</strong></h3><p>新型区块链会有不同的架构，开发的工程技术也不同，Libra就是一个例子。Libra系统就把软件资源和数据分开，而英国央行提出的核心账本和智能合约分开也与Libra异曲同工之妙。这样将软件和数据分开的软件设计原则是软件工程之父David Parnas在1972年（48年前）提出的概念。原则简单，但是今天的一些链的设计还是违背这原则，包括比特币（2008年）、以太坊（2013年）等系统。当账本系统和交易系统放在同一系统的时候，系统就会出现许多问题。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234714351.png" alt="image-20200731234714351"></p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234733196.png" alt="image-20200731234733196"></p>
+<p>在《智能合约：重构社会契约》书里，提到一个重要项目，就是ISDA (International Swap and Derivatives Association国际交换交易商协会) 的智能合约标准化的工作。ISDA提出金融衍生品的交易用智能合约完成（这观点和美国CFTC一致），并且开始制定智能合约标准。从2017-2020年一直在研究开发，在今年已经出了多个白皮书，开始建立一套新型的智能合约体系。</p>
+<p>在ISDA的白皮书中提出了一个重要的概念，那就是智能合约系统首先需要预言机，而且预言系统可以复杂。ISDA花了大部分时间来制定在金融交易上可能会遇到事件和问题，而不是在写智能合约代码。因为在智能合约环境下，以前人工处理的问题，现在需要自动处理，而以前这些复杂的流程是业务人员可以经过谈话、交通、和系统一起来处理，谈话单位可能包括上市公司、交易所、证券商、托管中心、银行、律师、公证处和法院，现在大部分这些工作会是（智能合约）自动处理，而这些单位都可以是智能合约参与单位或是预言界出发点。 例如一家上市公司有一天有金融危机，没有交付欠款，这可能会引起大量相关市场交易，或是法律事件。在银行的预言机可能会先启动，通知相关单位这公司没有按期付款，违约的事件会自动启动，这违约事件可能会启动早已部署的智能合约在市场自动执行交易，还要启动其他事件。ISDA大量分析这些场景，而且一个重要设计理念就是事件处理(event processing)，下图是金融交易可能遇到的一些事件。这样的事件处理系统在传统区块链、智能合约、或是预言机都没有出现过，这是一个新机制。</p>
+<p>ISDA的工作带来重要信息，区块链和智能合约系统和当初以太坊的智能合约设计差距非常远，在架构和内容上都不同。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234908920.png" alt="image-20200731234908920"></p>
+<h3 id="3-4-基础设施不同"><a href="#3-4-基础设施不同" class="headerlink" title="3.4 基础设施不同"></a><strong>3.4 基础设施不同</strong></h3><p>我们已经看到新型区块链在架构不同，在工程不同，另外基础设施也会不同，而基础设施包括网络、数据库和存储。</p>
+<p>下面这张图，左边是传统的互联网，上面安全，下面不安全，是一个开放性的架构。右边是一个新的架构，这是互链网架构。下面加一个共识层，上面加一个核心的区块链，还有应用层。我们可以看到，如果我们根据ISDA的做法，还会有智能合约和预言机出现，包括标准式的预言机和合约。这个跟我们现在知道的互联网和金融架构不同。</p>
+<p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731234952699.png" alt="image-20200731234952699"></p>
+<p><strong>区块链系统</strong>：在新书里面会提出了多个新型区块链模型包括。</p>
+<ul>
+<li>皋陶模型：顶层智能合约设计的模型；</li>
+<li>比特犬模型：领域工程和模型来创造智能合约；</li>
+<li>烽火台模型：预言机内事件处理模型，一件事情发生后，这信息就像烽火在烽火台一样快速的传递，到达在正确的智能合约执行平台；</li>
+<li>大雁模型：这是新型传递的模型，信息可以有组织性往上报，而且上面的信息的可以有组织性的往下走；</li>
+<li>熊猫模型：基本思想就是在区块链系统，数据与软件分开处理；</li>
+<li>独角兽模型：一个可以被机器处理的智能合约语言，也是法言法语；</li>
+<li>石榴模型：一个事件处理器的模型；</li>
+<li>三架马车模型：智能合约混合模型；</li>
+<li>金丝猴模型：一种交易的跨链模型。</li>
+</ul>
+<p><strong>网络系统</strong>：互联网虽然速度快，但是<strong>不安全，而且时常有欺诈行为</strong>。新网络思想追求速度，但是更加重要的是追求安全和隐私。<strong>保护隐私和监管是互链网的首要目的</strong>。这是我们在2019年提出新网络协议MEF，而且又兼容现在的协议，这就有可能打开一个新网络结构。朱波博士也提出Jazz（爵士音乐）模型。在互链网上面，每个团队或者每个组织都可以在上面做开发和经商。不像在现在互联网上，只有大公司有能力开发系统做电商。在互链网上，世界更加扁平化，好像Jazz音乐一样，没有交响乐团也可以有发展空间。这些都是新思想。</p>
+<p><strong>操作系统</strong>：再来就是传统操作系统，传统操作系统多年没改变，架构也没有变。但是今天因为要监管数字金融交易，操作系统需要改变。我们提出操作数据库系统ODBS（Operating DataBase Systems）这概念。当我们有这种ODBS的时候，就可以监管所有的交易，业可以使用硬件来处理交易。在这新型操作系统，结构、进程、存储、和安全机制都和跟传统的操作系统不一样。</p>
+<p><strong>数据库</strong>：数据库在过去有非常大的发展，例如大数据平台出现，但是当区块链来的时候，我预测会有还会有新型的数据库结构出现。在2019年微软和德国出了一个BlockchainDB，我们也提出了BQL(Blockchain Query Language)和BDL(Blockchain Data Lake)。BQL使区块链查询更方便，而BDL是为监管区块链数据的平台，以后区块链交易都可以放在数据湖内查询和大数据分析。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h2><p><img src="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/image-20200731235230100.png" alt="image-20200731235230100"></p>
+<p>另外，虽然这些都是改革，但又兼容现有的系统，例如MEF协议可以和现在TCP或是BBR协议一同使用，新型操作系统兼容现在运行的应用，新型数据库结构也兼容现在的数据库和其应用。区块链确实改变，不仅是应用的改变，系统设计也改变，而且是结构上的改变，基础设施的改变。这样的改变才有可能在理论上占有前沿的地位，拥有国际话语权，制定国际标准，这是1024的精神。只是跟随国外的技中国发展，不可能在理论上有最前沿的地位，也不会在国际上有话语权。国外单位例如ISDA已经大量制定金融交易的标准，已经走在中国前面了。</p>
+<p>以后怎么发展，以后那个会留下来，现在还未可知，但是一个很清晰的图已经出现。老师预测：现在的以太坊，比特币，超级账本不会是将来。将来的区块链有非常大的改变，有可能是这些链的改进版，也可能是全新的项目像Libra一样。举个例子，十年以后或是二十年以后，可能现在所有的区块链机制都可能全翻新，有可能现在部分思想会留下来，但是不改变是没有办法的。</p>
+<h2 id="Q-amp-A："><a href="#Q-amp-A：" class="headerlink" title="Q&amp;A："></a>Q&amp;A：</h2><ul>
+<li><p>区块链在金融领域的应用会重构监管政策吗？可能会，传统监管方式不能一直持续下去</p>
+</li>
+<li><p>对虚拟货币市场怎么看？2020年开始区块链技术全面走向正规化。</p>
+</li>
+<li><p>会取代纸币吗？纸币不会完全被取代</p>
+</li>
+<li><p>监管会有什么变化？由于交易迅速，数字监管会更加严格，类比汽车与飞机</p>
+</li>
+<li><p>其他行业应用？电力行业</p>
+</li>
+</ul>
+<p>最后：英国首席科学家称之为“革命”，如果真的实现，将是对社会各方面巨大的改变</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>希望这些内容对你有帮助，感谢打赏！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Chronos 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Chronos 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"><i class="fa fa-tag"></i> 区块链</a>
+              <a href="/tags/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/" rel="tag"><i class="fa fa-tag"></i> 智能合约</a>
+              <a href="/tags/%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" rel="tag"><i class="fa fa-tag"></i> 共识机制</a>
+              <a href="/tags/BFT%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99/" rel="tag"><i class="fa fa-tag"></i> BFT拜占庭容错</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/" rel="prev" title="DID分布式身份">
+      <i class="fa fa-chevron-left"></i> DID分布式身份
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/15/20200815Linux%E6%8C%87%E4%BB%A4/" rel="next" title="Linux指令">
+      Linux指令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#互链网——重新定义区块链"><span class="nav-number">1.</span> <span class="nav-text">互链网——重新定义区块链</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-区块链架构历史"><span class="nav-number">1.1.</span> <span class="nav-text">1. 区块链架构历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-区块链两大应用"><span class="nav-number">1.2.</span> <span class="nav-text">2. 区块链两大应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-区块链新定义"><span class="nav-number">1.3.</span> <span class="nav-text">3. 区块链新定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-新组成系统"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 新组成系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-特性不同"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 特性不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-架构不同、工程不同"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 架构不同、工程不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-基础设施不同"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 基础设施不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">1.4.</span> <span class="nav-text">4 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A："><span class="nav-number">1.5.</span> <span class="nav-text">Q&amp;A：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chronos"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Chronos</p>
+  <div class="site-description" itemprop="description">Constantly approaching the truth</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/msq0313" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;msq0313" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:miaosuqi@pku.edu.cn" title="E-Mail → mailto:miaosuqi@pku.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chronos</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">51k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">46 分钟</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'oqLUJ6WPfmrmEAiejBAjxwhD-gzGzoHsz',
+      appKey     : 'S0J2fgnOL3IU7FXNW76GnAtB',
+      placeholder: "write your words here...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

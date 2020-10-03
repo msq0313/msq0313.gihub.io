@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.mainecoon.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="去中心化身份（Decentralized ID, DID）1 背景与现状1.1 数字身份认证背景 中心化身份 &#x3D;&gt; 联盟身份 &#x3D;&gt; 中心化身份（DID）  一开始的数字认证始是中心化的，比如ICANN管理的域名与IP地址分配，以及PKI（Public Key Infrastructure）系统中的CA（Certificate Authority）证书机构管理的数字证书。 中心化身份系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DID分布式身份">
+<meta property="og:url" content="https://www.mainecoon.top/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/index.html">
+<meta property="og:site_name" content="MaineCoon">
+<meta property="og:description" content="去中心化身份（Decentralized ID, DID）1 背景与现状1.1 数字身份认证背景 中心化身份 &#x3D;&gt; 联盟身份 &#x3D;&gt; 中心化身份（DID）  一开始的数字认证始是中心化的，比如ICANN管理的域名与IP地址分配，以及PKI（Public Key Infrastructure）系统中的CA（Certificate Authority）证书机构管理的数字证书。 中心化身份系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93M2MtY2NnLmdpdGh1Yi5pby9kaWQtcHJpbWVyL2RpZC1wcmltZXItZGlhZ3JhbXMvZGlkLWZvcm1hdC5wbmc">
+<meta property="article:published_time" content="2020-07-10T10:00:55.000Z">
+<meta property="article:modified_time" content="2020-10-02T10:03:09.911Z">
+<meta property="article:author" content="Chronos">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="DID分布式身份">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93M2MtY2NnLmdpdGh1Yi5pby9kaWQtcHJpbWVyL2RpZC1wcmltZXItZGlhZ3JhbXMvZGlkLWZvcm1hdC5wbmc">
+
+<link rel="canonical" href="https://www.mainecoon.top/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DID分布式身份 | MaineCoon</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <a href="https://github.com/msq0313" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">MaineCoon</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record of technical learning experience</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.mainecoon.top/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Chronos">
+      <meta itemprop="description" content="Constantly approaching the truth">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MaineCoon">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DID分布式身份
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-10 18:00:55" itemprop="dateCreated datePublished" datetime="2020-07-10T18:00:55+08:00">2020-07-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BE%81%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">区块链征信</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="去中心化身份（Decentralized-ID-DID）"><a href="#去中心化身份（Decentralized-ID-DID）" class="headerlink" title="去中心化身份（Decentralized ID, DID）"></a>去中心化身份（Decentralized ID, DID）</h1><h2 id="1-背景与现状"><a href="#1-背景与现状" class="headerlink" title="1 背景与现状"></a>1 背景与现状</h2><h3 id="1-1-数字身份认证背景"><a href="#1-1-数字身份认证背景" class="headerlink" title="1.1 数字身份认证背景"></a>1.1 数字身份认证背景</h3><blockquote>
+<p>中心化身份 =&gt; 联盟身份 =&gt; 中心化身份（DID）</p>
+</blockquote>
+<p>一开始的数字认证始是中心化的，比如ICANN管理的域名与IP地址分配，以及PKI（Public Key Infrastructure）系统中的CA（Certificate Authority）证书机构管理的数字证书。</p>
+<p><strong>中心化身份系统</strong>的本质就是，中央集权化的权威机构掌握着身份数据，因为围绕数据进行的认证、授权等也都由中心化的机构来决定。身份不是由用户自己控制的。</p>
+<p>而且不同的中心化网站（比如淘宝、知乎、豆瓣等等）上有一套自己的身份系统，所以都需要你重新注册一个账户。而不同网站自己用的身份系统（及账户对应的数据）之间是<strong>不互通的</strong>。</p>
+<a id="more"></a>
+
+<p>为了解决这个问题，不同的网站自己联合起来推出了<strong>联盟身份</strong>（这个概念是首先由微软在1999年提出的）。在联盟身份体系下，用户的在线身份有了一定的可移植性。如今的不少网站注册都可以支持<strong>第三方登录</strong>，比如微信、QQ、新浪微博等。</p>
+<p>在联盟身份提出后，身份系统就开始走向<strong>去中心化</strong>了。期间也有很多去中心化的标准、方案出现，比如<a href="https://baike.baidu.com/item/OpenID/2267230?fr=aladdin" target="_blank" rel="noopener">OpenID</a>。其实就算是一些网站支持的微信、QQ第三方登录，其用户体验也不是很好，而且往往还是需要你用手机号 + 验证码进行注册的。</p>
+<p>综上所述，中心化身份主要的问题就是两个，一是个人并不是真正意义上拥有自己的身份，二是身份无法互通。</p>
+<h3 id="1-2-Decentralized-IDentity（DID）现状"><a href="#1-2-Decentralized-IDentity（DID）现状" class="headerlink" title="1.2 Decentralized IDentity（DID）现状"></a>1.2 Decentralized IDentity（DID）现状</h3><blockquote>
+<p>发展前景、已经提出的标准、已经出现的项目</p>
+</blockquote>
+<p>DID可以说是区块链领域一个偏冷门的方向。目前只有很少的团队在研究DID，开发的项目也不多，屈指可数，而关于DID行业的研究报告也几乎没有（只找到一份）。DID的热度和扩容、跨链、DeFi这些热门概念是无法相比的。但是其实它看上去有不小的价值的，微软布局DID或许就是从侧面说明了这点。</p>
+<p>基于区块链或者说是分布式账本（DLT）技术的DID有望解决前面提到的问题（但是也会引进新的问题，新的问题会在<strong>3 uPort项目</strong>部分提到）。</p>
+<h4 id="（1）标准"><a href="#（1）标准" class="headerlink" title="（1）标准"></a>（1）标准</h4><p>目前（2019年）已经提出的标准主要有：</p>
+<ul>
+<li>W3C的DID标准：<a href="https://w3c-ccg.github.io/did-primer/" target="_blank" rel="noopener">A Primer for Decentralized Identifiers</a></li>
+<li>DIF（Decentralized Identity Foundation）的DID Auth：<a href="https://identity.foundation/#about" target="_blank" rel="noopener">DIF官网</a></li>
+</ul>
+<p>接下去以W3C的DID标准以及以太坊ETH上的实际项目uPort进行简要分析。</p>
+<h4 id="（2）项目"><a href="#（2）项目" class="headerlink" title="（2）项目"></a>（2）项目</h4><p>目前已经有的比较知名的DID项目有：MicrosoftDID、Sovrin、uPort、Evernym、Civic、ShoCard。</p>
+<table>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>大致内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MicrosoftDID</td>
+<td><a href="https://www.microsoft.com/zh-cn/security/technology/own-your-identity" target="_blank" rel="noopener">微软的DID</a></td>
+</tr>
+<tr>
+<td>Sovrin</td>
+<td>位于HyperLedger</td>
+</tr>
+<tr>
+<td>uPort</td>
+<td><a href="https://www.uport.me/" target="_blank" rel="noopener">位于ETH</a></td>
+</tr>
+<tr>
+<td>Evernym</td>
+<td>用于交易</td>
+</tr>
+<tr>
+<td>Civic</td>
+<td>使生物识别的多因素身份认证、移动身份平台</td>
+</tr>
+<tr>
+<td>ShoCard</td>
+<td>移动身份平台、保护隐私</td>
+</tr>
+</tbody></table>
+<h2 id="2-W3C-DID-标准"><a href="#2-W3C-DID-标准" class="headerlink" title="2 W3C DID 标准"></a>2 W3C DID 标准</h2><blockquote>
+<p>去中心化身份标识(Decentralized Identifier，DID)是一种新类型的标识符，具有全局唯一性、高可用性可解析性和加密可验证性。DIDs通常与加密材料(如公钥)和服务端点相关联，以建立安全的通信信道。DIDs对于任何受益于自管理、加密可验证的标识符(如个人标识符、组织标识符和物联网场景标识符)的应用程序都很有用。例如，当前W3C可验证凭据的商业部署大量使用DIDs来标识人员、组织和事物，并实现许多安全和隐私保护保证。<br>——W3C 文档</p>
+</blockquote>
+<p>W3C的DID标准下的DID系统主要包括以下层次要素：</p>
+<ol>
+<li>基础层：DID规范<ul>
+<li><strong>DID标识符</strong>（Identifier）</li>
+<li><strong>DID文档</strong>（Document）</li>
+</ul>
+</li>
+<li>应用层：可验证声明<ul>
+<li><strong>可验证声明</strong>（Verifiable Claims 或 Verifiable Credentials，本文接下去都简称<strong>VC</strong>）</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-1-DID-规范"><a href="#2-1-DID-规范" class="headerlink" title="2.1 DID 规范"></a>2.1 DID 规范</h3><p><strong>DID标识符</strong>，是一个全局唯一的表示你身份的东西，就像你的身份证号码一样。其形式大致如下：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93M2MtY2NnLmdpdGh1Yi5pby9kaWQtcHJpbWVyL2RpZC1wcmltZXItZGlhZ3JhbXMvZGlkLWZvcm1hdC5wbmc" alt="DID格式"></p>
+<p>DID示例：<code>did:eth:123456789abcdefg</code></p>
+<p>DID标识符不容易记忆。根据Zooko三角形理论，没有任何标识符能够同时实现易记忆、安全、去中心化。在这里，W3C的DID取了后两者。</p>
+<p><strong>DID Infrastructure</strong>是一个全局键值对数据库，这个数据库要么是某个DID兼容的区块链，要么是某个DID兼容的分布式账本，或者是某个DID兼容的去中心化网络（其实这个数据库的位置就是DID标识符中的<em>example</em>字段，目前已经有非常多的<a href="https://w3c-ccg.github.io/did-method-registry/" target="_blank" rel="noopener">合法地址</a>）。在这个数据库中，<strong>DID标识符</strong>是键，而<strong>DID文档</strong>是值。</p>
+<p><strong>DID文档</strong>是一个JSON-LD Object，包括6个部分（都是optional的）：</p>
+<ol>
+<li>DID标识符。</li>
+<li>一个加密材料的集合。比如公钥。</li>
+<li>一个加密协议的集合。</li>
+<li>一个服务端点的集合。</li>
+<li>时间戳。</li>
+<li>一个可选的JSON-LD签名。用来证明这个DID文档是合法的。</li>
+</ol>
+<p>文档内容示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"@context"</span>: <span class="string">"https://w3id.org/did/v1"</span>,</span><br><span class="line">  <span class="attr">"id"</span>: <span class="string">"did:example:123456789abcdefghi"</span>,</span><br><span class="line">  <span class="attr">"authentication"</span>: [&#123;</span><br><span class="line">    <span class="comment">// used to authenticate as did:...fghi</span></span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"did:example:123456789abcdefghi#keys-1"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"RsaVerificationKey2018"</span>,</span><br><span class="line">    <span class="attr">"controller"</span>: <span class="string">"did:example:123456789abcdefghi"</span>,</span><br><span class="line">    <span class="attr">"publicKeyPem"</span>: <span class="string">"-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"</span></span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"service"</span>: [&#123;</span><br><span class="line">    <span class="comment">// used to retrieve Verifiable Credentials associated with the DID</span></span><br><span class="line">    <span class="attr">"id"</span>:<span class="string">"did:example:123456789abcdefghi#vcs"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"VerifiableCredentialService"</span>,</span><br><span class="line">    <span class="attr">"serviceEndpoint"</span>: <span class="string">"https://example.com/vc/"</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">1234567891011121314151617</span></span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是，<strong>DID文档中没有任何和你个人真实信息相关的内容，比如你的真实姓名、地址、手机号等</strong>。因此光靠DID规范是无法验证一个人的身份的，必须要靠DID应用层中的<strong>VC</strong>。</p>
+<h3 id="2-2-可验证声明"><a href="#2-2-可验证声明" class="headerlink" title="2.2 可验证声明"></a>2.2 可验证声明</h3><p>W3C认为前面的DID规范是基础，而把<strong>可验证声明</strong>视作是next higher layer，<strong>并认为这一层才是建立DID整个体系的价值所在</strong>。因为在这个应用层中，DID既可以用来标识个体的身份、也可以用来标识组织的身份，甚至标识物品的身份（言外之意是不仅可以改变当前的互联网，还可以改变物联网？）。</p>
+<p>接下去我将可验证声明简称之<strong>VC</strong>。VC有点类似于数字签名，要是实现数字签名，需要有PKI体系。这里要实现VC也是一样，需要用一套系统来支持它。在VC的这套系统中，有以下几种参与者（列出了其功能）：</p>
+<ul>
+<li>发行者（Issuer）：拥有用户数据并能开具VC的实体，如政府、银行、大学等机构和组织。</li>
+<li>验证者（Inspector-Verifier，<strong>IV</strong>）：接受VC并进行验证，由此可以提供给出示VC者某种类型的服务。</li>
+<li>持有者（Holder）：向Issuer请求、收到、持有VC的实体。向IV出示VC。开具的VC可以放在VC钱包里，方便以后再次使用。</li>
+<li>标识符注册机构（Identifier Registry）：维护DIDs的数据库，如某条区块链、分布式账本（差不多就是前面提到的DID里的<em>example字段</em>）。</li>
+</ul>
+<p>之所以需有Identifier Registry，是因为IV要验证VC，也要验证用户。验证VC用VC和发VC的Issuer，验证用户用DID和存DID的数据库。</p>
+<p>因为DID对应的DID文档里没有用户的真实信息，所以当用户进行某个操作时，网站需要用户出示证明。比如，要求你证明“我XXX年龄已经大于18周岁”。这个时候你就需要Issuer帮你发出（并签名）这样一个VC给网站，网站做作为Inspector就可以进行验证。验证之后你可以进行操作了。</p>
+<p>这里有一点要注意，那就是Issuer只需要给出你是超过18岁的VC，而不需要给出你的生日是多少的的VC，前者泄露你更少的信息。最理想的VC应该是一个回答是否的回复，而不是回答多少和什么的回复。这样能泄露最少的信息给IV。</p>
+<p>VC的格式也是JSON的。示例如下：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// set the context, which establishes the special terms we will be using</span></span><br><span class="line">  <span class="comment">// such as 'issuer' and 'alumniOf'.</span></span><br><span class="line">  <span class="string">"@context"</span>: [</span><br><span class="line">    <span class="string">"https://www.w3.org/2018/credentials/v1"</span>,</span><br><span class="line">    <span class="string">"https://www.w3.org/2018/credentials/examples/v1"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// specify the identifier for the credential</span></span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"http://example.edu/credentials/1872"</span>,</span><br><span class="line">  <span class="comment">// the credential types, which declare what data to expect in the credential</span></span><br><span class="line">  <span class="string">"type"</span>: [<span class="string">"VerifiableCredential"</span>, <span class="string">"AlumniCredential"</span>],</span><br><span class="line">  <span class="comment">// the entity that issued the credential</span></span><br><span class="line">  <span class="string">"issuer"</span>: <span class="string">"https://example.edu/issuers/565049"</span>,</span><br><span class="line">  <span class="comment">// when the credential was issued</span></span><br><span class="line">  <span class="string">"issuanceDate"</span>: <span class="string">"2010-01-01T19:73:24Z"</span>,</span><br><span class="line">  <span class="comment">// claims about the subjects of the credential</span></span><br><span class="line">  <span class="string">"credentialSubject"</span>: &#123;</span><br><span class="line">    <span class="comment">// identifier for the only subject of the credential</span></span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,</span><br><span class="line">    <span class="comment">// assertion about the only subject of the credential</span></span><br><span class="line">    <span class="string">"alumniOf"</span>: &#123;</span><br><span class="line">      <span class="string">"id"</span>: <span class="string">"did:example:c276e12ec21ebfeb1f712ebc6f1"</span>,</span><br><span class="line">      <span class="string">"name"</span>: [&#123;</span><br><span class="line">        <span class="string">"value"</span>: <span class="string">"Example University"</span>,</span><br><span class="line">        <span class="string">"lang"</span>: <span class="string">"en"</span></span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        <span class="string">"value"</span>: <span class="string">"Exemple d'Université"</span>,</span><br><span class="line">        <span class="string">"lang"</span>: <span class="string">"fr"</span></span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// digital proof that makes the credential tamper-evident</span></span><br><span class="line">  <span class="comment">// see the NOTE at end of this section for more detail</span></span><br><span class="line">  <span class="string">"proof"</span>: &#123;</span><br><span class="line">    <span class="comment">// the cryptographic signature suite that was used to generate the signature</span></span><br><span class="line">    <span class="string">"type"</span>: <span class="string">"RsaSignature2018"</span>,</span><br><span class="line">    <span class="comment">// the date the signature was created</span></span><br><span class="line">    <span class="string">"created"</span>: <span class="string">"2017-06-18T21:19:10Z"</span>,</span><br><span class="line">    <span class="comment">// purpose of this proof</span></span><br><span class="line">    <span class="string">"proofPurpose"</span>: <span class="string">"assertionMethod"</span>,</span><br><span class="line">    <span class="comment">// the identifier of the public key that can verify the signature</span></span><br><span class="line">    <span class="string">"verificationMethod"</span>: <span class="string">"https://example.edu/issuers/keys/1"</span>,</span><br><span class="line">    <span class="comment">// the digital signature value</span></span><br><span class="line">    <span class="string">"jws"</span>: <span class="string">"eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X</span></span><br><span class="line">      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc</span><br><span class="line">      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj</span><br><span class="line">      PAYuNzVBAh4vGHSrQyHUdBBPM<span class="string">"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>IV该如何来验证VC：</strong>因为VC中是没有Issuer的公钥的（也不应该有，因为就算有了，IV还是得亲自验证公钥是否是真的）。这里VC的id是一个URI，而VC中的Issuer字段也是一个URI。而Issuer也可能是使用DID来作为其身份的。因此通过VC中的Issuer字段——URI地址得到其DID，然后从DID对应的DID文档里就可以得到其公钥了。用公钥验证对VC的签名就能验证VC是否Issuer发的。</p>
+<p>当然IV验证用户的方法也是如此：用Holder（即用户）的DID对应的DID文档里的公钥来验证其数字签名的合法性。</p>
+<p>资料参考：<a href="https://zhuanlan.zhihu.com/p/77290826" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/77290826</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>希望这些内容对你有帮助，感谢打赏！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Chronos 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Chronos 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"><i class="fa fa-tag"></i> 区块链</a>
+              <a href="/tags/DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/" rel="tag"><i class="fa fa-tag"></i> DID分布式身份</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" rel="prev" title="LibraBFT共识机制">
+      <i class="fa fa-chevron-left"></i> LibraBFT共识机制
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/13/20200713%E4%BA%92%E9%93%BE%E7%BD%91%E2%80%94%E2%80%94%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="next" title="互链网——重新定义区块链">
+      互链网——重新定义区块链 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#去中心化身份（Decentralized-ID-DID）"><span class="nav-number">1.</span> <span class="nav-text">去中心化身份（Decentralized ID, DID）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-背景与现状"><span class="nav-number">1.1.</span> <span class="nav-text">1 背景与现状</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-数字身份认证背景"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 数字身份认证背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Decentralized-IDentity（DID）现状"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Decentralized IDentity（DID）现状</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）标准"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">（1）标准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）项目"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">（2）项目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-W3C-DID-标准"><span class="nav-number">1.2.</span> <span class="nav-text">2 W3C DID 标准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DID-规范"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 DID 规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可验证声明"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 可验证声明</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chronos"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Chronos</p>
+  <div class="site-description" itemprop="description">Constantly approaching the truth</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/msq0313" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;msq0313" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:miaosuqi@pku.edu.cn" title="E-Mail → mailto:miaosuqi@pku.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chronos</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">51k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">46 分钟</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'oqLUJ6WPfmrmEAiejBAjxwhD-gzGzoHsz',
+      appKey     : 'S0J2fgnOL3IU7FXNW76GnAtB',
+      placeholder: "write your words here...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

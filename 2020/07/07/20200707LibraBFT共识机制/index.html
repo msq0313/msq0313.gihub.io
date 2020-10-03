@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.mainecoon.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Facebook Libra 的 LibraBFT 共识协议Libra 采用基于 HotStuff 的 LibraBFT 共识。 HotStuff 是一个三阶段的 BFT 算法。它将视图切换流程和正常流程进行合并，不再有单独视图切换流程，降低了视图切换的复杂度。 在 HotStuff 中切换视图时，系统中的某个节点无需确认「足够多的节点希望进行视图切换」这一消息再通知新的主节点，而是可以直接切换到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LibraBFT共识机制">
+<meta property="og:url" content="https://www.mainecoon.top/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="MaineCoon">
+<meta property="og:description" content="Facebook Libra 的 LibraBFT 共识协议Libra 采用基于 HotStuff 的 LibraBFT 共识。 HotStuff 是一个三阶段的 BFT 算法。它将视图切换流程和正常流程进行合并，不再有单独视图切换流程，降低了视图切换的复杂度。 在 HotStuff 中切换视图时，系统中的某个节点无需确认「足够多的节点希望进行视图切换」这一消息再通知新的主节点，而是可以直接切换到">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-b174bfcc0980ee03a7db4f4f647235e8_720w.jpg">
+<meta property="og:image" content="https://picb.zhimg.com/80/v2-546a48d8f561a5682b11456833f73379_720w.jpg">
+<meta property="og:image" content="https://picb.zhimg.com/80/v2-037b85da524742d6949e457dde3ae9a6_720w.jpg">
+<meta property="article:published_time" content="2020-07-07T09:57:28.000Z">
+<meta property="article:modified_time" content="2020-10-02T10:03:17.589Z">
+<meta property="article:author" content="Chronos">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="智能合约">
+<meta property="article:tag" content="共识机制">
+<meta property="article:tag" content="拜占庭将军问题">
+<meta property="article:tag" content="BFT拜占庭容错">
+<meta property="article:tag" content="Libra">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-b174bfcc0980ee03a7db4f4f647235e8_720w.jpg">
+
+<link rel="canonical" href="https://www.mainecoon.top/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>LibraBFT共识机制 | MaineCoon</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <a href="https://github.com/msq0313" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">MaineCoon</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record of technical learning experience</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.mainecoon.top/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Chronos">
+      <meta itemprop="description" content="Constantly approaching the truth">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MaineCoon">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LibraBFT共识机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-07 17:57:28" itemprop="dateCreated datePublished" datetime="2020-07-07T17:57:28+08:00">2020-07-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BE%81%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">区块链征信</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/20200707LibraBFT%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Facebook-Libra-的-LibraBFT-共识协议"><a href="#Facebook-Libra-的-LibraBFT-共识协议" class="headerlink" title="Facebook Libra 的 LibraBFT 共识协议"></a><strong>Facebook Libra 的 LibraBFT 共识协议</strong></h2><p>Libra 采用基于 HotStuff 的 LibraBFT 共识。</p>
+<p>HotStuff 是一个三阶段的 BFT 算法。它将视图切换流程和正常流程进行合并，不再有单独视图切换流程，降低了视图切换的复杂度。</p>
+<p>在 HotStuff 中切换视图时，系统中的某个节点无需确认「足够多的节点希望进行视图切换」这一消息再通知新的主节点，而是可以直接切换到新视图并通知新主节点。HotStuff 把确认「足够多的节点希望进行视图切换」这一消息的行为放进了正常流程中。由此把 PBFT 的两阶段确认扩展成了三阶段确认。</p>
+<a id="more"></a>
+
+<p>HotStuff 的另一个重要改变，是将 PBFT 的网状通信网络拓扑变成了星形通信网络拓扑。HotStuff 中，每次通信都依靠主节点。节点不再通过 p2p 网络将消息广播给其它节点，而是将消息发送给主节点，由主节点处理后发送给其它节点。得益于星型通信网络拓扑，系统的通信复杂度大大降低。和 PBFT 类似，主节点会提议进行状态迁移，其它节点收到该状态迁移要求后，会检查其合法性。</p>
+<p>LibraBFT 在 3f+1 个验证节点之间收集投票，这些验证者可能是诚实的节点也可能是拜占庭节点。在网络中存在 2f+1 个诚实节点的前提下，Libra能够抵御 f 个验证节点的双花攻击和分叉攻击。</p>
+<p>LibraBFT在一个有全局统一时间（GST），并且网络最大延时（ΔT）可控的部分同步网络中是有效的。并且，LibraBFT在所有验证节点重启的情况下，也能够保证网络一致性。</p>
+<h1 id="LibraBFT共识机制"><a href="#LibraBFT共识机制" class="headerlink" title="LibraBFT共识机制"></a>LibraBFT共识机制</h1><p><strong>Libra白皮书中关于共识机制的描述</strong></p>
+<p>Libra 区块链采用了基于 LibraBFT 共识协议的 BFT 机制来实现所有验证者节点就将要执行的交易及其执行顺序达成一致。这种方法可以在网络中建立信任，因为即使某些验证者节点(最多三分之一的网络)被破坏或发生故障，BFT共识协议的设计也能够确保网络正常运行。与其他一些区块链中使用的“工作量证明”机制相比，这类共识协议还可实现高交易处理量、低延迟和更高能效的共识方法。</p>
+<p><strong>1. libra共识简介</strong></p>
+<p>Libra的共识采用的是LibraBFT共识，是一个为Libra设计的鲁棒的高效的状态复制系统。它基于一种新型的BFT共识算法，HotStuff(BFT Consensus in Lens of Blockchain)，在扩展性和一致性上达到了较高的水平。LibraBFT 在HotStuff的基础上引入显示的活跃机制并提供了具体的延时分析。LibraBFT在3f+1个验证节点之间收集投票，这些验证者可能是诚实的节点也可能是拜占庭节点。在网络中有2f+1个诚实节点的前提下，Libra能够抵御f个验证节点的双花攻击和分叉攻击。LibraBFT在一个有全局统一时间（GST），并且网络最大延时（ΔT）可控的 Partial Synchrony的网络中是有效的。并且，LibraBFT在所有验证节点都重启的情况下，也能够保证网络的一致性。</p>
+<p>Libra白皮书指出，其将以许可型区块链的方式起步。未来为了确保Libra的真正开放，始终以符合用户最佳利益的方式运作，Facebook的最终目标是让Libra网络成为”非许可型网络”，但是其目前的挑战在于，他们目前还没有成熟的解决方案可以通过非许可型网络，提供支持全球数十亿人和交易所需的规模、稳定性和安全性。从“许可型”网络过渡到“非许可型”网络，共识层面还需要做非常大的改进。</p>
+<h2 id="2-HotStuff算法"><a href="#2-HotStuff算法" class="headerlink" title="2. HotStuff算法"></a><strong>2. HotStuff算法</strong></h2><p>2.1 HotStuff算法特点</p>
+<p>HotStuff 是一个三阶段的BFT算法，允许一个新的leader简单地选择一个最新的的QC(Quorum certification)。它引入了一个第二阶段，允许副本在投票后在不需要请求leader请求的基础上改变他的决策。这一改进大大降低了复杂度，同时也降低了leader替换的复杂度。最后，由于长期委任所有的状态，这样HotStuff非常容易通过事件机制的方式实现，适合leader经常切换的场景。HotStuff主要有以下几个特性：</p>
+<p>• 线性的视图切换：在GST后，对于一个诚实的leader，一旦被指定，会发给n个验证者来收集签名，以推动共识的决定；</p>
+<p>• 乐观的响应：在GST后，对于一个诚实的leader，一旦被指定，只需要等最早的 n-f 个验证者返回消息就可以发起有效的提案，包括leader替换；</p>
+<p>• 支持频繁切主：HotStuff还有一个特点是新leader的推动协议达成共识的成本不高于当前领导者的成本，所以其适用于leader切换的协议；</p>
+<p>• 决策简单：HotStuff中副本只有两种消息类型和一个简单的规则来决定是否要接受一个提案，其通过投票和提交规则来达成一致性，通过Pacemaker来保证可用性，并且各阶段的算法复杂度低；</p>
+<p>• 阈值签名：HotStuff使用阈值签名的方式来收集签名，使得签名的验证会更为简单；</p>
+<p>2.2 HotStuff算法流程</p>
+<h2 id="2-2-1-Basic-HotStuff"><a href="#2-2-1-Basic-HotStuff" class="headerlink" title="2.2.1 Basic HotStuff"></a>2.2.1 Basic HotStuff</h2><p>Basic HotStuff 协议是HotStuff的基本过程，他在一系列的视图中切换，视图以单调递增编号方式切换。在每个视图内，有一个唯一的达成共识的leader。每个副本在起本地数据结构中会记录所有请求的tree，tree的每个叶子节点是一个已经提出的提案。一个给定节点的分支是该节点到达树根的所有路径。按照HotStuff协议，随着视图的增长，分支会被提交。Leader需要像(n-f)个验证者采用阈值签名的方式收集签名，收集签名的过程主要包括3个阶段，PREPARE、PRE-COMMIT和COMMIT阶段，整个算法包括5个阶段，PREPARE、PRE-COMMIT、COMMIT、DECIDE和FINALLY阶段，如下图所示：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-b174bfcc0980ee03a7db4f4f647235e8_720w.jpg" alt="img"></p>
+<p>\1. PREPARE阶段：该阶段，leader发起一个high的提案（highQC），组成消息，消息内容 m = MSG(PREPARE, curProposal,highQC)，并广播给所有的验证节点；验证节点在收到时上述提案消息后会进行投票，如果m的node超过本地已经判决过的node是则会投票，并返回消息给leader，m’ = voteMSG(PREPARE，n.node，⊥)。</p>
+<p>\2. PRE-COMMIT阶段：该阶段，当Leader收到（n-f）个验证节点的PREPARE阶段的投票信息后，会发起一个 PREPARE的提案（prepareQC），组成消息，消息内容为 m = MSG(COMMIT, ⊥，prepareQC），并广播给所有的验证节点；验证节点在收到上述提案消息后会进行投票，并返回消息给leader，m’ = voteMSG(PRE-COMMIT，m.justify.node，⊥)。</p>
+<p>\3. COMMIT阶段：该阶段，当Leader收到（n-f）个验证节点的PRE-COMMIT阶段的投票信息后，会发起一个 PRE-COMMIT的提案（precommitQC），组成消息，消息内容为 m = MSG(COMMIT, ⊥，precommitQC），并广播给所有的验证节点；验证节点在收到上述提案消息后会进行投票，并返回消息给leader，m’ = voteMSG(COMMIT，m.justify.node，⊥)。</p>
+<p>\4. DECIDE阶段：该阶段，当Leader收到（n-f）个验证节点 COMMIT 的投票后，会生成一个COMMIT的提案（commitQC），组成消息，消息内容为 m = MSG(DECIDE，⊥，commitQC)，并广播给所有的验证者；验证者在收到该消息后，会执行命令，并返回给客户端。</p>
+<p>\5. FINALLY阶段：如果系统进入下一个View，各个副本会发送一个消息给下一个View的leader，消息内容为 m = MSG(NEW-VIEW，⊥，prepareQC)。</p>
+<h2 id="2-2-2-Chained-HotStuff"><a href="#2-2-2-Chained-HotStuff" class="headerlink" title="2.2.2 Chained HotStuff"></a>2.2.2 Chained HotStuff</h2><p>上图中可以看出来Basic HotStuff的各个phase中的流程都非常相似，作者又提出了一种Chained HotStuff来优化和简化Basic HotStuff。改进的点主要是改变每个PREPARE节点的View。这将大大降低通信消息的数量，并且可以对决策进行管道处理。Chained HotStuff的流程如下所示：</p>
+<p><img src="https://picb.zhimg.com/80/v2-546a48d8f561a5682b11456833f73379_720w.jpg" alt="img"></p>
+<p>上述Figure1可以看出一个节点可以同时处于不同的View，通过链式的结构，一个提案在经过3个块后能够达成共识。其内部有一个状态转换器，通过genericQC实现提案的自动切换。其主要算法流程如下所示：</p>
+<p><img src="https://picb.zhimg.com/80/v2-037b85da524742d6949e457dde3ae9a6_720w.jpg" alt="img"></p>
+<p><strong>3. LibraBft改进</strong></p>
+<p>Libra 为了更好地适应其生态，对HotStuff进行了相应的优化，主要有5点：</p>
+<p>1.首要的是Libra定义了安全的条件，提供了安全性、活性和乐观响应的扩展证明；</p>
+<p>2.第二点：Libra 通过让验证器集体对区块的状态而不是事务的顺序进行签名，使得协议会更加鲁棒。同时还允许客户端使用QC验证从数据库里读出的数据。</p>
+<p>3.第三点：Libra 设计了一个Pacemaker 来发出显示的超时信号，验证者通过他发出的提案自动进入下一个视图，而不需要一个同步的时钟；</p>
+<p>4.第四点：Libra 希望让矿工变得不可预测，它最新提交的区块信息为种子生成一个可验证的随机数VRF，成为下一个矿工；</p>
+<p>5.第五点：Libra 使用聚合签名的方式保留QC中验证者的身份，以提高验签效率，同时为这些验证者提供奖励。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>希望这些内容对你有帮助，感谢打赏！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Chronos 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Chronos 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"><i class="fa fa-tag"></i> 区块链</a>
+              <a href="/tags/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/" rel="tag"><i class="fa fa-tag"></i> 智能合约</a>
+              <a href="/tags/%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" rel="tag"><i class="fa fa-tag"></i> 共识机制</a>
+              <a href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98/" rel="tag"><i class="fa fa-tag"></i> 拜占庭将军问题</a>
+              <a href="/tags/BFT%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%AE%B9%E9%94%99/" rel="tag"><i class="fa fa-tag"></i> BFT拜占庭容错</a>
+              <a href="/tags/Libra/" rel="tag"><i class="fa fa-tag"></i> Libra</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/30/20200630%E5%BC%82%E6%AD%A5%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/" rel="prev" title="异步拜占庭将军问题分析">
+      <i class="fa fa-chevron-left"></i> 异步拜占庭将军问题分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/10/20200710DID%E5%88%86%E5%B8%83%E5%BC%8F%E8%BA%AB%E4%BB%BD/" rel="next" title="DID分布式身份">
+      DID分布式身份 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Facebook-Libra-的-LibraBFT-共识协议"><span class="nav-number">1.</span> <span class="nav-text">Facebook Libra 的 LibraBFT 共识协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LibraBFT共识机制"><span class="nav-number"></span> <span class="nav-text">LibraBFT共识机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HotStuff算法"><span class="nav-number">1.</span> <span class="nav-text">2. HotStuff算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-1-Basic-HotStuff"><span class="nav-number">2.</span> <span class="nav-text">2.2.1 Basic HotStuff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-2-Chained-HotStuff"><span class="nav-number">3.</span> <span class="nav-text">2.2.2 Chained HotStuff</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chronos"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Chronos</p>
+  <div class="site-description" itemprop="description">Constantly approaching the truth</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/msq0313" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;msq0313" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:miaosuqi@pku.edu.cn" title="E-Mail → mailto:miaosuqi@pku.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chronos</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">51k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">46 分钟</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'oqLUJ6WPfmrmEAiejBAjxwhD-gzGzoHsz',
+      appKey     : 'S0J2fgnOL3IU7FXNW76GnAtB',
+      placeholder: "write your words here...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
