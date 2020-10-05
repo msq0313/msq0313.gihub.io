@@ -20,24 +20,21 @@
     var CONFIG = {"hostname":"www.chrblog.icu","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="正样本：无异常 负样本：有异常 指标维度：dataA dataB dataC 利用大量正样本，负样本进行模型训练，通过训练好的模型来进行数据异常检测">
+  <meta name="description" content="PBFT概述Practical Byzantine Fault Tolerance： PBFT，是联盟币的共识算法的基础。实现了在有限个节点的情况下的拜占庭问题，有3f+1的容错性，并同时保证一定的性能。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Metis异常检测分析">
-<meta property="og:url" content="https://www.chrblog.icu/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/index.html">
+<meta property="og:title" content="PBFT共识算法">
+<meta property="og:url" content="https://www.chrblog.icu/2020/08/27/20200827PBFT%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Chronos&#39; blog">
-<meta property="og:description" content="正样本：无异常 负样本：有异常 指标维度：dataA dataB dataC 利用大量正样本，负样本进行模型训练，通过训练好的模型来进行数据异常检测">
+<meta property="og:description" content="PBFT概述Practical Byzantine Fault Tolerance： PBFT，是联盟币的共识算法的基础。实现了在有限个节点的情况下的拜占庭问题，有3f+1的容错性，并同时保证一定的性能。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.chrblog.icu/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/data_info.png">
-<meta property="og:image" content="https://www.chrblog.icu/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/image-20200406131707735.png">
-<meta property="article:published_time" content="2020-03-31T04:32:39.000Z">
-<meta property="article:modified_time" content="2020-10-01T05:59:49.858Z">
+<meta property="article:published_time" content="2020-08-27T11:03:47.000Z">
+<meta property="article:modified_time" content="2020-10-05T11:07:03.719Z">
 <meta property="article:author" content="Chronos">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="智能运维">
+<meta property="article:tag" content="共识算法">
+<meta property="article:tag" content="PBFT">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.chrblog.icu/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/data_info.png">
 
-<link rel="canonical" href="https://www.chrblog.icu/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/">
+<link rel="canonical" href="https://www.chrblog.icu/2020/08/27/20200827PBFT%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
 
 
 <script id="page-configurations">
@@ -50,7 +47,7 @@
   };
 </script>
 
-  <title>Metis异常检测分析 | Chronos' blog</title>
+  <title>PBFT共识算法 | Chronos' blog</title>
   
 
 
@@ -196,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.chrblog.icu/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/">
+    <link itemprop="mainEntityOfPage" href="https://www.chrblog.icu/2020/08/27/20200827PBFT%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Metis异常检测分析
+          PBFT共识算法
         </h1>
 
         <div class="post-meta">
@@ -219,7 +216,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-03-31 12:32:39" itemprop="dateCreated datePublished" datetime="2020-03-31T12:32:39+08:00">2020-03-31</time>
+              <time title="创建时间：2020-08-27 19:03:47" itemprop="dateCreated datePublished" datetime="2020-08-27T19:03:47+08:00">2020-08-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -227,7 +224,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%99%BA%E8%83%BD%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">智能运维</span></a>
+                  <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BE%81%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">区块链征信</span></a>
                 </span>
             </span>
 
@@ -247,8 +244,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/08/27/20200827PBFT%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/27/20200827PBFT%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,14 +255,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>463</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -277,48 +274,113 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>正样本：无异常</p>
-<p>负样本：有异常</p>
-<p>指标维度：dataA dataB dataC</p>
-<p>利用大量正样本，负样本进行模型训练，通过训练好的模型来进行数据异常检测</p>
+        <h1 id="PBFT概述"><a href="#PBFT概述" class="headerlink" title="PBFT概述"></a>PBFT概述</h1><p>Practical Byzantine Fault Tolerance： PBFT，是联盟币的共识算法的基础。实现了在有限个节点的情况下的拜占庭问题，有3f+1的容错性，并同时保证一定的性能。</p>
 <a id="more"></a>
 
-<p>用户可根据场景选择使用API接口对时间序列进行异常检测：</p>
-<p>1、量值检测：适用于大多数KPI指标数据的检测，使用无监督和有监督联合检测，会加载检测模型</p>
-<p>2、率值检测：适用于正态分布类型数据的检测，使用无监督算法进行检测，如成功率等生死指标数据的检测</p>
-<ul>
-<li>HTTP接口调用请使用搭建的后端服务地址；Python接口可直接调用</li>
-<li>当前检测时间窗口选取为3小时，每分钟1个数据点，即窗口值为180</li>
-<li>同比数据日期和时间段的选择可根据实际情况调整，文档中两个同比数据分别取昨日和一周前的同比</li>
+<h1 id="容错率"><a href="#容错率" class="headerlink" title="容错率"></a>容错率</h1><ul>
+<li>raft算法的的容错只支持容错故障节点，不支持容错作恶节点，所以容错率高，过半节点正常即可</li>
+<li>PBFT算法可以容忍小于1/3个无效或者恶意节点<br> 作恶节点：除了可以故意对集群的其它节点的请求无响应之外，还可以故意发送错误的数据，或者给不同的其它节点发送不同的数据，使整个集群的节点最终无法达成共识，这种节点就是作恶节点。</li>
 </ul>
-<p>针对当前一个值的检测，需要依赖过去三段数据，数据选取规则参考示例图：<br><img src="/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/data_info.png" alt="data_info"></p>
-<p>dataA最后一个点为待检测点</p>
-<p>导入样本模板</p>
-<p><img src="/2020/03/31/20200331Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E5%88%86%E6%9E%90/image-20200406131707735.png" alt="image-20200406131707735"></p>
-<table>
-<thead>
-<tr>
-<th>字段名称</th>
-<th>必填</th>
-<th>合法性规则</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>dataC</td>
-<td>是</td>
-<td>整型数值以英文逗号分隔，数据个数应为(2 * 窗口值 +1)</td>
-</tr>
-<tr>
-<td>dataB</td>
-<td>是</td>
-<td>整型数值以英文逗号分隔，数据个数应为(2 * 窗口值 +1)</td>
-</tr>
-<tr>
-<td>dataA</td>
-<td>是</td>
-<td>整型数值以英文逗号分隔，数据个数应为( 窗口值 +1)</td>
-</tr>
-</tbody></table>
+<h1 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h1><p>Primary节点和普通节点，PBFT系统的Primary是轮流当选的，这和zab、raft不一样</p>
+<ul>
+<li>主节点 p = v mod |R|</li>
+<li>p：主节点编号</li>
+<li>v：视图编号</li>
+<li>|R|节点个数</li>
+</ul>
+<h1 id="Primary角色分析"><a href="#Primary角色分析" class="headerlink" title="Primary角色分析"></a>Primary角色分析</h1><p>Primary节点的作用：</p>
+<ol>
+<li>正常工作时，接收客户端的事务请求，验证request身份后，为该请求设置编号，广播pre-prepare消息</li>
+<li>新Primary当选时，根据自己收集的View-Change消息，发送View-New信息，让其它节点同步数据</li>
+<li>Primary与所有的其它节点维系心跳</li>
+</ol>
+<p>Primary节点地位和follower节点一样，并没有什么特权</p>
+<ol>
+<li>如果Primary宕机，会因为心跳超时，而触发重新选举，保证系统运行稳定</li>
+<li>如果Primary恶意发送错误编号的消息，那么会在后续的操作中，被follower察觉，因为 prepare和commit阶段都是会进行广播的，一旦不一致，view-change</li>
+<li>如果Primary不发送接收到的request，client在超时未回复时，会重发request到所有的replica，小弟们发现primary竟然私藏消息，view-change</li>
+<li>如果Primary节点篡改消息，因为有Request里面有data和client的签名，所以primary无法篡改消息，其它replica会先验证消息的合法性，否则丢弃，view-change<br> 综上所述，限制了权限的Primary节点，如果宕机、或者不发生消息、或者发送错误编号的消息、或者篡改消息，都会被其它节点感知，并触发view-change。</li>
+</ol>
+<h1 id="PBFT工作正常的详细流程"><a href="#PBFT工作正常的详细流程" class="headerlink" title="PBFT工作正常的详细流程"></a>PBFT工作正常的详细流程</h1><p>客户端发起请求–&gt;转发请求到primary–&gt;primary生成proposal–&gt;primary广播proposal–&gt;所有节点复制proposal并广播–&gt;复制过半节点完成–&gt;广播commit节点–&gt;commit过半节点完成–&gt;应用状态机–&gt;反馈客户端–&gt;客户端统计f+1个反馈消息–&gt;交易完成</p>
+<ol>
+<li>系统根据机器编号顺序轮流选举出一个primary，primary初始化时发出View-new消息，同步所有节点的数据</li>
+<li>Client发起请求转发给primary，primary验证通过后，广播这个请求，发起pre-prepare消息给所有的follower节点，并且自己也保存这个request</li>
+<li>所有的follower收到pre-prepare消息后，第一步是进行校验，包括数据的顺序是否正确，操作的先后有序性，以及交易是否有效比如签名。（防止客户端造假或者primary节点篡改造假）</li>
+<li>follower验证正确之后，写到自己的磁盘里，然后广播Prepare消息，并且自己也进入Prepare阶段</li>
+<li>所有节点统计针对某个Request的Prepare消息，当统计结果超过2f节点时，表明大部分节点已经完成了持久化，则自己进入commit阶段</li>
+<li>广播 commit 消息，并且统计收到的commit 消息的数量，当超过2f节点都发出commit的消息时</li>
+<li>该节点完成commit阶段，写入数据（该操作已经完成2/3共识了），运用自己的状态机，更新 stable checkpoint，缓存该客户端最后一次的请求，并且反馈给客户端</li>
+<li>当客户端统计反馈的节点超过f个时，表示交易已经被大部分节点确认了，交易成功。如果超时还不成功，则向所有的replica广播这个request</li>
+</ol>
+<p>解释：</p>
+<ol>
+<li>为什么客户端收到f+1个确认时，交易就成功了？<br> 因为默认问题节点为f，那么f+1个确认节点中，肯定有1个是诚实的节点，只要有1个诚实的确认消息，则交易成功，因为1个诚实的消息必须是2f+1个节点都commit操作成功了，才可能有这个1个最终确认消息的。所以为了提升交易处理的速度，只要有f+1个确认反馈，就可以表示交易成功。</li>
+</ol>
+<h1 id="客户端Client发起请求"><a href="#客户端Client发起请求" class="headerlink" title="客户端Client发起请求"></a>客户端Client发起请求</h1><ol>
+<li>客户端 c 通过向副本多播一条&lt;REQUEST，o，t，c&gt;到系统中</li>
+<li>副本对Request进行身份验证</li>
+<li>验证成功，则接受请求并将其添加到它们的日志中，请求执行使用request中的时间戳进行排序执行</li>
+<li>副本直接将请求的回复发送给客户端</li>
+<li>客户端在接受结果 r 之前，等待一个来自不同副本的有 f + 1 个带有有效 MACs 的以及相 同的 t 和 r 的 weak certificate</li>
+<li>如果客户端没有足够迅速的收到一个 reply certificate，则会重新发送请求。如果请求已被处理，则副本只是重新发送回复;副本记住他们发送给每个客户端的最后一个回复消息以 启用此重传</li>
+</ol>
+<p>客户端请求消息:客户端直接向Primary节点发起一个请求 ： 消息的格式&lt;REQUEST, o, t, c&gt;</p>
+<ul>
+<li>o: 请求的具体操作，operation</li>
+<li>t: 请求时客户端追加的时间戳，time，这里面追加的是client的时间戳，会在后面的时候，客户端的请求做时间戳排序，结合请求编号一起，保证消息的有序性（不仅仅是写操作，还有读写操作）</li>
+<li>c：客户端标识，clientID，其中 c + t 就是requestID</li>
+<li>REQUEST: 包含消息内容m，以及消息摘要d(m)。客户端对请求进行签名。</li>
+</ul>
+<p>服务端在执行request时会进行签名验证，因为PBFT应用的是联盟链，而不是私链，所以要对操作者的身份进行校验，比如A发起一笔转账，则服务端需要check是不是A发起的转账，防止盗刷</p>
+<p>服务端回复消息：&lt;REPLY, v, t, c, i, r&gt;</p>
+<ul>
+<li>REPLY，消息类型为回复客户端</li>
+<li>v，当前view</li>
+<li>t，c 哪个client的时间戳为t的回复（而不是通过zxid，是通过时间戳，相当于requestID）</li>
+<li>i 当前node编号</li>
+<li>r 操作结果，还必须有server i的签名，客户端要验证的，防止网络拦截和欺诈</li>
+</ul>
+<h1 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h1><ul>
+<li>消息的类型（pre-prepare、prepare、commit）</li>
+<li>View（类似于term)</li>
+<li>n（类似于index)</li>
+<li>d（交易的详细信息)</li>
+<li>m(交易的签名）</li>
+<li>i（节点的编号）</li>
+<li>checkpoint ：节点参数，该节点最新的proposal编号</li>
+<li>stable checkpoint：系统参数，该系统中，最新的超过2f节点commit过了的proposal的编号。可以减少内存的占用，已经2f+1确认过的操作，就最终确认了，后续不需要操作了，可以从内存中移除了。</li>
+</ul>
+<h1 id="重新选举-viewChange"><a href="#重新选举-viewChange" class="headerlink" title="重新选举 viewChange"></a>重新选举 viewChange</h1><p>当普通节点感知到primary异常的时候，触发viewchange，重新选举必须要有2f+1个节点都confirm（VIEW-CHANGE）了，发起重选才生效，一旦超过2f节点都发起VIEW-CHANGE消息，则选举结束，p =v+1 mod |R|节点当选为new Primary。并且new primary会根据自己统计的VIEW-CHANGE的内容,生成并广播NEW-VIEW消息，其它节点验证之后，开始新的view</p>
+<p>&lt;VIEW-CHANGE, v+1, n, C, P, i&gt;消息</p>
+<ul>
+<li>v+1 ：新的view编号</li>
+<li>n是最新的stable checkpoint的编号</li>
+<li>C是2f+1验证过的CheckPoint消息集合</li>
+<li>P是当前副本节点未完成的请求的PRE-PREPARE和PREPARE消息集合<br> 新的主节点就是 newPrimary = v + 1 mod |R|。当newPrimary收到2f个有效的VIEW-CHANGE消息后，向其他节点广播NEW-VIEW消息</li>
+</ul>
+<p>&lt;NEW-VIEW, v+1, V, O&gt;</p>
+<ul>
+<li>V是有效的VIEW-CHANGE消息集合</li>
+<li>O是主节点重新发起的未经完成的PRE-PREPARE消息集合</li>
+</ul>
+<p>未完成的PRE-PREPARE消息集合的生成逻辑：</p>
+<ol>
+<li>选取V中最小的stable checkpoint编号min-s，选取V中prepare消息的最大编号max-s。</li>
+<li>在min-s和max-s之间，如果存在P消息集合，则创建&lt;&lt;PRE-PREPARE, v+1, n, d&gt;, m&gt;消息。否则创建一个空的PRE-PREPARE消息，即：&lt;&lt;PRE-PREPARE, v+1, n, d(null)&gt;, m(null)&gt;, m(null)空消息，d(null)空消息摘要。</li>
+</ol>
+<p>副本节点收到主节点的NEW-VIEW消息，验证有效性（各个replica都统计view-change的个数），有效的话，进入v+1状态，并且开始O中的PRE-PREPARE消息处理流程。</p>
+<p>特殊情况：<br> 那么如果一半的节点和primary网络分区了，那也无法发起重选。<br> 同时primary也执行不了新的操作，因为新的消息有一半节点收不到，整个集群陷入瘫痪状态。所以primary也应该和zab一样，具备自我检测超时，超过一定个数的ack缺失时，触发重新选举。</p>
+<h1 id="Raft-Vs-PBFT"><a href="#Raft-Vs-PBFT" class="headerlink" title="Raft Vs PBFT"></a>Raft Vs PBFT</h1><ol>
+<li>Raft系统中leader拥有最高权限，follower如果和leader数据不一致，那么必须删除自己的数据，保持和leader一致</li>
+<li>PBFT中，Primary向我发送命令时，当我认为老大的命令是有问题时，我会拒绝执行。并且很有可能会触发view-change。就算我认为老大的命令是对的，我还会问下团队的其它成员老大的命令是否是对的，只有大多数人 （2f+1） 都认为老大的命令是对的时候，我才会去执行命令</li>
+</ol>
+<h1 id="PBFT的特点"><a href="#PBFT的特点" class="headerlink" title="PBFT的特点"></a>PBFT的特点</h1><ol>
+<li>客户端事务请求的严格有序性<br> request里面包含了时间戳，request在服务端执行的时候，按照时间戳进行排序执行。而zab协议、raft协议都是按照先到先执行的有序性（服务端），但是PBFT却能按照Client的有序性。即使网络问题，先发起的请求晚于后发起的请求抵达服务端，服务端也不会打乱执行的顺序，PBFT是更严格的操作有序性。这也提高了系统的复杂度。</li>
+<li>性能尚可<br> PBFT 算法通信复杂度 o（n^2），因为系统在尝试达成状态共识时，涉及到N个几点都需要广播N-1个其它节点。而在没有作恶节点的zab、raft系统中，通信复杂度 O(N)</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>美图架构师 讲PBFT 和Raft区别<br> <a href="https://zhuanlan.zhihu.com/p/35847127" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/35847127</a></p>
+<p>原始论文的地址<br> <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf" target="_blank" rel="noopener">http://pmg.csail.mit.edu/papers/osdi99.pdf</a></p>
+<p>论文翻译中文版<br> <a href="https://blog.csdn.net/DeveloperRen/article/details/82771710" target="_blank" rel="noopener">https://blog.csdn.net/DeveloperRen/article/details/82771710</a></p>
 
     </div>
 
@@ -348,8 +410,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
-              <a href="/tags/%E6%99%BA%E8%83%BD%E8%BF%90%E7%BB%B4/" rel="tag"><i class="fa fa-tag"></i> 智能运维</a>
+              <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 共识算法</a>
+              <a href="/tags/PBFT/" rel="tag"><i class="fa fa-tag"></i> PBFT</a>
           </div>
 
         
@@ -358,13 +420,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/03/23/20200323Metis%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%B5%81%E7%A8%8B/" rel="prev" title="Metis的异常检测流程">
-      <i class="fa fa-chevron-left"></i> Metis的异常检测流程
+    <a href="/2020/08/24/20200824%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BE%81%E4%BF%A1%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/" rel="prev" title="区块链征信基本概念整理">
+      <i class="fa fa-chevron-left"></i> 区块链征信基本概念整理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/04/04/20200404docker%E9%83%A8%E7%BD%B2Metis/" rel="next" title="Metis异常检测分析">
-      Metis异常检测分析 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -424,6 +483,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PBFT概述"><span class="nav-number">1.</span> <span class="nav-text">PBFT概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容错率"><span class="nav-number">2.</span> <span class="nav-text">容错率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#角色"><span class="nav-number">3.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Primary角色分析"><span class="nav-number">4.</span> <span class="nav-text">Primary角色分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PBFT工作正常的详细流程"><span class="nav-number">5.</span> <span class="nav-text">PBFT工作正常的详细流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端Client发起请求"><span class="nav-number">6.</span> <span class="nav-text">客户端Client发起请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#消息"><span class="nav-number">7.</span> <span class="nav-text">消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重新选举-viewChange"><span class="nav-number">8.</span> <span class="nav-text">重新选举 viewChange</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Raft-Vs-PBFT"><span class="nav-number">9.</span> <span class="nav-text">Raft Vs PBFT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PBFT的特点"><span class="nav-number">10.</span> <span class="nav-text">PBFT的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
