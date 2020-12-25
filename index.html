@@ -247,14 +247,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>389</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -266,19 +266,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>git commit</p>
+          <h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>学习网站：<a href="https://learngitbranching.js.org/?demo=&amp;locale=zh_CN" target="_blank" rel="noopener">https://learngitbranching.js.org/?demo=&amp;locale=zh_CN</a></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git commit</span></span><br></pre></td></tr></table></figure>
+
 <p>提交当前状态，会存有提交记录，作为新节点生成</p>
-<p>git branch xxx</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">branch </span>xxx</span><br><span class="line"><span class="symbol">git</span> <span class="keyword">branch </span><span class="keyword">bugWork </span>master^^<span class="number">2</span>^</span><br></pre></td></tr></table></figure>
+
 <p>创建xxx分支，但不切换到该分支</p>
-<p>git checkout xxx</p>
-<p>切换至xxx分支</p>
-<p>git checkout -b xxx</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git checkout xxx</span></span><br></pre></td></tr></table></figure>
+
+<p>切换至xxx分支，xxx可以是具体提交也可以是分支名</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> checkout -<span class="keyword">b </span>xxx</span><br></pre></td></tr></table></figure>
+
 <p>创建并切换至xxx分支</p>
-<p>git merge xxx</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">merge</span> xxx</span><br></pre></td></tr></table></figure>
+
 <p>合并分支，如当前分支为master，执行git merge bugFix，则将bugFix内容合并至master分支，master分支中新的提交记录生成，此节点拥有两个父节点，并包含了这两个分支中的所有修改。</p>
-<p>git rebase</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="literal">master</span></span><br><span class="line">git rebase a b 将b挪至a之后</span><br></pre></td></tr></table></figure>
+
 <p>合并分支，如果当前分支为bugFix，执行git rebase master，则将工作内容合并至master分支，并在master分支当前结点之后创建新的提交节点bugFix，此时master分支的master指针指向的不是最新节点，切换至master分子、执行git rebase bugFix，可指向最新节点</p>
-<h2 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h2>
+<h2 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h2><p>HEAD指向正在其基础上进行工作的提交记录。HEAD总是指向当前分支上最近一次提交记录，通常情况下指向分支名。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/19/20201219Git%E6%80%BB%E7%BB%93/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1350,12 +1365,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">56k</span>
+    <span title="站点总字数">57k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">50 分钟</span>
+    <span title="站点阅读时长">52 分钟</span>
 </div>
 
 <!--
