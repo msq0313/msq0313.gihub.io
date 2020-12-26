@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.chrblog.icu/2020/12/19/20201219Git%E6%80%BB%E7%BB%93/image-20201224012433330.png">
 <meta property="article:published_time" content="2020-12-19T11:03:47.000Z">
-<meta property="article:modified_time" content="2020-12-25T12:32:40.509Z">
+<meta property="article:modified_time" content="2020-12-26T17:16:45.598Z">
 <meta property="article:author" content="Chronos">
 <meta property="article:tag" content="查阅参考">
 <meta property="article:tag" content="Git">
@@ -258,7 +258,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -387,6 +387,19 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">git</span> <span class="selector-tag">fetch</span> <span class="selector-tag">origin</span> <span class="selector-pseudo">:bar</span></span><br></pre></td></tr></table></figure>
 
 <p>创建本地bar分支</p>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>查看提交点</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> <span class="comment">--oneline</span></span><br></pre></td></tr></table></figure>
+
+<p>解决冲突</p>
+<h3 id="Git删除已提交的target等文件"><a href="#Git删除已提交的target等文件" class="headerlink" title="Git删除已提交的target等文件"></a>Git删除已提交的target等文件</h3><p>1 添加.gitignore文件</p>
+<p>2 删除远程文件</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git rm -r <span class="params">--cached</span> <span class="string">.idea/</span></span><br><span class="line">git rm -r <span class="params">--cached</span> target/</span><br></pre></td></tr></table></figure>
+
+<p>3 提交</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"删除不需要的文件"</span></span><br><span class="line">git <span class="keyword">push</span></span><br></pre></td></tr></table></figure>
+
+
+
 
     </div>
 
@@ -427,8 +440,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/08/27/20200827PBFT%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" rel="prev" title="PBFT共识算法">
-      <i class="fa fa-chevron-left"></i> PBFT共识算法
+    <a href="/2020/09/01/20200901Java%E4%BF%AE%E9%A5%B0%E7%AC%A6/" rel="prev" title="Java修饰符">
+      <i class="fa fa-chevron-left"></i> Java修饰符
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -490,7 +503,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git"><span class="nav-number">1.</span> <span class="nav-text">Git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HEAD"><span class="nav-number">1.1.</span> <span class="nav-text">HEAD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TAG"><span class="nav-number">1.2.</span> <span class="nav-text">TAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程"><span class="nav-number">1.3.</span> <span class="nav-text">远程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交历史的偏移"><span class="nav-number">1.4.</span> <span class="nav-text">提交历史的偏移</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git"><span class="nav-number">1.</span> <span class="nav-text">Git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HEAD"><span class="nav-number">1.1.</span> <span class="nav-text">HEAD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TAG"><span class="nav-number">1.2.</span> <span class="nav-text">TAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程"><span class="nav-number">1.3.</span> <span class="nav-text">远程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交历史的偏移"><span class="nav-number">1.4.</span> <span class="nav-text">提交历史的偏移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际应用"><span class="nav-number">1.5.</span> <span class="nav-text">实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git删除已提交的target等文件"><span class="nav-number">1.5.1.</span> <span class="nav-text">Git删除已提交的target等文件</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -505,20 +518,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
