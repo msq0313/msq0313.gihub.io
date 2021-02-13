@@ -1634,4 +1634,31 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Ubuntu设置默认登录用户为root</title>
+    <url>/2020/10/10/20201010Ubuntu%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E7%99%BB%E5%BD%95%E7%94%A8%E6%88%B7%E4%B8%BAroot/</url>
+    <content><![CDATA[<p>ubuntu登录后，默认是普通用户权限，刚安装的ubuntu系统的root用户是没设置密码的<br><strong>第一步我们先给root用户设置一个密码：</strong><br>sudo passwd root<br>输入sudo passwd root然后输入两次自己要设置的密码就可以了。</p>
+<a id="more"></a>
+
+<p><strong>第二步是在配置文件里设置root自启</strong><br>编辑 /etc/lightdm/lightdm.conf 文件</p>
+<p>sudo vim  /etc/lightdm/lightdm.conf</p>
+<p>[Seat:*]<br>autologin-guest=false<br>autologin-user=root<br>autologin-user-timeout=0<br>greeter-session=lightdm-gtk-greeter </p>
+<p>编辑/root/.profile文件，增加tty -s &amp;&amp;：<br>sudo vim /root/.profile </p>
+<p># ~/.profile: executed by Bourne-compatible login shells.</p>
+<p>if [ “$BASH” ]; then<br> if [ -f ~/.bashrc ]; then<br>  . ~/.bashrc<br> fi<br>fi</p>
+<p>tty -s &amp;&amp; mesg n || true </p>
+<p><strong>第三步：重启系统</strong><br>reboot</p>
+<p><strong>细节总结：</strong></p>
+<p>1、如果/etc/下没有/lightdm就执行：service lightdm start</p>
+<p>2、如果/etc/lightdm/下面没有lightdm.conf文件就新建一个</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>查阅参考</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
 </search>
